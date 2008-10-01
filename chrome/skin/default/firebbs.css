@@ -1,0 +1,64 @@
+body{
+  background-color: black;
+  color: silver;
+  overflow: hidden ;
+}
+
+a:link {
+  color: silver;
+  text-decoration: none;
+}
+
+a:visited {
+  color: silver;
+  text-decoration: none;
+}
+
+a:hover {
+  background: silver;
+  color: #cc3333;
+  text-decoration: none;
+}
+
+a:active {
+  color: #cc3333;
+  text-decoration: none;
+}
+
+iframe {
+  background: white;
+  border: 0px;
+  height: 35px;
+  padding: 0px;
+  width: 245px;
+}
+
+img {
+  background: silver;
+  padding: 5px 7px;
+}
+
+.terminal_display {
+  font-family : 宋体, monospace;
+  font-size: 24px;
+  line-height: 24px;
+  white-space: pre;
+  cursor: crosshair;
+  position: absolute;
+}
+
+#output_area {
+  margin: 0em auto 0em;
+  width: 960px;
+  height: 576px;
+}
+
+#float_box {
+  display: none;
+  position: absolute;
+}
+
+#cursor{
+  color: yellow;
+  text-decoration: blink;
+}

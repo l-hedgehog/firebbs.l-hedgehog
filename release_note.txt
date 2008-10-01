@@ -1,0 +1,109 @@
+original version: 0.3.0 by Milx
+modified by l-hedgehog as FireBBS.l-hedgehog 0.3.0+*.*
+the first digit is reserved for my real contribution to the extension
+
+== yyyy-mm-dd *.* ==
+
+== 2008-09-30 0.23 ==
+- comment out the ip2location which cannot be used
+
+== 2008-06-17 0.22 ==
+- bug fix for \ufffd in color copy & paste
+
+== 2008-06-16 0.21 ==
+- ascii code i.e. copy & paste with color for whole pages
+- ascii copy - F2, ascii & normal paste - F3
+- F4 for the input dialog introduced in v0.11
+
+== 2008-06-15 0.20 ==
+- stop capture input after exit the bbs
+
+== 2008-06-14 0.19 ==
+- ^C to copy when selecting some text
+- F3 to paste as I cannot empty clipboard and may not use ^V
+- remove JS_Extension.js
+
+== 2008-06-04 0.18 ==
+- ip2location iframe can be hidden by mouseover now
+
+== 2008-05-16 0.17 ==
+- set minVersion to toolkit 1.9b4pre and thus ime-mode can be used
+- F2 to open the input dialog introduced in v0.11
+- rename all zh- things
+
+== 2008-03-13 0.16 ==
+- img preview position based on top/bottom
+- ip2location for smth.org etc. which show ip as aaa.bbb.ccc.*
+
+== 2008-03-10 0.15 ==
+- add ip2location (powered by cz88.net)
+- img preview position based on bottom, the same as ip2location information
+
+== 2008-03-08 0.14 ==
+- remove the borders of the divs named main and output_area
+- add target app prism
+
+== 2008-01-03 0.13 ==
+- change all files to utf-8 without BOM (not this file though)
+- bug fix for "¡ã"
+- click menu will work at least for bdwm zixia & newsmth
+- change v0.8 trick to standard way
+- about dialog when pressing F1
+- center the input dialog introduced in v0.11
+- change \ufffd to "?"
+
+== 2008-01-03 0.12 ==
+- bug fix for link with "'" in it
+- restrict alt key dialog to Chinese IME mode
+
+== 2007-12-21 0.11 ==
+- use alt key to paste multi-paragraph article
+
+== 2007-12-17 0.10 ==
+- bug fix for "¡Á¡Â"
+
+== 2007-12-15 0.9 ==
+- bug fix, i.e. delete all showMsg which should be done completely at v0.1 or v0.2
+- bug fix, preview picture not hidden can be removed by moving mouse over it
+
+== 2007-12-14 0.8 ==
+- use a trick (strings.js in locale folder) to make it completely localizable. NOT in a standard way.
+    the reason: it seems that without xul files no string bundles can be created.
+    and i still have problem in using locale files, strange behaviors here and there.
+
+== 2007-12-08 0.7 ==
+- change imgTag from </ to < i.e.&lt;
+- finally using locale to define prefs, while javascript strings still not done.
+- delete zh-TW locale
+
+== 2007-12-04 0.6 ==
+- add preview to img links
+- enable right click for all links
+- and more rearrangement e.g. using prefs.js thus charset & font can be controled in about:config
+...
+
+== 2007-12-03 0.5 ==
+- make text links (single line and contain no "(" or ")") real link i.e. clickable
+- add my own icon - which is not really suitable - as firebbs.l-hedgehog's icon
+
+== 2007-12-02 0.4 ==
+- use span instead of div to make text copy possible and ¡òFRANKLY SPEAKING FAIL¡ò to work
+    not make it worse either
+
+== 2007-12-02 0.3 ==
+- change default font size to 24
+- rearrange file structure by using jar pack in chrome and sth. like this
+
+== 2007-11-30 0.2 ==
+- automatically prompt when turning on Chinese IME by Ctrl+Space
+- when keyCode=229 will show advice to turn it off
+- and delete toolbar2 as a result
+
+== 2007-11-28 0.1 ==
+- change default charset to gb2312
+- change default font family to "ËÎÌå"
+- change default font size to 22
+- delete Google search and toolbar (mostly for ptt.cc) sections
+- not possible to remember login info in firefox password manager
+- no longer reload 5 secs after quit
+- automatically prompt when keyCode=229 which means Chinese IME

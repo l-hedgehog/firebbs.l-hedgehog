@@ -1,0 +1,5 @@
+content  firebbs  chrome/content/
+
+locale  firebbs  zh-CN  chrome/locale/zh-CN/
+
+skin  firebbs  default  chrome/skin/default/

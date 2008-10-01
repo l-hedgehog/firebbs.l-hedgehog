@@ -1,0 +1,21 @@
+known bugs:
+
+parsePTT ??
+...will show in one single line when copy text ¡ñ div->span in common.js [divLine]
+
+========================================================================================
+
+roadmap:
+which mostly are jokes :-)
+
+1.realized
+2.realized
+3.realized
+4.realized
+5.realized
+6.realized
+7.realized
+--------------------------------------
+8.a real icon for it
+9.options.xul
+10.valign
