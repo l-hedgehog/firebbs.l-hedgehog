@@ -1,10 +1,6 @@
 var isPreventDefault = false;//for events of keyboard & mouse
 var IME = [];
 
-function locale(strName){
-  return strBundle.GetStringFromName(strName);
-}
-
 function key_map(e){
 //http://en.wikipedia.org/wiki/ASCII
 //http://invisible-island.net/xterm/ctlseqs/ctlseqs.html#VT220-Style%20Function%20Keys

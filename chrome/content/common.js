@@ -92,3 +92,7 @@ function stringLen(str){
   str3 = str.replace(/[^\xA7\xB0\xB7\xD7\xF7]/g, '');
   return str.length + str2.length + str3.length;
 }
+
+function locale(strName){
+  return strBundle.GetStringFromName(strName);
+}

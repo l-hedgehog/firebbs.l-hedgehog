@@ -40,6 +40,14 @@ var clipTrans =
         createInstance(Ci.nsITransferable);
 clipTrans.addDataFlavor("text/unicode");
 
+var alertsService =
+      Cc["@mozilla.org/alerts-service;1"].
+        getService(Ci.nsIAlertsService);
+
+var soundService =
+      Cc["@mozilla.org/sound;1"].
+        getService(Ci.nsISound);
+
 var FireBBS = {
   cursor : null,
   output_area : null,
