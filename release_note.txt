@@ -51,7 +51,7 @@ the first digit is reserved for my real contribution to the extension
 
 == 2008-01-03 0.13 ==
 - change all files to utf-8 without BOM (not this file though)
-- bug fix for "¡ã"
+- bug fix for "Â°"
 - click menu will work at least for bdwm zixia & newsmth
 - change v0.8 trick to standard way
 - about dialog when pressing F1
@@ -66,7 +66,7 @@ the first digit is reserved for my real contribution to the extension
 - use alt key to paste multi-paragraph article
 
 == 2007-12-17 0.10 ==
-- bug fix for "¡Á¡Â"
+- bug fix for "Ã—Ã·"
 
 == 2007-12-15 0.9 ==
 - bug fix, i.e. delete all showMsg which should be done completely at v0.1 or v0.2
@@ -93,7 +93,7 @@ the first digit is reserved for my real contribution to the extension
 - add my own icon - which is not really suitable - as firebbs.l-hedgehog's icon
 
 == 2007-12-02 0.4 ==
-- use span instead of div to make text copy possible and ¡òFRANKLY SPEAKING FAIL¡ò to work
+- use span instead of div to make text copy possible and â—ŽFRANKLY SPEAKING FAILâ—Ž to work
     not make it worse either
 
 == 2007-12-02 0.3 ==
@@ -107,7 +107,7 @@ the first digit is reserved for my real contribution to the extension
 
 == 2007-11-28 0.1 ==
 - change default charset to gb2312
-- change default font family to "ËÎÌå"
+- change default font family to "å®‹ä½“"
 - change default font size to 22
 - delete Google search and toolbar (mostly for ptt.cc) sections
 - not possible to remember login info in firefox password manager
