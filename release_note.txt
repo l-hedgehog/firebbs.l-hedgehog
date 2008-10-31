@@ -4,6 +4,10 @@ the first digit is reserved for my real contribution to the extension
 
 == yyyy-mm-dd *.* ==
 
+== 2008-10-31 0.26 ==
+- change this file to utf-8 without BOM
+- change homepage url to http://hedgehog-hosted.appspot.com/firebbs.l-hedgehog
+
 == 2008-10-27 0.25 ==
 - play sound and alert when receiving new message.
 
