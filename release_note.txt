@@ -4,6 +4,12 @@ the first digit is reserved for my real contribution to the extension
 
 == yyyy-mm-dd *.* ==
 
+== 2008-10-31 0.28 ==
+- test update.rdf
+
+== 2008-10-31 0.27 ==
+- add update.rdf and stop using 0.3.0+ in version
+
 == 2008-10-31 0.26 ==
 - change this file to utf-8 without BOM
 - change homepage url to http://hedgehog-hosted.appspot.com/firebbs.l-hedgehog

@@ -5,7 +5,7 @@
 
   <Description about="urn:mozilla:install-manifest">
     <em:id>firebbs.l-hedgehog@hector.zhao</em:id>
-    <em:version>0.3.0+0.26</em:version>
+    <em:version>0.28</em:version>
     <em:type>2</em:type>
 
     <em:targetApplication>
@@ -16,12 +16,12 @@
       </Description>
     </em:targetApplication>
 
-    <!-- Front End MetaData -->
     <em:name>FireBBS.l-hedgehog</em:name>
     <em:description>在Firefox里使用Telnet访问BBS！</em:description>
     <em:creator>Milx</em:creator>
     <em:contributor>Hector Zhao</em:contributor>
     <em:homepageURL>http://hedgehog-hosted.appspot.com/firebbs.l-hedgehog</em:homepageURL>
+    <em:updateURL>https://hedgehog-hosted.appspot.com/download/update.rdf</em:updateURL>
 <!--    <em:optionsURL></em:optionsURL> -->
     <em:iconURL>chrome://firebbs/skin/firebbs.png</em:iconURL>
   </Description>
