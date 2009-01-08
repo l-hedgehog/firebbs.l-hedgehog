@@ -15,7 +15,7 @@
                 <em:id>toolkit@mozilla.org</em:id>
                 <em:minVersion>1.9b4pre</em:minVersion>
                 <em:maxVersion>1.9.*</em:maxVersion>
-                <em:updateLink>https://hedgehog-hosted.appspot.com/download/firebbs.l-hedgehog.xpi?v=0.28</em:updateLink>
+                <em:updateLink>https://hedgehog-hosted.appspot.com/download/firebbs.l-hedgehog.xpi?v=0.29</em:updateLink>
               </Description>
             </em:targetApplication>
           </Description>
