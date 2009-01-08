@@ -154,7 +154,8 @@ var FireBBS = {
   init : function(){
     var transport = nsISocketTransportService.
           createTransport(null, 0,
-                          document.location.hostname, document.location.port ? document.location.port : 23,
+                          document.location.hostname == "firebbs" ? "bbs.pku.edu.cn" : document.location.hostname,
+                          document.location.port ? document.location.port : 23,
                           null);
     var options = document.location.search;
     var charset = (/charset\x3D(\w+)/.exec(options))

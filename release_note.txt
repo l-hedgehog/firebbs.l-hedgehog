@@ -4,6 +4,9 @@ the first digit is reserved for my real contribution to the extension
 
 == yyyy-mm-dd *.* ==
 
+== 2009-01-08 0.29 ==
+- rename some vars and add color copy for part of the page
+
 == 2008-10-31 0.28 ==
 - test update.rdf
 

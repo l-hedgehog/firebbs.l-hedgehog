@@ -229,6 +229,14 @@ function key_down(e){
                  extensionManager.datasource);
     }
     else if(e.keyCode==113){
+      var ASCII = [FireBBS.output_area.firstChild, FireBBS.output_area.lastChild];
+      if(!window.getSelection().isCollapsed){
+        ASCII = [window.getSelection().anchorNode.parentNode, window.getSelection().focusNode.parentNode];
+      }
+      FireBBS.ASCII_cache = "";
+      for(var i = ASCII[0]; i != ASCII[1].nextSibling; i = i.nextSibling){
+        FireBBS.ASCII_cache += node2ASCII(i);
+      }
       nsISupportsString.data = FireBBS.ASCII_cache;
       nsITransferable.setTransferData("text/unicode", nsISupportsString, FireBBS.ASCII_cache.length * 2);
       nsIClipboard.setData(nsITransferable, null, nsIClipboard.kGlobalClipboard);
@@ -243,6 +251,7 @@ function key_down(e){
                         data.substring(0, pasteStrLength.value / 2);
         FireBBS.sendData(pasteText);
       }
+      nsIClipboard.emptyClipboard(nsIClipboard.kGlobalClipboard);
     }
     else if(e.keyCode==115){
       var str = {out: null};
@@ -283,4 +292,34 @@ function prePicResize(img){
     img.style.width = (imgWidth / scale) + "px";
     img.style.height = (imgHeight / scale) + "px";
   }
+}
+
+function node2ASCII(node){
+  var style = node.style;
+  if(!style.color){
+    return "";
+  }
+  var string = /m(\d+)n(\d+)n(\d+)/.exec(node.id)[2] == "1" ? "\r" : "";
+  var color = [];
+  for(var i = 0; i < colorTable.length; i++){
+    if(style.color == colorTable[i]){
+      color[0] = (i > 9) ? i : (i + 30);
+    }
+    else if(style.backgroundColor == colorTable[i]){
+      color[1] = i;
+    }
+    if(color[0] && color[1]){
+      break;
+    }
+  }
+  string += "\x1B\x1B[";
+  string += (Math.floor(color[0] / 10) - 1) + ";";
+  if(style.textDecoration.search("blink") != -1){
+    string += "5;";
+  }
+  string += (30 + color[0] % 10) + ";";
+  string += (40 + color[1] % 10) + "m";
+  string += node.innerHTML.replace(/<.+?>/g, "").replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&");
+  string += "\x1B\x1B[m";
+  return string;
 }
