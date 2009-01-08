@@ -497,9 +497,9 @@ function NEL(){//Move to next line(NEL )
 
 //BEL
 function BEL(){
-  alertsService.showAlertNotification("chrome://firebbs/skin/firebbs.png", 
+  nsIAlertsService.showAlertNotification("chrome://firebbs/skin/firebbs.png", 
                                       locale("alerts"), locale("newMessage"));
-  soundService.playSystemSound("_moz_mailbeep");
+  nsISound.playSystemSound("_moz_mailbeep");
 }
 //LF(Line Feed)
 function LF(){

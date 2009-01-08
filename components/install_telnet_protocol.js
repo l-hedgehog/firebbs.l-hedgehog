@@ -95,7 +95,7 @@ Protocol.prototype = {
     /* create dummy nsIURI and nsIChannel instances */
     var ios = Components.classes[kIOSERVICE_CONTRACTID].getService(nsIIOService);
 
-    return ios.newChannel('chrome://firebbs/content/main_window.htm', null, null);
+    return ios.newChannel('chrome://firebbs/content/firebbs.html', null, null);
   },
 }
 

@@ -29,22 +29,22 @@ var prefs =
         getService(Ci.nsIPrefService).
         getBranch("extensions.firebbs.");
 
-var clip =
+var nsIClipboard =
       Cc["@mozilla.org/widget/clipboard;1"].
         getService(Ci.nsIClipboard);
-var clipStr =
+var nsISupportsString =
       Cc["@mozilla.org/supports-string;1"].
         createInstance(Ci.nsISupportsString);
-var clipTrans =
+var nsITransferable =
       Cc["@mozilla.org/widget/transferable;1"].
         createInstance(Ci.nsITransferable);
-clipTrans.addDataFlavor("text/unicode");
+nsITransferable.addDataFlavor("text/unicode");
 
-var alertsService =
+var nsIAlertsService =
       Cc["@mozilla.org/alerts-service;1"].
         getService(Ci.nsIAlertsService);
 
-var soundService =
+var nsISound =
       Cc["@mozilla.org/sound;1"].
         getService(Ci.nsISound);
 
@@ -75,7 +75,7 @@ var FireBBS = {
       onDataAvailable: function(request, context, inputStream, offset, count){
         nsIConverterInputStream.readString(0xFFFF, this.data);
         var str = this.restStr + this.data.value;
-        FireBBS.ASCII_cache = str.replace(/\x1B/g, '\x1B\x1B').replace(/\r/g, '').replace(/\ufffd/g, '?');
+        //FireBBS.ASCII_cache = str.replace(/\x1B/g, '\x1B\x1B').replace(/\r/g, '').replace(/\ufffd/g, '?');
         this.restStr ='';
 
         str = str.replace(/\x07/g, '\x1B\x07');//escape BEL

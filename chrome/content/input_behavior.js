@@ -23,13 +23,13 @@ function key_map(e){
           //^C
           if(e.charCode == 0x63&&!window.getSelection().isCollapsed){
             var copyText = window.getSelection().toString();
-            clipStr.data = copyText;
-            clipTrans.setTransferData("text/unicode", clipStr, copyText.length * 2);
-            clip.setData(clipTrans, null, clip.kGlobalClipboard);
+            nsISupportsString.data = copyText;
+            nsITransferable.setTransferData("text/unicode", nsISupportsString, copyText.length * 2);
+            nsIClipboard.setData(nsITransferable, null, nsIClipboard.kGlobalClipboard);
           }
           //^V but cannot empty the clipboard ...
           else if(e.charCode == 0x76&&false){
-            clip.emptyClipboard(clip.kGlobalClipboard);
+            nsIClipboard.emptyClipboard(nsIClipboard.kGlobalClipboard);
           }
           else {
             FireBBS.sendData(String.fromCharCode(e.charCode - 0x60));
@@ -229,15 +229,15 @@ function key_down(e){
                  extensionManager.datasource);
     }
     else if(e.keyCode==113){
-      clipStr.data = FireBBS.ASCII_cache;
-      clipTrans.setTransferData("text/unicode", clipStr, FireBBS.ASCII_cache.length * 2);
-      clip.setData(clipTrans, null, clip.kGlobalClipboard);
+      nsISupportsString.data = FireBBS.ASCII_cache;
+      nsITransferable.setTransferData("text/unicode", nsISupportsString, FireBBS.ASCII_cache.length * 2);
+      nsIClipboard.setData(nsITransferable, null, nsIClipboard.kGlobalClipboard);
     }
-    else if(e.keyCode==114&&clip.hasDataMatchingFlavors(["text/unicode"], 1, clip.kGlobalClipboard)){
-      clip.getData(clipTrans, clip.kGlobalClipboard);
+    else if(e.keyCode==114&&nsIClipboard.hasDataMatchingFlavors(["text/unicode"], 1, nsIClipboard.kGlobalClipboard)){
+      nsIClipboard.getData(nsITransferable, nsIClipboard.kGlobalClipboard);
       var pasteStr = new Object();
       var pasteStrLength = new Object();
-      clipTrans.getTransferData("text/unicode", pasteStr, pasteStrLength);
+      nsITransferable.getTransferData("text/unicode", pasteStr, pasteStrLength);
       if(pasteStr){
         var pasteText = pasteStr.value.QueryInterface(Ci.nsISupportsString).
                         data.substring(0, pasteStrLength.value / 2);
