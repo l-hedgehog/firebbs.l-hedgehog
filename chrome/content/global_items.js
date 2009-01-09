@@ -11,7 +11,7 @@ colorTable[7] = '#606060';
 colorTable[9] = '#F9F9F9';
 //10~19 normal ones
 colorTable[10] = 'black';
-colorTable[11] = 'maroon ';
+colorTable[11] = 'maroon';
 colorTable[12] = 'green';
 colorTable[13] = 'olive';
 colorTable[14] = 'navy';

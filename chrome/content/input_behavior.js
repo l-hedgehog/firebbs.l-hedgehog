@@ -305,7 +305,7 @@ function node2ASCII(node){
     if(style.color == colorTable[i]){
       color[0] = (i > 9) ? i : (i + 30);
     }
-    else if(style.backgroundColor == colorTable[i]){
+    if(style.backgroundColor == colorTable[i]){
       color[1] = i;
     }
     if(color[0] && color[1]){
@@ -317,8 +317,10 @@ function node2ASCII(node){
   if(style.textDecoration.search("blink") != -1){
     string += "5;";
   }
-  string += (30 + color[0] % 10) + ";";
-  string += (40 + color[1] % 10) + "m";
+  if(style.backgroundColor != "black"){
+    string += (40 + color[1] % 10) + ";";
+  }
+  string += (30 + color[0] % 10) + "m";
   string += node.innerHTML.replace(/<.+?>/g, "").replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&");
   string += "\x1B\x1B[m";
   return string;
