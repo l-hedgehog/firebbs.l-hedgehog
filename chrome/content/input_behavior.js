@@ -321,7 +321,7 @@ function node2ASCII(node){
     string += (40 + color[1] % 10) + ";";
   }
   string += (30 + color[0] % 10) + "m";
-  string += node.innerHTML.replace(/<.+?>/g, "").replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&");
+  string += node.innerHTML.replace(/<.+?>/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
   string += "\x1B\x1B[m";
   return string;
 }
