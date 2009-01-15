@@ -4,8 +4,11 @@ the first digit is reserved for my real contribution to the extension
 
 == yyyy-mm-dd *.* ==
 
+== 2009-01-15 0.33 ==
+- bug fix, remove some useless ascii code
+
 == 2009-01-15 0.32 ==
-- bug fix for ASCII underline
+- bug fix for ascii underline
 
 == 2009-01-10 0.31 ==
 - bug fix for html tags <img> & </img>

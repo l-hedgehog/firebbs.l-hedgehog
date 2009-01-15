@@ -320,7 +320,6 @@ function node2ASCII(node){
   if(!style.color){
     return "";
   }
-  var string = /m(\d+)n(\d+)n(\d+)/.exec(node.id)[2] == "1" ? "\r" : "";
   var color = [];
   for(var i = 0; i < colorTable.length; i++){
     if(style.color == colorTable[i]){
@@ -333,7 +332,7 @@ function node2ASCII(node){
       break;
     }
   }
-  string += "\x1B\x1B[";
+  var string = "\x1B\x1B[";
   string += (Math.floor(color[0] / 10) - 1) + ";";
   if(style.textDecoration.search("underline") != -1){
     string += "4;";
@@ -345,7 +344,12 @@ function node2ASCII(node){
     string += (40 + color[1] % 10) + ";";
   }
   string += (30 + color[0] % 10) + "m";
-  string += node.innerHTML.replace(/<.+?>/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
-  string += "\x1B\x1B[m";
-  return string;
+  if(string == "\x1B\x1B[0;37m"){
+    string = node.innerHTML.replace(/<.+?>/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
+  }
+  else {
+    string += node.innerHTML.replace(/<.+?>/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
+    string += "\x1B\x1B[m";
+  }
+  return (/m(\d+)n(\d+)n(\d+)/.exec(node.id)[2] == "1" ? "\r" : "") + string;
 }
