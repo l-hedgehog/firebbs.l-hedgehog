@@ -335,6 +335,9 @@ function node2ASCII(node){
   }
   string += "\x1B\x1B[";
   string += (Math.floor(color[0] / 10) - 1) + ";";
+  if(style.textDecoration.search("underline") != -1){
+    string += "4;";
+  }
   if(style.textDecoration.search("blink") != -1){
     string += "5;";
   }
