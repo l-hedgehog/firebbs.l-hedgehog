@@ -1,6 +1,7 @@
 /* ***** BEGIN COPYRIGHT AND LICENSE BLOCK *****
  *
- * Copyright © 2007,2008,2009 Milx, Hector Zhao
+ * Copyright © 2007 Milx
+ * Copyright © 2007, 2008, 2009 Hector Zhao
  *
  * This file is part of FireBBS.l-hedgehog.
  *
@@ -273,14 +274,6 @@ function key_down(e){
         FireBBS.sendData(pasteText);
       }
       nsIClipboard.emptyClipboard(nsIClipboard.kGlobalClipboard);
-    }
-    else if(e.keyCode==115){
-      var str = {out: null};
-      var dialog = openDialog("chrome://firebbs/content/input.xul",
-                              "firebbsDialog", "chrome,centerscreen,modal", str);
-      if(str.out != ''){
-        FireBBS.sendData(str.out);
-      }
     }
   }
 }

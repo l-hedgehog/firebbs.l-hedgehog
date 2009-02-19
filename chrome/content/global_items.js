@@ -1,6 +1,7 @@
 /* ***** BEGIN COPYRIGHT AND LICENSE BLOCK *****
  *
- * Copyright © 2007,2009 Milx, Hector Zhao
+ * Copyright © 2007 Milx
+ * Copyright © 2009 Hector Zhao
  *
  * This file is part of FireBBS.l-hedgehog.
  *

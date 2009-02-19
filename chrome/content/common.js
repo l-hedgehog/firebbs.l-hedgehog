@@ -1,6 +1,7 @@
 /* ***** BEGIN COPYRIGHT AND LICENSE BLOCK *****
  *
- * Copyright © 2007,2008,2009 Milx, Hector Zhao
+ * Copyright © 2007 Milx
+ * Copyright © 2007, 2008 Hector Zhao
  *
  * This file is part of FireBBS.l-hedgehog.
  *
@@ -56,7 +57,7 @@ function generate_span(str){
      str = str.replace(/"/g, '&quot;');
   }
   //add html link
-  var urlTemplate=/(https?:\/\/)([\w-.]+)(:[0-9]+)?(\/[\/\w;,?:@&=+$.!~*\'#%-]*)?/g;  //()
+  var urlTemplate=/(https?:\/\/)([\w-.]+)(:[0-9]+)?(\/[\/\w;,?:@&=+$.!~*'#%-]*)?/g;  //()
   str = str.replace(urlTemplate, addLink);
   //add ip2location link
   //var fromIpTemplate=/\[FROM:\s\d+\.\d+\.\d+\.[*\d]+]/;

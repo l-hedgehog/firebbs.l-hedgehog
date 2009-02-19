@@ -4,6 +4,9 @@ the first digit is reserved for my real contribution to the extension
 
 == yyyy-mm-dd *.* ==
 
+== 2009-02-19 0.34 ==
+- remove the F4 input dialog
+
 == 2009-01-15 0.33 ==
 - bug fix, remove some useless ascii code
 
