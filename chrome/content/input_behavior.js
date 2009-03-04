@@ -308,6 +308,20 @@ function prePicResize(img){
   }
 }
 
+function toHex(dec) {
+  var hex = "0123456789ABCDEF";
+  return hex[Math.floor(dec / 16)] + "" + hex[dec % 16];
+}
+
+function hexColor(color) {
+  if(color.search("rgb")==0){
+    var rgb = /(\d+),\s(\d+),\s(\d+)/.exec(color);
+    return "#" + toHex(rgb[1]) + "" + toHex(rgb[2]) + "" + toHex(rgb[3]);
+  } else {
+    return color;
+  }
+}
+
 function node2ASCII(node){
   var style = node.style;
   if(!style.color){
@@ -315,10 +329,10 @@ function node2ASCII(node){
   }
   var color = [];
   for(var i = 0; i < colorTable.length; i++){
-    if(style.color == colorTable[i]){
+    if(hexColor(style.color) == colorTable[i]){
       color[0] = (i > 9) ? i : (i + 30);
     }
-    if(style.backgroundColor == colorTable[i]){
+    if(hexColor(style.backgroundColor) == colorTable[i]){
       color[1] = i;
     }
     if(color[0] && color[1]){

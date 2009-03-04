@@ -4,6 +4,9 @@ the first digit is reserved for my real contribution to the extension
 
 == yyyy-mm-dd *.* ==
 
+== 2009-03-04 0.35 ==
+- bug fix for not understanding rgb colors
+
 == 2009-02-19 0.34 ==
 - remove the F4 input dialog
 
