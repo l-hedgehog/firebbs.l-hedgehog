@@ -521,7 +521,11 @@ function NEL(){//Move to next line(NEL )
 function BEL(){
   nsIAlertsService.showAlertNotification("chrome://firebbs/skin/firebbs.png", 
                                       locale("alerts"), locale("newMessage"));
-  nsISound.playSystemSound("_moz_mailbeep");
+  if(prefs.getCharPref('sound')) {
+    nsISound.play(nsIIOService.newURI(prefs.getCharPref('sound'), null, null));  
+  } else {
+    nsISound.playSystemSound("_moz_mailbeep");
+  }
 }
 //LF(Line Feed)
 function LF(){
