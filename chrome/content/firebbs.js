@@ -82,6 +82,7 @@ var FireBBS = {
   inputStream : null,
   HTMLString_cache : '',
   ASCII_cache: '',
+  previous_node: '',
 
   dataListener : {
       data : {},
@@ -101,7 +102,6 @@ var FireBBS = {
       onDataAvailable: function(request, context, inputStream, offset, count){
         nsIConverterInputStream.readString(0xFFFF, this.data);
         var str = this.restStr + this.data.value;
-        //FireBBS.ASCII_cache = str.replace(/\x1B/g, '\x1B\x1B').replace(/\r/g, '').replace(/\ufffd/g, '?');
         this.restStr ='';
 
         str = str.replace(/\x07/g, '\x1B\x07');//escape BEL
@@ -217,6 +217,7 @@ var FireBBS = {
     this.cursor = document.getElementById('cursor');
     this.output_area = document.getElementById('output_area');
     this.float_box = document.getElementById('float_box');
+    this.previous_node = [0, false, false, 10, 7];
     
     //document.title = document.location.host;
     $garbage_span_collector.initCoveredArea();

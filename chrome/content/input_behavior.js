@@ -259,6 +259,7 @@ function key_down(e){
       for(var i = ASCII[0]; i != ASCII[1].nextSibling; i = i.nextSibling){
         FireBBS.ASCII_cache += node2ASCII(i);
       }
+      FireBBS.ASCII_cache += "\x1B\x1B[m";
       nsISupportsString.data = FireBBS.ASCII_cache;
       nsITransferable.setTransferData("text/unicode", nsISupportsString, FireBBS.ASCII_cache.length * 2);
       nsIClipboard.setData(nsITransferable, null, nsIClipboard.kGlobalClipboard);
@@ -339,24 +340,44 @@ function node2ASCII(node){
       break;
     }
   }
+  var lineStart = (/m(\d+)n(\d+)n(\d+)/.exec(node.id)[2] == "1");
+  if(lineStart){
+    FireBBS.previous_node = [0, false, false, 10, 7];
+  }
   var string = "\x1B\x1B[";
-  string += (Math.floor(color[0] / 10) - 1) + ";";
-  if(style.textDecoration.search("underline") != -1){
-    string += "4;";
+  var intensity = Math.floor(color[0] / 10) - 1;
+  if(intensity != FireBBS.previous_node[0]){
+    string += intensity + ";";
+    FireBBS.previous_node[0] = intensity;
+    if(!intensity) {
+      FireBBS.previous_node = [0, false, false, 10, 7];
+    }
   }
-  if(style.textDecoration.search("blink") != -1){
-    string += "5;";
+  var underline = (style.textDecoration.search("underline") != -1);
+  if(underline != FireBBS.previous_node[1]){
+    string += (underline ? "4;" : "24;");
+    FireBBS.previous_node[1] = underline;
   }
-  if(style.backgroundColor != "black"){
+  var blink = (style.textDecoration.search("blink") != -1);
+  if(blink != FireBBS.previous_node[2]){
+    string += (blink ? "5;" : "25;");
+    FireBBS.previous_node[2] = blink;
+  }
+  if(color[1] != FireBBS.previous_node[3]){
     string += (40 + color[1] % 10) + ";";
+    FireBBS.previous_node[3] = color[1];
   }
-  string += (30 + color[0] % 10) + "m";
-  if(string == "\x1B\x1B[0;37m"){
+  color[0] = color[0] % 10;
+  if(color[0] != FireBBS.previous_node[4]){
+    string += (30 + color[0]) + ";";
+    FireBBS.previous_node[4] = color[0];    
+  }
+  string = string.replace(/;$/, 'm');
+  if(string == "\x1B\x1B["){
     string = node.innerHTML.replace(/<.+?>/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
   }
   else {
     string += node.innerHTML.replace(/<.+?>/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
-    string += "\x1B\x1B[m";
   }
-  return (/m(\d+)n(\d+)n(\d+)/.exec(node.id)[2] == "1" ? "\r" : "") + string;
+  return (lineStart ? "\x1B\x1B[m\r" : "") + string;
 }

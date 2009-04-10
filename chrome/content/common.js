@@ -110,8 +110,8 @@ function convertMN2XY(cursorPosition){
 
 function stringLen(str){
   str2 = str.replace(/[\x00-\xFF\uFFFD]/g, '');
-  //bug fix for this: '§·×÷°'
-  str3 = str.replace(/[^\xA7\xB0\xB7\xD7\xF7]/g, '');
+  //bug fix for this: '§¨·×÷°'
+  str3 = str.replace(/[^\xA7\xA8\xB0\xB7\xD7\xF7]/g, '');
   return str.length + str2.length + str3.length;
 }
 

@@ -4,6 +4,9 @@ the first digit is reserved for my real contribution to the extension
 
 == yyyy-mm-dd *.* ==
 
+== 2009-04-10 0.37 ==
+- improve color copy code
+
 == 2009-03-17 0.36 ==
 - add pref to change notify sound in about:config
 
