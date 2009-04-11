@@ -170,13 +170,13 @@ function mouse_behavior(e){
         if(e.target.rel){
           if(e.target.rel.toLowerCase() == "pic_preview"){
             FireBBS.float_box.style.display = "block";
-            FireBBS.float_box.innerHTML="<img src='" + e.target.href + "' onload='prePicResize(this)' />"
+            FireBBS.float_box.innerHTML="<img src='" + e.target.href + "' onload='prePicResize(this)' />";
             e.target.addEventListener('mouseout', mouse_behavior, false);
             e.target.addEventListener('mousemove', mouse_behavior, false);
           }
           //else if(e.target.rel.toLowerCase() == "ip2loc"){
           //  FireBBS.float_box.style.display = "block";
-          //  FireBBS.float_box.innerHTML="<iframe src='chrome://firebbs/content/iploc.html?ip=" + e.target.textContent + "' scrolling='no' />"
+          //  FireBBS.float_box.innerHTML="<iframe src='chrome://firebbs/content/iploc.html?ip=" + e.target.textContent + "' scrolling='no' />";
           //  e.target.addEventListener('mouseout', mouse_behavior, false);
           //  e.target.addEventListener('mousemove', mouse_behavior, false);
           //}
