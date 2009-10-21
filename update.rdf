@@ -8,14 +8,14 @@
       <Seq>
         <li>
           <Description>
-            <em:version>0.37</em:version>
+            <em:version>0.38</em:version>
 
             <em:targetApplication>
               <Description>
                 <em:id>toolkit@mozilla.org</em:id>
                 <em:minVersion>1.9b4pre</em:minVersion>
                 <em:maxVersion>1.9.*</em:maxVersion>
-                <em:updateLink>https://hedgehog-hosted.appspot.com/download/firebbs.l-hedgehog.xpi?v=0.37</em:updateLink>
+                <em:updateLink>https://hedgehog-hosted.appspot.com/download/firebbs.l-hedgehog.xpi?v=0.38</em:updateLink>
               </Description>
             </em:targetApplication>
           </Description>

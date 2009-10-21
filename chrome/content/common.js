@@ -86,7 +86,7 @@ function generate_span(str){
   return s;
 }
 
-function generate_black_span(cursorPosition, cols){
+function generate_bg_span(cursorPosition, cols){
   var pos = convertMN2XY($cursor.position);
   var s = '<span';
   s += ' id="m' + cursorPosition.m + 'n' + cursorPosition.n + 'n' + (cursorPosition.n + cols) + '"';
@@ -94,7 +94,7 @@ function generate_black_span(cursorPosition, cols){
   s += ' style="';
   s += 'left: ' + pos[0] + 'px;';
   s += 'top: ' + pos[1] + 'px;';
-  s += 'background-color: black;'
+  s += 'background-color: ' + colorTable[10] + ';'
   s += 'width: ' + (cols * $character.fontWidth) + 'px"> </span>';
   $garbage_span_collector.setRange($cursor.position.m, [cursorPosition.n, cursorPosition.n + cols]);
   return s;
@@ -110,8 +110,8 @@ function convertMN2XY(cursorPosition){
 
 function stringLen(str){
   str2 = str.replace(/[\x00-\xFF\uFFFD]/g, '');
-  //bug fix for this: '§¨·×÷°'
-  str3 = str.replace(/[^\xA7\xA8\xB0\xB7\xD7\xF7]/g, '');
+  //bug fix for this: '¤§¨·×÷°'
+  str3 = str.replace(/[^\xA4\xA7\xA8\xB0\xB7\xD7\xF7]/g, '');
   return str.length + str2.length + str3.length;
 }
 

@@ -184,6 +184,7 @@ var FireBBS = {
                           document.location.port ? document.location.port : 23,
                           null);
     var options = document.location.search;
+    var bgColor = /bgcolor\x3D(\w+)/.exec(options);
     var charset = (/charset\x3D(\w+)/.exec(options))
                 ? (/charset\x3D(\w+)/.exec(options))[1]
                 : (prefs.getComplexValue('charset', Ci.nsIPrefLocalizedString).data);
@@ -222,26 +223,28 @@ var FireBBS = {
     //document.title = document.location.host;
     $garbage_span_collector.initCoveredArea();
 
-    if(fontFamily){
-      terminal_display_class.style.fontFamily = decodeURIComponent(fontFamily[1]) + ',monospace';
-    } else {
-      terminal_display_class.style.fontFamily = prefs.getComplexValue('fontfamily', Ci.nsIPrefLocalizedString).data + ',monospace';
-    }
+    bgColor = bgColor
+            ? bgColor[1]
+            : prefs.getCharPref('bgcolor');
+    document.body.style.backgroundColor = bgColor;
+    colorTable[0] = bgColor;
+    colorTable[10] = bgColor;
 
-    if(fontSize){
-      terminal_display_class.style.fontSize = fontSize[1] + 'px';
-      terminal_display_class.style.lineHeight = fontSize[1] + 'px';
-      $character.init(parseInt(fontSize[1]));
-      this.output_area.style.width = $character.fontWidth * $output_area.cols + 'px';
-      this.output_area.style.height = $character.fontHeight * $output_area.rows + 'px';
-    } else {
-      fontSize = prefs.getIntPref('fontsize');
-      terminal_display_class.style.fontSize = fontSize + 'px';
-      terminal_display_class.style.lineHeight = fontSize + 'px';
-      $character.init(fontSize);
-      this.output_area.style.width = $character.fontWidth * $output_area.cols + 'px';
-      this.output_area.style.height = $character.fontHeight * $output_area.rows + 'px';
-    }
+    fontFamily = fontFamily
+               ? decodeURIComponent(fontFamily[1])
+               : prefs.getComplexValue('fontfamily', Ci.nsIPrefLocalizedString).data;
+    terminal_display_class.style.fontFamily = fontFamily + ',monospace';
+
+    fontSize = fontSize
+             ? fontSize[1]
+             : prefs.getIntPref('fontsize');
+    fontSize = parseInt(fontSize, 10);
+    fontSize += fontSize % 2;
+    terminal_display_class.style.fontSize = fontSize + 'px';
+    terminal_display_class.style.lineHeight = fontSize + 'px';
+    $character.init(fontSize);
+    this.output_area.style.width = $character.fontWidth * $output_area.cols + 'px';
+    this.output_area.style.height = $character.fontHeight * $output_area.rows + 'px';
   },
 
   sendData : function(str){

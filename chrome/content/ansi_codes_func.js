@@ -133,10 +133,10 @@ function EL(P){//Erase in Line (EL)
   with(FireBBS.output_area){
     switch(P[0]){
       case 0://Erase to Right (default)
-        FireBBS.HTMLString_cache += generate_black_span($cursor.position, 80 - $cursor.position.n + 1);
+        FireBBS.HTMLString_cache += generate_bg_span($cursor.position, 80 - $cursor.position.n + 1);
         break;
       case 1://Erase to Left
-        FireBBS.HTMLString_cache += generate_black_span({m: 1, n: 1}, $cursor.position.n);
+        FireBBS.HTMLString_cache += generate_bg_span({m: 1, n: 1}, $cursor.position.n);
         break;
       case 2://Erase All
         for(var i = childNodes.length - 1; i >= 0 ; i--){

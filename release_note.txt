@@ -4,6 +4,9 @@ the first digit is reserved for my real contribution to the extension
 
 == yyyy-mm-dd *.* ==
 
+== 2009-10-21 0.38 ==
+- add pref to control background color in about:config
+
 == 2009-04-10 0.37 ==
 - improve color copy code
 
