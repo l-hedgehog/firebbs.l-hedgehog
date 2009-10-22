@@ -520,9 +520,11 @@ function NEL(){//Move to next line(NEL )
 //BEL
 function BEL(){
   nsIAlertsService.showAlertNotification("chrome://firebbs/skin/firebbs.png", 
-                                      locale("alerts"), locale("newMessage"));
+                                         locale("alerts"), locale("newMessage"));
   if(prefs.getCharPref('sound')) {
     nsISound.play(nsIIOService.newURI(prefs.getCharPref('sound'), null, null));  
+  } else if(nsISound.playEventSound) {
+    nsISound.playEventSound(EVENT_NEW_MAIL_RECEIVED);
   } else {
     nsISound.playSystemSound("_moz_mailbeep");
   }

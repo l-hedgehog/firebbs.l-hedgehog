@@ -82,7 +82,9 @@ var FireBBS = {
   inputStream : null,
   HTMLString_cache : '',
   ASCII_cache: '',
-  previous_node: '',
+  previous_node: null,
+  last_action: null,
+  idle_interval: null,
 
   dataListener : {
       data : {},
@@ -97,6 +99,7 @@ var FireBBS = {
         nsIConverterInputStream.close();
         nsIConverterOutputStream.close();
         switchInputCapturer();
+        clearInterval(FireBBS.idle_interval);
       },
 
       onDataAvailable: function(request, context, inputStream, offset, count){
@@ -219,6 +222,8 @@ var FireBBS = {
     this.output_area = document.getElementById('output_area');
     this.float_box = document.getElementById('float_box');
     this.previous_node = [0, false, false, 10, 7];
+    this.last_action = new Date();
+    this.idle_interval = setInterval(antiIdle, 300000);
     
     //document.title = document.location.host;
     $garbage_span_collector.initCoveredArea();
@@ -227,6 +232,12 @@ var FireBBS = {
             ? bgColor[1]
             : prefs.getCharPref('bgcolor');
     document.body.style.backgroundColor = bgColor;
+    for(var i = 0; i < colorTable.length; i++){
+      if(bgColor == colorTable[i]){
+        colorTable[i] = "black";
+        break;
+      }
+    }
     colorTable[0] = bgColor;
     colorTable[10] = bgColor;
 
@@ -250,6 +261,7 @@ var FireBBS = {
   sendData : function(str){
     nsIConverterOutputStream.writeString(str);
     FireBBS.cursor.style.color = 'red';
+    FireBBS.last_action = new Date();
 
   },
 

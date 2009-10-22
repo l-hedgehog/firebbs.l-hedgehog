@@ -118,3 +118,9 @@ function stringLen(str){
 function locale(strName){
   return strBundle.GetStringFromName(strName);
 }
+
+function antiIdle(){
+  if((new Date()) - FireBBS.last_action > 270000){
+    FireBBS.sendData('\x1B[A\x1B[B');
+  }
+}

@@ -1,8 +1,13 @@
 original version: 0.3.0 by Milx
-modified by l-hedgehog as FireBBS.l-hedgehog 0.3.0+*.*
+modified by l-hedgehog as FireBBS.l-hedgehog *.*
 the first digit is reserved for my real contribution to the extension
 
 == yyyy-mm-dd *.* ==
+
+== 2009-10-22 0.39 ==
+- anti idle
+- bug fix, introduced by bgcolor
+- prepare for firefox 3.6
 
 == 2009-10-21 0.38 ==
 - add pref to control background color in about:config

@@ -340,9 +340,6 @@ function node2ASCII(node){
       break;
     }
   }
-  if(colorTable[color[1]] == colorTable[10]){
-    color[1] = 10;
-  }
   var lineStart = (/m(\d+)n(\d+)n(\d+)/.exec(node.id)[2] == "1");
   if(lineStart){
     FireBBS.previous_node = [0, false, false, 10, 7];
