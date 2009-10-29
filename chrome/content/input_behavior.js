@@ -49,16 +49,41 @@ function key_map(e){
             nsITransferable.setTransferData("text/unicode", nsISupportsString, copyText.length * 2);
             nsIClipboard.setData(nsITransferable, null, nsIClipboard.kGlobalClipboard);
           }
-          //^V but cannot empty the clipboard ...
-          else if(e.charCode == 0x76&&false){
-            nsIClipboard.emptyClipboard(nsIClipboard.kGlobalClipboard);
-          }
           else {
             FireBBS.sendData(String.fromCharCode(e.charCode - 0x60));
           }
         }
         else if(0x5B <= e.charCode && e.charCode <= 0x5F){
           FireBBS.sendData(String.fromCharCode(e.charCode - 0x40));
+        }
+        //Shift + ^C
+        else if(e.charCode == 0x43 && e.shiftKey){
+          var ASCII = [FireBBS.output_area.firstChild, FireBBS.output_area.lastChild];
+          if(!window.getSelection().isCollapsed){
+            ASCII = [window.getSelection().anchorNode.parentNode, window.getSelection().focusNode.parentNode];
+          }
+          FireBBS.ASCII_cache = "";
+          for(var i = ASCII[0]; i != ASCII[1].nextSibling; i = i.nextSibling){
+            FireBBS.ASCII_cache += node2ASCII(i);
+          }
+          FireBBS.ASCII_cache += "\x1B\x1B[m";
+          nsISupportsString.data = FireBBS.ASCII_cache;
+          nsITransferable.setTransferData("text/unicode", nsISupportsString, FireBBS.ASCII_cache.length * 2);
+          nsIClipboard.setData(nsITransferable, null, nsIClipboard.kGlobalClipboard);
+        }
+        //Shift + ^V
+        else if(e.charCode == 0x56 && e.shiftKey &&
+                nsIClipboard.hasDataMatchingFlavors(["text/unicode"], 1, nsIClipboard.kGlobalClipboard)){
+          nsIClipboard.getData(nsITransferable, nsIClipboard.kGlobalClipboard);
+          var pasteStr = new Object();
+          var pasteStrLength = new Object();
+          nsITransferable.getTransferData("text/unicode", pasteStr, pasteStrLength);
+          if(pasteStr){
+            var pasteText = pasteStr.value.QueryInterface(Ci.nsISupportsString).
+                            data.substring(0, pasteStrLength.value / 2);
+            FireBBS.sendData(pasteText);
+          }
+          nsIClipboard.emptyClipboard(nsIClipboard.kGlobalClipboard);
         }
       }
       else{}
@@ -250,32 +275,6 @@ function key_down(e){
                  "urn:mozilla:item:firebbs.l-hedgehog@hector.zhao",
                  extensionManager.datasource);
     }
-    else if(e.keyCode==113){
-      var ASCII = [FireBBS.output_area.firstChild, FireBBS.output_area.lastChild];
-      if(!window.getSelection().isCollapsed){
-        ASCII = [window.getSelection().anchorNode.parentNode, window.getSelection().focusNode.parentNode];
-      }
-      FireBBS.ASCII_cache = "";
-      for(var i = ASCII[0]; i != ASCII[1].nextSibling; i = i.nextSibling){
-        FireBBS.ASCII_cache += node2ASCII(i);
-      }
-      FireBBS.ASCII_cache += "\x1B\x1B[m";
-      nsISupportsString.data = FireBBS.ASCII_cache;
-      nsITransferable.setTransferData("text/unicode", nsISupportsString, FireBBS.ASCII_cache.length * 2);
-      nsIClipboard.setData(nsITransferable, null, nsIClipboard.kGlobalClipboard);
-    }
-    else if(e.keyCode==114&&nsIClipboard.hasDataMatchingFlavors(["text/unicode"], 1, nsIClipboard.kGlobalClipboard)){
-      nsIClipboard.getData(nsITransferable, nsIClipboard.kGlobalClipboard);
-      var pasteStr = new Object();
-      var pasteStrLength = new Object();
-      nsITransferable.getTransferData("text/unicode", pasteStr, pasteStrLength);
-      if(pasteStr){
-        var pasteText = pasteStr.value.QueryInterface(Ci.nsISupportsString).
-                        data.substring(0, pasteStrLength.value / 2);
-        FireBBS.sendData(pasteText);
-      }
-      nsIClipboard.emptyClipboard(nsIClipboard.kGlobalClipboard);
-    }
   }
 }
 
@@ -306,20 +305,6 @@ function prePicResize(img){
   if(scale>1){
     img.style.width = (imgWidth / scale) + "px";
     img.style.height = (imgHeight / scale) + "px";
-  }
-}
-
-function toHex(dec) {
-  var hex = "0123456789ABCDEF";
-  return hex[Math.floor(dec / 16)] + "" + hex[dec % 16];
-}
-
-function hexColor(color) {
-  if(color.search("rgb")==0){
-    var rgb = /(\d+),\s(\d+),\s(\d+)/.exec(color);
-    return "#" + toHex(rgb[1]) + "" + toHex(rgb[2]) + "" + toHex(rgb[3]);
-  } else {
-    return color;
   }
 }
 

@@ -4,6 +4,12 @@ the first digit is reserved for my real contribution to the extension
 
 == yyyy-mm-dd *.* ==
 
+== 2009-10-29 0.40 ==
+- ascii copy - shift + ctrl + c
+- ascii & normal paste - shift + ctrl + v
+- F2 & F3 no longer supported
+- add README.md for github
+
 == 2009-10-22 0.39 ==
 - anti idle
 - bug fix, introduced by bgcolor

@@ -231,6 +231,7 @@ var FireBBS = {
     bgColor = bgColor
             ? bgColor[1]
             : prefs.getCharPref('bgcolor');
+    bgColor = hexColor(bgColor);
     document.body.style.backgroundColor = bgColor;
     for(var i = 0; i < colorTable.length; i++){
       if(bgColor == colorTable[i]){

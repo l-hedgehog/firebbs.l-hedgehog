@@ -119,6 +119,20 @@ function locale(strName){
   return strBundle.GetStringFromName(strName);
 }
 
+function toHex(dec) {
+  var hex = "0123456789ABCDEF";
+  return hex[Math.floor(dec / 16)] + "" + hex[dec % 16];
+}
+
+function hexColor(color) {
+  if(color.search("rgb")==0){
+    var rgb = /(\d+),\s(\d+),\s(\d+)/.exec(color);
+    return "#" + toHex(rgb[1]) + "" + toHex(rgb[2]) + "" + toHex(rgb[3]);
+  } else {
+    return color;
+  }
+}
+
 function antiIdle(){
   if((new Date()) - FireBBS.last_action > 270000){
     FireBBS.sendData('\x1B[A\x1B[B');
