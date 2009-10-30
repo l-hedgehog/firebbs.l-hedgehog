@@ -16,8 +16,8 @@ Tips
     *   Copy as plain text: select the text you want and "^C";
     *   Copy as ASCII code: use "Shift + ^C" instead of "^C";
     *   Paste for both: use "Shift + ^V", __NOT__ "^V".
-*   Settings
-    1.  Go to "about:blank";
+*   Preferences
+    1.  Go to "about:config";
     2.  In the filter, search for "extensions.firebbs.";
     3.  There will be:
         *   "bgcolor", background color, web standard color names preferred,
