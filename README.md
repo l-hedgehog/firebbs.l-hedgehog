@@ -21,7 +21,7 @@ Tips
     2.  In the filter, search for "extensions.firebbs.";
     3.  There will be:
         *   "bgcolor", background color, web standard color names preferred,
-            "#080808"<!-- or "rgb(8, 8, 8)"--> is ok but only in "about:config";
+            "#080808" is ok but only in "about:config";
         *   "charset", encodings, e.g. "big5";
         *   "fontfamily";
         *   "fontsize";
