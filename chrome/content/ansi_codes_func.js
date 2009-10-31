@@ -524,7 +524,7 @@ function BEL(){
   if(prefs.getCharPref('sound')) {
     nsISound.play(nsIIOService.newURI(prefs.getCharPref('sound'), null, null));  
   } else if(nsISound.playEventSound) {
-    nsISound.playEventSound(EVENT_NEW_MAIL_RECEIVED);
+    nsISound.playEventSound(nsISound.EVENT_NEW_MAIL_RECEIVED);
   } else {
     nsISound.playSystemSound("_moz_mailbeep");
   }

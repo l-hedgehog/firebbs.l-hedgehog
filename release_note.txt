@@ -4,6 +4,9 @@ the first digit is reserved for my real contribution to the extension
 
 == yyyy-mm-dd *.* ==
 
+== 2009-10-31 0.41 ==
+- bug fix for new event sound in fx 3.6
+
 == 2009-10-29 0.40 ==
 - ascii copy - shift + ctrl + c
 - ascii & normal paste - shift + ctrl + v
