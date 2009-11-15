@@ -65,7 +65,8 @@ Protocol.prototype = {
   scheme: kSCHEME,
   defaultPort: 23,
   protocolFlags: nsIProtocolHandler.URI_NORELATIVE |
-                 nsIProtocolHandler.URI_NOAUTH,
+                 nsIProtocolHandler.URI_NOAUTH |
+                 nsIProtocolHandler.URI_LOADABLE_BY_ANYONE,
   
   allowPort: function(port, scheme) {
     return false;
