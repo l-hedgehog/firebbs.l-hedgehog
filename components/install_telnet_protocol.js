@@ -35,6 +35,11 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+/*
+ * Modification by 2009 Hector Zhao
+ * Switch to XPCOMUtils, code from pythonext <http://pyxpcomext.mozdev.org>
+ */
+
 // Test protocol related
 const kSCHEME              = "telnet";
 const kPROTOCOL_NAME       = "Telnet Protocol";
@@ -43,7 +48,6 @@ const kPROTOCOL_CID        = Components.ID("5FAF83FD-708D-45c0-988B-C7404FB25376
 
 // Mozilla defined
 const kSTANDARDURL_CONTRACTID = "@mozilla.org/network/standard-url;1";
-const kSIMPLEURI_CONTRACTID   = "@mozilla.org/network/simple-uri;1";
 const kIOSERVICE_CONTRACTID   = "@mozilla.org/network/io-service;1";
 
 const nsISupports        = Components.interfaces.nsISupports;
@@ -52,15 +56,16 @@ const nsIProtocolHandler = Components.interfaces.nsIProtocolHandler;
 const nsIStandardURL     = Components.interfaces.nsIStandardURL;
 const nsIURI             = Components.interfaces.nsIURI;
 
-function Protocol() {}
+Components.utils.import("resource://gre/modules/XPCOMUtils.jsm");
 
-Protocol.prototype = {
-  QueryInterface: function(iid) {
-    if (!iid.equals(nsIProtocolHandler) &&
-        !iid.equals(nsISupports))
-      throw Components.results.NS_ERROR_NO_INTERFACE;
-    return this;
-  },
+function TelnetProtocol() {}
+
+TelnetProtocol.prototype = {
+  classDescription: kPROTOCOL_NAME,
+  classID:          kPROTOCOL_CID,
+  contractID:       kPROTOCOL_CONTRACTID,
+  QueryInterface:   XPCOMUtils.generateQI([nsIProtocolHandler,
+                                           nsISupports]),
 
   scheme: kSCHEME,
   defaultPort: 23,
@@ -73,14 +78,10 @@ Protocol.prototype = {
   },
 
   newURI: function(spec, charset, baseURI) {
-    /*
-    var uri = Components.classes[kSIMPLEURI_CONTRACTID].createInstance(nsIURI);
-    uri.spec = spec;
-    return uri;
-    */
     var cls = Components.classes[kSTANDARDURL_CONTRACTID];
     var url = cls.createInstance(nsIStandardURL);
-    url.init(nsIStandardURL.URLTYPE_STANDARD, 23, spec, charset, baseURI);
+    url.init(nsIStandardURL.URLTYPE_STANDARD,
+             this.defaultPort, spec, charset, baseURI);
 
     return url.QueryInterface(nsIURI);
   },
@@ -100,59 +101,8 @@ Protocol.prototype = {
   },
 }
 
-var ProtocolFactory = new Object();
-
-ProtocolFactory.createInstance = function (outer, iid)
-{
-  if (outer != null)
-    throw Components.results.NS_ERROR_NO_AGGREGATION;
-
-  if (!iid.equals(nsIProtocolHandler) &&
-      !iid.equals(nsISupports))
-    throw Components.results.NS_ERROR_NO_INTERFACE;
-
-  return new Protocol();
+// XPCOM registration.
+var components = [TelnetProtocol];
+function NSGetModule(compMgr, fileSpec) {
+    return XPCOMUtils.generateModule(components);
 }
-
-
-/**
- * JS XPCOM component registration goop:
- *
- * We set ourselves up to observe the xpcom-startup category.  This provides
- * us with a starting point.
- */
-
-var ThisModule = new Object();
-
-ThisModule.registerSelf = function (compMgr, fileSpec, location, type)
-{
-  compMgr = compMgr.QueryInterface(Components.interfaces.nsIComponentRegistrar);
-  compMgr.registerFactoryLocation(kPROTOCOL_CID,
-                                  kPROTOCOL_NAME,
-                                  kPROTOCOL_CONTRACTID,
-                                  fileSpec, 
-                                  location, 
-                                  type);
-}
-
-ThisModule.getClassObject = function (compMgr, cid, iid)
-{
-  if (!cid.equals(kPROTOCOL_CID))
-    throw Components.results.NS_ERROR_NO_INTERFACE;
-
-  if (!iid.equals(Components.interfaces.nsIFactory))
-    throw Components.results.NS_ERROR_NOT_IMPLEMENTED;
-    
-  return ProtocolFactory;
-}
-
-ThisModule.canUnload = function (compMgr)
-{
-  return true;
-}
-
-function NSGetModule(compMgr, fileSpec)
-{
-  return ThisModule;
-}
-
