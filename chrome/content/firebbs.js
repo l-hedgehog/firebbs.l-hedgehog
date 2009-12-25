@@ -77,6 +77,7 @@ var nsIIOService =
 var FireBBS = {
   cursor : null,
   output_area : null,
+  input_area : null,
   float_box : null,
   outputStream : null,
   inputStream : null,
@@ -220,6 +221,7 @@ var FireBBS = {
 
     this.cursor = document.getElementById('cursor');
     this.output_area = document.getElementById('output_area');
+    this.input_area = document.getElementById('input_area');
     this.float_box = document.getElementById('float_box');
     this.previous_node = [0, false, false, 10, 7];
     this.last_action = new Date();

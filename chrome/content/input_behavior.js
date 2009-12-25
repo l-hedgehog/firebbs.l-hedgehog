@@ -21,7 +21,6 @@
  * ***** END COPYRIGHT AND LICENSE BLOCK ***** */
 
 var isPreventDefault = false;//for events of keyboard & mouse
-var IME = [];
 
 function key_map(e){
 //http://en.wikipedia.org/wiki/ASCII
@@ -45,6 +44,7 @@ function key_map(e){
           //^C
           if(e.charCode == 0x63&&!window.getSelection().isCollapsed){
             var copyText = window.getSelection().toString();
+            FireBBS.input_area.focus();
             nsISupportsString.data = copyText;
             nsITransferable.setTransferData("text/unicode", nsISupportsString, copyText.length * 2);
             nsIClipboard.setData(nsITransferable, null, nsIClipboard.kGlobalClipboard);
@@ -62,6 +62,7 @@ function key_map(e){
           if(!window.getSelection().isCollapsed){
             ASCII = [window.getSelection().anchorNode.parentNode, window.getSelection().focusNode.parentNode];
           }
+          FireBBS.input_area.focus();
           FireBBS.ASCII_cache = "";
           for(var i = ASCII[0]; i != ASCII[1].nextSibling; i = i.nextSibling){
             FireBBS.ASCII_cache += node2ASCII(i);
@@ -229,6 +230,9 @@ function mouse_behavior(e){
         break;
       default:
     }
+    if(window.getSelection().isCollapsed){
+      FireBBS.input_area.focus();
+    }
   }
 }
 
@@ -259,14 +263,7 @@ function switchInputCapturer(){
   isPreventDefault = !isPreventDefault;
 }
 
-function key_down(e){
-  if(isPreventDefault){
-    e.preventDefault();
-
-    if(e.ctrlKey){
-      window.addEventListener('keyup', key_up, false);
-    }
-    else if(e.keyCode==112){
+/*    if(e.keyCode==112){
       var extensionManager =
         Cc["@mozilla.org/extensions/manager;1"].
         getService(Ci.nsIExtensionManager);
@@ -274,28 +271,18 @@ function key_down(e){
                  "chrome,centerscreen,modal",
                  "urn:mozilla:item:firebbs.l-hedgehog@hector.zhao",
                  extensionManager.datasource);
-    }
-  }
+    }*/
+
+function composition_start(){
+  var pos = convertMN2XY($cursor.position);
+  FireBBS.input_area.style.left = pos[0] + 'px';
+  FireBBS.input_area.style.top = pos[1] + 'px';
 }
 
-function key_up(e){
-  if(isPreventDefault){
-    e.preventDefault();
-
-    if(IME.length==0){
-      IME.push(e.keyCode);
-      return;
-    }
-    if(IME.pop()==(49-e.keyCode)){//Ctrl+Space
-      if(e.keyCode==17||e.keyCode==32){
-        var str = window.prompt(locale("IMEPrompt"));
-        if(str != ''){
-          FireBBS.sendData(str);
-        }
-      }
-    }
-    window.removeEventListener('keyup', key_up, false);
-  }
+function composition_end(){
+  FireBBS.input_area.style.top = '-100px';
+  FireBBS.sendData(FireBBS.input_area.value);
+  FireBBS.input_area.value = '';
 }
 
 function prePicResize(img){

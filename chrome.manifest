@@ -1,5 +1,6 @@
 content  firebbs  chrome/content/
 
 locale  firebbs  zh-CN  chrome/locale/zh-CN/
+locale  firebbs  zh-TW  chrome/locale/zh-TW/
 
 skin  firebbs  default  chrome/skin/default/

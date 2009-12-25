@@ -38,6 +38,7 @@
   <body>
     <div id="main">
       <div id="output_area"></div>
+      <textarea id="input_area"></textarea>
       <div id="float_box"></div>
       <div id="cursor" class="terminal_display">_</div>      
     </div>
@@ -46,12 +47,14 @@
 FireBBS.init();
 
 window.addEventListener('keypress', key_map, false);
-window.addEventListener('keydown', key_down, false);
 document.addEventListener('DOMMouseScroll', mouse_behavior, false);
 document.addEventListener('click', mouse_behavior, false);
 document.addEventListener('contextmenu', mouse_behavior, false);
 document.addEventListener('mouseover', mouse_behavior, false);
+document.addEventListener('compositionstart', composition_start, false);
+document.addEventListener('compositionend', composition_end, false);
 
+FireBBS.input_area.focus();
 switchInputCapturer();
     </script>
   </body>
