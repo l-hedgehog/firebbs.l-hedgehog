@@ -4,6 +4,11 @@ the first digit is reserved for my real contribution to the extension
 
 == yyyy-mm-dd *.* ==
 
+== 2009-12-25 0.42 ==
+- try to improve IME input
+- idea from pcmanfx
+- and locale from on-the-wave
+
 == 2009-10-31 0.41 ==
 - bug fix for new event sound in fx 3.6
 
