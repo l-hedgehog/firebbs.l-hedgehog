@@ -1,7 +1,7 @@
 /* ***** BEGIN COPYRIGHT AND LICENSE BLOCK *****
  *
  * Copyright © 2007 Milx
- * Copyright © 2007, 2008 Hector Zhao
+ * Copyright © 2007, 2008, 2009 Hector Zhao
  *
  * This file is part of FireBBS.l-hedgehog.
  *
@@ -23,7 +23,7 @@
 body{
   background-color: black;
   color: silver;
-  overflow: hidden ;
+  overflow: hidden;
 }
 
 a:link {
@@ -77,8 +77,10 @@ img {
 
 #input_area {
   height: 15px;
+  opacity: 0;
   position: absolute;
   top: -100px;
+  width: 2px;
 }
 
 #float_box {
