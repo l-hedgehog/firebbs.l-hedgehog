@@ -74,6 +74,10 @@ var nsIIOService =
       Cc["@mozilla.org/network/io-service;1"].
         getService(Ci.nsIIOService);
 
+var nsIExtensionManager =
+      Cc["@mozilla.org/extensions/manager;1"].
+        getService(Ci.nsIExtensionManager);
+
 var FireBBS = {
   cursor : null,
   output_area : null,

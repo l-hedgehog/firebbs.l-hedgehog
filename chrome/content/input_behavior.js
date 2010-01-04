@@ -134,7 +134,11 @@ function key_map(e){
           FireBBS.sendData('\x1B[3~');
           //FireBBS.sendData('\x7F');
           break;
-        case 112:
+        case 112://Help ? About !
+          openDialog("chrome://mozapps/content/extensions/about.xul", "",
+                     "chrome,centerscreen,modal",
+                     "urn:mozilla:item:firebbs.l-hedgehog@hector.zhao",
+                     nsIExtensionManager.datasource);
           break;
         default:
       }
@@ -262,16 +266,6 @@ function parsePTT(target){
 function switchInputCapturer(){
   isPreventDefault = !isPreventDefault;
 }
-
-/*    if(e.keyCode==112){
-      var extensionManager =
-        Cc["@mozilla.org/extensions/manager;1"].
-        getService(Ci.nsIExtensionManager);
-      openDialog("chrome://mozapps/content/extensions/about.xul", "",
-                 "chrome,centerscreen,modal",
-                 "urn:mozilla:item:firebbs.l-hedgehog@hector.zhao",
-                 extensionManager.datasource);
-    }*/
 
 function composition_start(){
   var pos = convertMN2XY($cursor.position);
