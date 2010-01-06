@@ -1,7 +1,7 @@
 /* ***** BEGIN COPYRIGHT AND LICENSE BLOCK *****
  *
  * Copyright © 2007 Milx
- * Copyright © 2009 Hector Zhao
+ * Copyright © 2009, 2010 Hector Zhao
  *
  * This file is part of FireBBS.l-hedgehog.
  *
@@ -43,9 +43,9 @@ colorTable[17] = 'silver';
 colorTable[19] = '#F9F9F9';
 //20~29 bright ones
 colorTable[20] = 'gray';
-colorTable[21] = 'red'
+colorTable[21] = 'red';
 colorTable[22] = 'lime';
-colorTable[23] = 'yellow' ;
+colorTable[23] = 'yellow';
 colorTable[24] = 'blue';
 colorTable[25] = 'fuchsia';
 colorTable[26] = 'aqua';
@@ -313,5 +313,30 @@ var $garbage_span_collector = {
       }
     }
     this.initCoveredArea();
+  },
+};
+
+var $anti_idler = {
+  interval : null,
+  latest : null,
+  string : '\x1B[A\x1B[B',
+
+  antiIdle: function(ai){
+    if((new Date()) - ai.latest > 270000){
+      FireBBS.sendData(ai.string);
+    }
+  },
+
+  init: function(){
+    this.latest = new Date();
+    this.interval = setInterval(this.antiIdle, 300000, this);
+  },
+
+  stop: function(){
+    clearInterval(this.interval);
+  },
+
+  update: function(){
+    this.latest = new Date();
   },
 };

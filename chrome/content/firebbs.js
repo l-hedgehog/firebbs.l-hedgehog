@@ -1,7 +1,7 @@
 /* ***** BEGIN COPYRIGHT AND LICENSE BLOCK *****
  *
  * Copyright © 2007 Milx
- * Copyright © 2007, 2008, 2009 Hector Zhao
+ * Copyright © 2007, 2008, 2009, 2010 Hector Zhao
  *
  * This file is part of FireBBS.l-hedgehog.
  *
@@ -88,8 +88,6 @@ var FireBBS = {
   HTMLString_cache : '',
   ASCII_cache: '',
   previous_node: null,
-  last_action: null,
-  idle_interval: null,
 
   dataListener : {
       data : {},
@@ -104,7 +102,7 @@ var FireBBS = {
         nsIConverterInputStream.close();
         nsIConverterOutputStream.close();
         switchInputCapturer();
-        clearInterval(FireBBS.idle_interval);
+        $anti_idler.stop();
       },
 
       onDataAvailable: function(request, context, inputStream, offset, count){
@@ -205,18 +203,13 @@ var FireBBS = {
         terminal_display_class = document.styleSheets[0].cssRules[i];
       }
     }
-      
-      
-      
-      
+
     const REPLACEMENT_CHARACTER = Ci.nsIConverterInputStream.DEFAULT_REPLACEMENT_CHARACTER;
 
     this.outputStream = transport.openOutputStream(0,0,0);
     this.inputStream = transport.openInputStream(0,0,0);
     nsIConverterInputStream.init(this.inputStream, charset, 0xFFFF, REPLACEMENT_CHARACTER);
     nsIConverterOutputStream.init(this.outputStream, charset, 0xFFFF, REPLACEMENT_CHARACTER)
-
-
 
     nsIScriptableInputStream.init(this.inputStream);
 
@@ -228,8 +221,7 @@ var FireBBS = {
     this.input_area = document.getElementById('input_area');
     this.float_box = document.getElementById('float_box');
     this.previous_node = [0, false, false, 10, 7];
-    this.last_action = new Date();
-    this.idle_interval = setInterval(antiIdle, 300000);
+    $anti_idler.init();
     
     //document.title = document.location.host;
     $garbage_span_collector.initCoveredArea();
@@ -268,8 +260,7 @@ var FireBBS = {
   sendData : function(str){
     nsIConverterOutputStream.writeString(str);
     FireBBS.cursor.style.color = 'red';
-    FireBBS.last_action = new Date();
-
+    $anti_idler.update();
   },
 
   relocateCursor : function(){

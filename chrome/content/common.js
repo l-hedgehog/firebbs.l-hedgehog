@@ -1,7 +1,7 @@
 /* ***** BEGIN COPYRIGHT AND LICENSE BLOCK *****
  *
  * Copyright © 2007 Milx
- * Copyright © 2007, 2008, 2009 Hector Zhao
+ * Copyright © 2007, 2008, 2009, 2010 Hector Zhao
  *
  * This file is part of FireBBS.l-hedgehog.
  *
@@ -130,11 +130,5 @@ function hexColor(color) {
     return "#" + toHex(rgb[1]) + "" + toHex(rgb[2]) + "" + toHex(rgb[3]);
   } else {
     return color;
-  }
-}
-
-function antiIdle(){
-  if((new Date()) - FireBBS.last_action > 270000){
-    FireBBS.sendData('\x1B[A\x1B[B');
   }
 }
