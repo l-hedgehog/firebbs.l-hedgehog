@@ -319,7 +319,8 @@ var $garbage_span_collector = {
 var $anti_idler = {
   interval : null,
   latest : null,
-  string : '\x1B[A\x1B[B',
+  //^@
+  string : String.fromCharCode(0x00),
 
   antiIdle: function(ai){
     if((new Date()) - ai.latest > 270000){
