@@ -1,7 +1,7 @@
 /* ***** BEGIN COPYRIGHT AND LICENSE BLOCK *****
  *
  * Copyright © 2007 Milx
- * Copyright © 2007, 2008, 2009 Hector Zhao
+ * Copyright © 2007, 2008, 2009, 2010 Hector Zhao
  *
  * This file is part of FireBBS.l-hedgehog.
  *
@@ -47,19 +47,6 @@ a:active {
   text-decoration: none;
 }
 
-iframe {
-  background: white;
-  border: 0px;
-  height: 35px;
-  padding: 0px;
-  width: 245px;
-}
-
-img {
-  background: silver;
-  padding: 5px 7px;
-}
-
 .terminal_display {
   font-family : monospace;
   font-size: 24px;
@@ -84,7 +71,10 @@ img {
 }
 
 #float_box {
+  background: white;
+  color: black;
   display: none;
+  padding: 5px 7px;
   position: absolute;
 }
 

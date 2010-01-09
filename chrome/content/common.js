@@ -28,10 +28,10 @@ function prePicRel(match){
   }
 }
 
-//function ip2LocRel(match){
-//  var ipStart = match.search(/\d/);
-//  return match.substr(0, ipStart) + '<a rel="ip2loc">' + match.substr(ipStart, (match.length - ipStart - 1)) + '</a>]';
-//}
+function ip2LocRel(match){
+  var ipStart = match.search(/\d/);
+  return match.substr(0, ipStart) + '<a rel="ip2loc">' + match.substr(ipStart, (match.length - ipStart - 1)) + '</a>]';
+}
 
 //trick to avoid </img> in link
 function addLink(match){
@@ -60,8 +60,8 @@ function generate_span(str){
   var urlTemplate=/(https?:\/\/)([\w-.]+)(:[0-9]+)?(\/[\/\w;,?:@&=+$.!~*'#%-]*)?/g;  //()
   str = str.replace(urlTemplate, addLink);
   //add ip2location link
-  //var fromIpTemplate=/\[FROM:\s\d+\.\d+\.\d+\.[*\d]+]/;
-  //str = str.replace(fromIpTemplate, ip2LocRel);
+  var fromIpTemplate=/\[FROM:\s\d+\.\d+\.\d+\.[*\d]+]/;
+  str = str.replace(fromIpTemplate, ip2LocRel);
 
   var s = '<span';
   s += ' id="m' + $cursor.position.m + 'n' + $cursor.position.n + 'n' + ($cursor.position.n + lengthOfText) + '"';
@@ -109,9 +109,9 @@ function convertMN2XY(cursorPosition){
 }
 
 function stringLen(str){
-  str2 = str.replace(/[\x00-\xFF\uFFFD]/g, '');
+  var str2 = str.replace(/[\x00-\xFF\uFFFD]/g, '');
   //bug fix for this: '¤§¨·×÷°'
-  str3 = str.replace(/[^\xA4\xA7\xA8\xB0\xB7\xD7\xF7]/g, '');
+  var str3 = str.replace(/[^\xA4\xA7\xA8\xB0\xB7\xD7\xF7]/g, '');
   return str.length + str2.length + str3.length;
 }
 
