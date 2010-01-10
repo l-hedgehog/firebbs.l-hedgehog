@@ -29,7 +29,17 @@ Tips
             leave it blank to use system default;
     4.  Also, [telnet://ptt.cc/?charset=big5&fontfamily=MingLiU][3] will work,
         with the exception of "sound".
+*   IPSearcher
+    *   Windows only;
+    *   Where is ipwry.dat?
+        1.  Download _QQWry.dat_ from [cz88][4];
+        2.  Download _ipwry\_0\_2\_2c.zip_ from [cosoft][5];
+        3.  Unzip it and put _QQWry.dat_ in the same directory;
+        4.  Run _IPwry.exe_;
+        5.  Move _ipwry.dat_ to the same directory as firefox.exe;
 
   [1]: http://firebbs.googlepages.com
   [2]: /l-hedgehog/firebbs.l-hedgehog/blob/master/release_note.txt
   [3]: telnet://ptt.cc/?charset=big5&fontfamily=MingLiU
+  [4]: http://www.cz88.net/
+  [5]: http://cosoft.org.cn/project/showfiles.php?group_id=5643

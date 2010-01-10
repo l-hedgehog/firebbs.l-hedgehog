@@ -13,7 +13,7 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// 中文(中华人民共和国) resources
+// Chinese(People's Republic of China) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
 #ifdef _WIN32
@@ -69,14 +69,14 @@ BEGIN
     BEGIN
         BLOCK "080404b0"
         BEGIN
-            VALUE "Comments", "用于从ipwry.dat文件中检索IP数据"
-            VALUE "FileDescription", "动态链接库"
+            VALUE "Comments", "Find ip data from ipwry.dat"
+            VALUE "FileDescription", "dll"
             VALUE "FileVersion", "0.2.2c"
             VALUE "InternalName", "ipsearcher"
-            VALUE "LegalCopyright", "cnss 版权所有 (C) 2004-2005"
+            VALUE "LegalCopyright", "(C) 2004-2005 cnss; (C) 2009 Hector Zhao"
             VALUE "OriginalFilename", "ipsearch.dll"
-            VALUE "ProductName", "ipwry.dat检索器"
-            VALUE "ProductVersion", "PreView 0.2.2c"
+            VALUE "ProductName", "ipwry.dat searcher"
+            VALUE "ProductVersion", "0.2.2c.l-hedgehog"
         END
     END
     BLOCK "VarFileInfo"
@@ -85,7 +85,7 @@ BEGIN
     END
 END
 
-#endif    // 中文(中华人民共和国) resources
+#endif    // Chinese(People's Republic of China) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

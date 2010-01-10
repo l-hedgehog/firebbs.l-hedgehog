@@ -61,7 +61,8 @@ function generate_span(str){
   str = str.replace(urlTemplate, addLink);
   //add ip2location link
   var fromIpTemplate=/\[FROM:\s\d+\.\d+\.\d+\.[*\d]+]/;
-  str = str.replace(fromIpTemplate, ip2LocRel);
+  if(hzIPSearcher)
+    str = str.replace(fromIpTemplate, ip2LocRel);
 
   var s = '<span';
   s += ' id="m' + $cursor.position.m + 'n' + $cursor.position.n + 'n' + ($cursor.position.n + lengthOfText) + '"';

@@ -4,6 +4,11 @@ the first digit is reserved for my real contribution to the extension
 
 == yyyy-mm-dd *.* ==
 
+== 2010-01-?? 0.43 ==
+- set minVersion to toolkit 1.9.2
+- wait for fx 3.6 release
+- ip2location using js-ctypes and cnss's ipwry (windows only ??)
+
 == 2009-12-25 0.42 ==
 - try to improve IME input
 - idea from pcmanfx

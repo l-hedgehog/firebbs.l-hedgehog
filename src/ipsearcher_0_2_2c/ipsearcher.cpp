@@ -9,10 +9,13 @@
 #include "stdafx.h"
 
 #include "windows.h"
+extern "C"
+{
 #include "LzmaDecode.h"
-
+}
 
 extern "C" __declspec(dllexport) void*        __cdecl _GetAddress(const char *IPstr);
+extern "C" __declspec(dllexport) char*        __cdecl GetAddress(const char *IPstr);
 extern "C" __declspec(dllexport) void*        __cdecl GetAddressInt(const unsigned int ip);
 extern "C" __declspec(dllexport) unsigned int __cdecl IPCount();
 extern "C" __declspec(dllexport) char*        __cdecl DateTime();
@@ -114,7 +117,7 @@ s_index *layer1_ptr, *layer2_ptr;
 unsigned int layer1_num, layer2_num;
 
 char *country, *local;  //查找临时用
-char c_text[1024], l_text[1024]; //返回用
+char c_text[1024], l_text[512]; //返回用
 void *result[] = {c_text, l_text};//返回用
 
 char date_str[32] = ""; //时间
@@ -488,16 +491,16 @@ inline void get_ip_info(ip_info &info, const s_index *t_index)
 		info.l = p;
 		break;
 	case jump_uk:   //未知
+	default:
 		info.c = null_s1;
 		info.l = null_s2;
-		break;
 	}
 }
 
 inline void decode()
 {
-	strcpyn(c_text, country, 1024);
-	strcpyn(l_text, local, 1024);
+	strcpyn(c_text, country, 512);
+	strcpyn(l_text, local, 512);
 }
 inline void get_ipwry(const unsigned int ip)
 {
@@ -537,7 +540,7 @@ inline void get_ipwry(const unsigned int ip)
 		local   = info.l;
 
 		if( !info.has_child )
-			goto do_deceode;
+			goto do_decode;
 	}
 
 	//layer2======================================
@@ -549,7 +552,7 @@ layer2:
 	//最后一个
 	get_ip_info(info, tt);
 	if( ip > info.end )
-		goto do_deceode;
+		goto do_decode;
 
 	++end;
 	while(1)
@@ -569,7 +572,7 @@ layer2:
 		local   = info.l;
 	}
 
-do_deceode:
+do_decode:
 	decode();
 }
 
@@ -582,6 +585,18 @@ void* __cdecl _GetAddress(const char *IPstr)
 	get_ipwry(ip);
 
 	return result;
+}
+
+char* __cdecl GetAddress(const char *IPstr)
+{
+	if( !loaded || !ptr )
+		return noload_s1;
+
+	unsigned int ip = str2ip(IPstr);
+	get_ipwry(ip);
+
+	strcat(c_text, l_text);
+	return c_text;
 }
 
 void* __cdecl GetAddressInt(const unsigned int ip)
@@ -621,10 +636,9 @@ bool __cdecl Reload()
 	return init_ipwry();
 }
 
-
-BOOL APIENTRY DllMain(HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved)
+BOOL WINAPI DllMain(HINSTANCE hinstDLL,DWORD fdwReason,LPVOID lpvReserved)
 {
-	switch(ul_reason_for_call)
+	switch(fdwReason)
 	{
 		//case DLL_THREAD_ATTACH:
 		//case DLL_THREAD_DETACH:

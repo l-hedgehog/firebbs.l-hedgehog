@@ -78,9 +78,14 @@ var nsIExtensionManager =
       Cc["@mozilla.org/extensions/manager;1"].
         getService(Ci.nsIExtensionManager);
 
-var hzIPSearcher = 
-      Cc["@hector.zhao/ipsearcher-service;1"].
-        getService(Ci.nsISupports).wrappedJSObject;
+var hzIPSearcher = null;
+try {
+  hzIPSearcher = 
+    Cc["@hector.zhao/ipsearcher-service;1"].
+      getService(Ci.nsISupports).wrappedJSObject;
+}
+catch(e) {
+}
 
 var FireBBS = {
   cursor : null,
@@ -106,7 +111,8 @@ var FireBBS = {
         nsIConverterInputStream.close();
         nsIConverterOutputStream.close();
         switchInputCapturer();
-        hzIPSearcher.stop();
+        if(hzIPSearcher)
+          hzIPSearcher.stop();
         $anti_idler.stop();
       },
 
@@ -226,7 +232,8 @@ var FireBBS = {
     this.input_area = document.getElementById('input_area');
     this.float_box = document.getElementById('float_box');
     this.previous_node = [0, false, false, 10, 7];
-    hzIPSearcher.init();
+    if(hzIPSearcher)
+      hzIPSearcher.init();
     $anti_idler.init();
     
     //document.title = document.location.host;
