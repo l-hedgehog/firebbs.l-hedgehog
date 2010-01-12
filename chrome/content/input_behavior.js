@@ -206,13 +206,21 @@ function mouse_behavior(e){
           }
           else if(e.target.rel.toLowerCase() == "ip2loc"){
             FireBBS.float_box.style.display = "block";
-            FireBBS.float_box.innerHTML=hzIPSearcher.location(e.target.textContent);
+            var address = "";
+            try {
+              address = hzIPSearcher.location(e.target.textContent);
+            }
+            catch(e) {
+              hzIPSearcher.init();
+              address = hzIPSearcher.location(e.target.textContent);
+            }
+            FireBBS.float_box.innerHTML="<span id='ip2loc'>" + address + "</span>";
             e.target.addEventListener('mouseout', mouse_behavior, false);
             e.target.addEventListener('mousemove', mouse_behavior, false);
           }
         }
         //fix bug while no mouseout event to hide img
-        else if(e.target.tagName.toLowerCase() == "img"||e.target.tagName.toLowerCase() == "iframe"){
+        else if(e.target.tagName.toLowerCase() == "img"||e.target.id == "ip2loc"){
           FireBBS.float_box.style.display = "none";
         }
         break;

@@ -47,6 +47,12 @@ a:active {
   text-decoration: none;
 }
 
+img, #ip2loc {
+  background: white;
+  color: black;
+  padding: 5px 7px;
+}
+
 .terminal_display {
   font-family : monospace;
   font-size: 24px;
@@ -71,10 +77,7 @@ a:active {
 }
 
 #float_box {
-  background: white;
-  color: black;
   display: none;
-  padding: 5px 7px;
   position: absolute;
 }
 

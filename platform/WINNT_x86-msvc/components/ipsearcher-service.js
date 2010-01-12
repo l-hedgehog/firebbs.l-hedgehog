@@ -29,6 +29,10 @@ Cu.import("resource://gre/modules/ctypes.jsm");
 function IPSearcherService()
 {
     this.wrappedJSObject = this;
+
+    var conv   = null;
+    var ip2loc = null;
+    var lib    = null;
 }
 
 IPSearcherService.prototype = {
@@ -37,31 +41,20 @@ IPSearcherService.prototype = {
     contractID:       "@hector.zhao/ipsearcher-service;1",
     QueryInterface:   XPCOMUtils.generateQI([Ci.nsISupports]),
 
-    conv:   null,
-    dll:    null,
-    ip2loc: null,
-    lib:    null,
-
     init: function(){
         this.conv = Cc["@mozilla.org/intl/scriptableunicodeconverter"].
                       createInstance(Ci.nsIScriptableUnicodeConverter);
         //this is hardcoded to gb2312 as qqwry.dat/ipwry.dat is encoded in gb2312;
         this.conv.charset = "gb2312";
 
-        this.dll = __LOCATION__.parent;
-        this.dll.append("ipsearcher.dll");
-        this.dll.QueryInterface(Ci.nsILocalFile);
-        this.lib = ctypes.open(this.dll);
+        var dll = __LOCATION__.parent;
+        dll.append("ipsearcher.dll");
+        dll.QueryInterface(Ci.nsILocalFile);
+        this.lib = ctypes.open(dll);
         this.ip2loc = this.lib.declare("GetAddress",
                                        ctypes.stdcall_abi,
                                        ctypes.string,
                                        ctypes.string);
-        //sth. is wrong when I compile this dll, so this reload is needed
-        var reload = this.lib.declare("Reload",
-                                      ctypes.stdcall_abi,
-                                      ctypes.bool);
-        //btw, ipwry.dat should be dropped into Fx installation directory
-        reload();
     },
 
     location: function(ip){
