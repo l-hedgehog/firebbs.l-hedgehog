@@ -24,10 +24,10 @@ extern "C" __declspec(dllexport) bool         __cdecl Reload();
 
 const unsigned char this_ver = 0x03; //本程序版本
 
-char *null_s1 = "未知数据";
+char *null_s1 = "Unknown Data";
 char *null_s2 = "";
 
-char *noload_s1 = "未能装载ipwry.dat";
+char *noload_s1 = "Failed to load ipwry.dat";
 void *noload_result[] = {noload_s1, null_s2};
 
 const unsigned char jump_l_l = 0;
@@ -258,7 +258,7 @@ inline bool load_ipwry(void)
 		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	if(INVALID_HANDLE_VALUE == hnd)
 	{
-		::MessageBox(NULL, text, "无法打开文件", NULL);
+		::MessageBox(NULL, text, "Cannot open file", NULL);
 		return false;
 	}
 	
@@ -271,7 +271,7 @@ inline bool load_ipwry(void)
 	if(!ptr)
 	{
 		CloseHandle(hnd);
-		::MessageBox(NULL, "无法分配内存", NULL, NULL);
+		::MessageBox(NULL, "Cannot allocate memory", NULL, NULL);
 		return false;
 	}
 	
@@ -281,7 +281,7 @@ inline bool load_ipwry(void)
 		CloseHandle(hnd);
 		delete []ptr;
 		ptr = 0x0;
-		::MessageBox(NULL, text, "无法读入文件", NULL);
+		::MessageBox(NULL, text, "Cannot read the file", NULL);
 		return false;
 	}
 	CloseHandle(hnd);
@@ -301,7 +301,7 @@ inline bool init_ipwry()
 
 	if( f_header->ver != this_ver )
 	{
-		::MessageBox(NULL, "ipwry.dat格式版本与本程序不附.", NULL, NULL);
+		::MessageBox(NULL, "ipwry.dat is not compatible with this program", NULL, NULL);
 		return false;
 	}
 
@@ -328,7 +328,7 @@ inline bool init_ipwry()
 		CLzmaDecoderState state;
 		if(LzmaDecodeProperties(&state.Properties, properties, LZMA_PROPERTIES_SIZE) != LZMA_RESULT_OK)
 		{
-			::MessageBox(NULL, "无法初始化解码器.", NULL, NULL);
+			::MessageBox(NULL, "Cannot initialize decoder", NULL, NULL);
 			delete []decompress;
 			delete []ptr;
 
@@ -345,7 +345,7 @@ inline bool init_ipwry()
 		//检验
 		if(LZMA_RESULT_OK != c_result)
 		{
-			::MessageBox(NULL, "无法解压数据.", NULL, NULL);
+			::MessageBox(NULL, "Cannot decode the data", NULL, NULL);
 			delete []decompress;
 			delete []ptr;
 
@@ -391,7 +391,7 @@ inline bool init_ipwry()
 	return true;
 
 error:
-	::MessageBox(NULL, "IPwry.dat文件已损坏,请重新下载.", NULL, NULL);
+	::MessageBox(NULL, "ipwry.dat is corrupted", NULL, NULL);
 	return false;
 }
 inline void get_ip_info(ip_info &info, const s_index *t_index)

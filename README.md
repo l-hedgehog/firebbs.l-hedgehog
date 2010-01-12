@@ -12,11 +12,11 @@ modifications I can make. More details about my modifications can be found
 Tips
 ----
 
-*   Copy & Paste
+*   __Copy & Paste__
     *   Copy as plain text: select the text you want and "^C";
     *   Copy as ASCII code: use "Shift + ^C" instead of "^C";
     *   Paste for both: use "Shift + ^V", __NOT__ "^V".
-*   Preferences
+*   __Preferences__
     1.  Go to "about:config";
     2.  In the filter, search for "extensions.firebbs.";
     3.  There will be:
@@ -25,13 +25,14 @@ Tips
         *   "charset", encodings, e.g. "big5";
         *   "fontfamily";
         *   "fontsize";
+        *   "ipsearcher", __READ THE NEXT SECTION__ before you enable it;
         *   "sound", path of the sound to be played when receiving messages,
             leave it blank to use system default;
     4.  Also, [telnet://ptt.cc/?charset=big5&fontfamily=MingLiU][3] will work,
         with the exception of "sound".
-*   IPSearcher
+*   __IPSearcher__
     *   Windows only;
-    *   Where is ipwry.dat?
+    *   How to get a copy of ipwry.dat?
         1.  Download _QQWry.dat_ from [cz88][4];
         2.  Download _ipwry\_0\_2\_2c.zip_ from [cosoft][5];
         3.  Unzip it and put _QQWry.dat_ in the same directory;

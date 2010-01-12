@@ -1,6 +1,6 @@
 /* ***** BEGIN COPYRIGHT AND LICENSE BLOCK *****
  *
- * Copyright © 2007, 2009 Hector Zhao
+ * Copyright © 2007, 2009, 2010 Hector Zhao
  *
  * This file is part of FireBBS.l-hedgehog.
  *
@@ -23,4 +23,5 @@ pref("extensions.firebbs.bgcolor", "black");
 pref("extensions.firebbs.charset", "chrome://firebbs/locale/firebbs.properties");
 pref("extensions.firebbs.fontfamily", "chrome://firebbs/locale/firebbs.properties");
 pref("extensions.firebbs.fontsize", 24);
+pref("extensions.firebbs.ipsearcher", false);
 pref("extensions.firebbs.sound", "");

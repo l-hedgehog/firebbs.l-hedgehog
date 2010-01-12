@@ -65,11 +65,9 @@ nsITransferable.addDataFlavor("text/unicode");
 var nsIAlertsService =
       Cc["@mozilla.org/alerts-service;1"].
         getService(Ci.nsIAlertsService);
-
 var nsISound =
       Cc["@mozilla.org/sound;1"].
         getService(Ci.nsISound);
-
 var nsIIOService =
       Cc["@mozilla.org/network/io-service;1"].
         getService(Ci.nsIIOService);
@@ -79,12 +77,15 @@ var nsIExtensionManager =
         getService(Ci.nsIExtensionManager);
 
 var hzIPSearcher = null;
-try {
-  hzIPSearcher = 
-    Cc["@hector.zhao/ipsearcher-service;1"].
-      getService(Ci.nsISupports).wrappedJSObject;
-}
-catch(e) {
+if(prefs.getBoolPref('ipsearcher')){
+  try {
+    hzIPSearcher = 
+      Cc["@hector.zhao/ipsearcher-service;1"].
+        getService(Ci.nsISupports).wrappedJSObject;
+  }
+  catch(e) {
+    prefs.setBoolPref('ipsearcher', false);
+  }
 }
 
 var FireBBS = {
