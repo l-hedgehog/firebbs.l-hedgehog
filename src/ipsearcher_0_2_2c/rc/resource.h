@@ -2,7 +2,7 @@
 // Microsoft Visual C++ generated include file.
 // Used by ipsearcher.rc
 
-// пб╤тоС╣добр╩п╘д╛хож╣
+// Ф√╟Е╞╧Х╠║Г └Д╦▀Д╦─Д╨⌡И╩≤Х╝╓Е─╪
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS

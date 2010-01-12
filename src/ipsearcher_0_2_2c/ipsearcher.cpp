@@ -1,10 +1,10 @@
-// ±¾³ÌÐòÒÔLGPL(GNU Lesser General Public License)Ð­Òé·¢²¼
-// °æ±¾:0.2.2c  °æÈ¨ËùÓÐ: cnss 2004-2005
+// æœ¬ç¨‹åºä»¥LGPL(GNU Lesser General Public License)åè®®å‘å¸ƒ
+// ç‰ˆæœ¬:0.2.2c  ç‰ˆæƒæ‰€æœ‰: cnss 2004-2005
 
-// ÌØ±ðÉùÃ÷: cnss, ×÷Îª´Ë´úÂëµÄ×÷Õß, Ã÷È·µØÔÊÐíÄú½«ÄúµÄ´úÂë
-// ¾²Ì¬»ò¶¯Ì¬µØÁ´½Óµ½ipsearcher. ¶ø²»Ç¿ÆÈÄúÁ´½ÓµÄ´úÂë×ñÑ­GNU 
-// LPGLµÄÌõ¿î.µ«ÊÇ,ÈÎºÎ¶ÔipsearcherÖÐÎÄ¼þµÄÐÞ¸Ä»òÌí¼Ó¶¼±ØÐë×ñ
-// Ñ­GNU LPGLµÄÌõ¿î.
+// ç‰¹åˆ«å£°æ˜Ž: cnss, ä½œä¸ºæ­¤ä»£ç çš„ä½œè€…, æ˜Žç¡®åœ°å…è®¸æ‚¨å°†æ‚¨çš„ä»£ç 
+// é™æ€æˆ–åŠ¨æ€åœ°é“¾æŽ¥åˆ°ipsearcher. è€Œä¸å¼ºè¿«æ‚¨é“¾æŽ¥çš„ä»£ç éµå¾ªGNU 
+// LPGLçš„æ¡æ¬¾.ä½†æ˜¯,ä»»ä½•å¯¹ipsearcherä¸­æ–‡ä»¶çš„ä¿®æ”¹æˆ–æ·»åŠ éƒ½å¿…é¡»éµ
+// å¾ªGNU LPGLçš„æ¡æ¬¾.
 
 #include "stdafx.h"
 
@@ -12,6 +12,7 @@
 extern "C"
 {
 #include "LzmaDecode.h"
+BOOL WINAPI DllMain(HINSTANCE hinstDLL,DWORD fdwReason,LPVOID lpvReserved);
 }
 
 extern "C" __declspec(dllexport) void*        __cdecl _GetAddress(const char *IPstr);
@@ -21,12 +22,12 @@ extern "C" __declspec(dllexport) unsigned int __cdecl IPCount();
 extern "C" __declspec(dllexport) char*        __cdecl DateTime();
 extern "C" __declspec(dllexport) bool         __cdecl Reload();
 
-const unsigned char this_ver = 0x03; //±¾³ÌÐò°æ±¾
+const unsigned char this_ver = 0x03; //æœ¬ç¨‹åºç‰ˆæœ¬
 
-char *null_s1 = "Î´ÖªÊý¾Ý";
+char *null_s1 = "æœªçŸ¥æ•°æ®";
 char *null_s2 = "";
 
-char *noload_s1 = "Î´ÄÜ×°ÔØipwry.dat";
+char *noload_s1 = "æœªèƒ½è£…è½½ipwry.dat";
 void *noload_result[] = {noload_s1, null_s2};
 
 const unsigned char jump_l_l = 0;
@@ -52,9 +53,9 @@ const unsigned char jump_n_f = 15;
 #pragma pack(push, 1)
 struct data_header     //1b
 {
-	unsigned int jump:   4;  //Ìø×ª·½Ê½
-	unsigned int has_child: 1;  //ÊÇ·ñÓÐº¢×Ó
-	unsigned int differ: 3;  //²î·ÖÀàÐÍ
+	unsigned int jump:   4;  //è·³è½¬æ–¹å¼
+	unsigned int has_child: 1;  //æ˜¯å¦æœ‰å­©å­
+	unsigned int differ: 3;  //å·®åˆ†ç±»åž‹
 };
 struct date_time  //4b
 {
@@ -66,27 +67,27 @@ struct date_time  //4b
 	unsigned int min:   6;
 	unsigned int sec:   5;
 };
-struct file_header  //ÎÄ¼þÍ·
+struct file_header  //æ–‡ä»¶å¤´
 {
-	//»ù±¾Çø  13
+	//åŸºæœ¬åŒº  13
 	unsigned int  crc;
 	unsigned char ver;
 	date_time     date;
 	unsigned int  total;
-	//Êý¾ÝÇø  5
-	unsigned char data_len;  //Êý¾ÝÇøÕ¼¼¸¸ö×Ö½Ú
-	unsigned int  data_ptr;  //Êý¾ÝÇøÆðÊ¼
-	//×Öµä   10
-	unsigned char dic_len;   //Ë÷ÒýÕ¼¼¸×Ö½Ú
-	unsigned int  dic_count; //×ÖµäÌõÄ¿
-	unsigned char dic_chr;   //×ªÒå×Ö½Ú
-	unsigned int  dic_ptr;   //×ÖµäÇøÆðÊ¼
-	//Ñ¹Ëõ  13
-	char compress_type;  //Ñ¹ËõËã·¨
-	unsigned int compress_begin; //Ñ¹ËõÆðÊ¼
-	unsigned int compress_len;   //Ñ¹ËõÊý¾ÝµÄ³¤¶È
-	unsigned int compress_org;   //Ô­Ê¼³¤¶È
-	//Ë÷ÒýÇø  16
+	//æ•°æ®åŒº  5
+	unsigned char data_len;  //æ•°æ®åŒºå å‡ ä¸ªå­—èŠ‚
+	unsigned int  data_ptr;  //æ•°æ®åŒºèµ·å§‹
+	//å­—å…¸   10
+	unsigned char dic_len;   //ç´¢å¼•å å‡ å­—èŠ‚
+	unsigned int  dic_count; //å­—å…¸æ¡ç›®
+	unsigned char dic_chr;   //è½¬ä¹‰å­—èŠ‚
+	unsigned int  dic_ptr;   //å­—å…¸åŒºèµ·å§‹
+	//åŽ‹ç¼©  13
+	char compress_type;  //åŽ‹ç¼©ç®—æ³•
+	unsigned int compress_begin; //åŽ‹ç¼©èµ·å§‹
+	unsigned int compress_len;   //åŽ‹ç¼©æ•°æ®çš„é•¿åº¦
+	unsigned int compress_org;   //åŽŸå§‹é•¿åº¦
+	//ç´¢å¼•åŒº  16
 	unsigned int layer1_ptr;
 	unsigned int layer1_num;
 	unsigned int layer2_ptr;
@@ -109,18 +110,18 @@ struct ip_info
 
 unsigned int len;       //file len
 char *ptr  = 0x0;       //ptr of content
-char *data = 0x0;      //Êý¾ÝÇø
-bool loaded = false;    //ÒÑ×°ÔØ
-file_header *f_header;   //ÉèÖÃÓÃ
+char *data = 0x0;      //æ•°æ®åŒº
+bool loaded = false;    //å·²è£…è½½
+file_header *f_header;   //è®¾ç½®ç”¨
 
 s_index *layer1_ptr, *layer2_ptr;
 unsigned int layer1_num, layer2_num;
 
-char *country, *local;  //²éÕÒÁÙÊ±ÓÃ
-char c_text[1024], l_text[512]; //·µ»ØÓÃ
-void *result[] = {c_text, l_text};//·µ»ØÓÃ
+char *country, *local;  //æŸ¥æ‰¾ä¸´æ—¶ç”¨
+char c_text[1024], l_text[512]; //è¿”å›žç”¨
+void *result[] = {c_text, l_text};//è¿”å›žç”¨
 
-char date_str[32] = ""; //Ê±¼ä
+char date_str[32] = ""; //æ—¶é—´
 
 unsigned int dic_len;
 unsigned int dic_count;
@@ -245,7 +246,7 @@ inline bool load_ipwry(void)
 	char *temp;
 	char text[2048];
 	
-	//Â·¾¶
+	//è·¯å¾„
 	if( !GetModuleFileName(0, text, 2038) )
 		return false;
 	temp = strrchr(text, 92);  //'\'
@@ -257,7 +258,7 @@ inline bool load_ipwry(void)
 		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	if(INVALID_HANDLE_VALUE == hnd)
 	{
-		::MessageBox(NULL, text, "ÎÞ·¨´ò¿ªÎÄ¼þ", NULL);
+		::MessageBox(NULL, text, "æ— æ³•æ‰“å¼€æ–‡ä»¶", NULL);
 		return false;
 	}
 	
@@ -270,7 +271,7 @@ inline bool load_ipwry(void)
 	if(!ptr)
 	{
 		CloseHandle(hnd);
-		::MessageBox(NULL, "ÎÞ·¨·ÖÅäÄÚ´æ", NULL, NULL);
+		::MessageBox(NULL, "æ— æ³•åˆ†é…å†…å­˜", NULL, NULL);
 		return false;
 	}
 	
@@ -280,7 +281,7 @@ inline bool load_ipwry(void)
 		CloseHandle(hnd);
 		delete []ptr;
 		ptr = 0x0;
-		::MessageBox(NULL, text, "ÎÞ·¨¶ÁÈëÎÄ¼þ", NULL);
+		::MessageBox(NULL, text, "æ— æ³•è¯»å…¥æ–‡ä»¶", NULL);
 		return false;
 	}
 	CloseHandle(hnd);
@@ -300,51 +301,51 @@ inline bool init_ipwry()
 
 	if( f_header->ver != this_ver )
 	{
-		::MessageBox(NULL, "ipwry.dat¸ñÊ½°æ±¾Óë±¾³ÌÐò²»¸½.", NULL, NULL);
+		::MessageBox(NULL, "ipwry.datæ ¼å¼ç‰ˆæœ¬ä¸Žæœ¬ç¨‹åºä¸é™„.", NULL, NULL);
 		return false;
 	}
 
-	//½âÑ¹
+	//è§£åŽ‹
 	if( 1 == f_header->compress_type )
 	{
-		unsigned int start = f_header->compress_begin;  //ÆðÊ¼Î»ÖÃ
-		unsigned int org_len = f_header->compress_org; //Ô­´óÐ¡
-		unsigned int now_len  = f_header->compress_len; //ÏÖ´óÐ¡
-		unsigned int compressed_len, uncompress_len; //´¦ÀíÇ°ºó´óÐ¡
+		unsigned int start = f_header->compress_begin;  //èµ·å§‹ä½ç½®
+		unsigned int org_len = f_header->compress_org; //åŽŸå¤§å°
+		unsigned int now_len  = f_header->compress_len; //çŽ°å¤§å°
+		unsigned int compressed_len, uncompress_len; //å¤„ç†å‰åŽå¤§å°
 
-		//ÐÂµÄ×Ü´óÐ¡,ÄÚ´æ
+		//æ–°çš„æ€»å¤§å°,å†…å­˜
 		len += org_len - now_len;
 		char *decompress = new char[len];
 
-		//ÓÐÐ§Ñ¹ËõµÄ´óÐ¡
+		//æœ‰æ•ˆåŽ‹ç¼©çš„å¤§å°
 		compressed_len = now_len - (LZMA_PROPERTIES_SIZE + 8);
 
-		//¶ÁÈ¡Ñ¹ËõÊôÐÔ
+		//è¯»å–åŽ‹ç¼©å±žæ€§
 		unsigned char properties[LZMA_PROPERTIES_SIZE];
 		memcpy(properties, ptr+start, LZMA_PROPERTIES_SIZE);
 
-		//ÉèÖÃstate
+		//è®¾ç½®state
 		CLzmaDecoderState state;
 		if(LzmaDecodeProperties(&state.Properties, properties, LZMA_PROPERTIES_SIZE) != LZMA_RESULT_OK)
 		{
-			::MessageBox(NULL, "ÎÞ·¨³õÊ¼»¯½âÂëÆ÷.", NULL, NULL);
+			::MessageBox(NULL, "æ— æ³•åˆå§‹åŒ–è§£ç å™¨.", NULL, NULL);
 			delete []decompress;
 			delete []ptr;
 
 			return false;
 		}
 
-		//½âÑ¹
+		//è§£åŽ‹
 		state.Probs = new CProb[LzmaGetNumProbs(&state.Properties)];
 		int c_result;
 		c_result = LzmaDecode(&state, (unsigned char*)ptr+start+13, compressed_len, &now_len, 
 			(unsigned char*)decompress+start, org_len, &uncompress_len);
 		delete []state.Probs;
 
-		//¼ìÑé
+		//æ£€éªŒ
 		if(LZMA_RESULT_OK != c_result)
 		{
-			::MessageBox(NULL, "ÎÞ·¨½âÑ¹Êý¾Ý.", NULL, NULL);
+			::MessageBox(NULL, "æ— æ³•è§£åŽ‹æ•°æ®.", NULL, NULL);
 			delete []decompress;
 			delete []ptr;
 
@@ -352,32 +353,32 @@ inline bool init_ipwry()
 		}
 		else
 		{
-			//¸´ÖÆÍ·
+			//å¤åˆ¶å¤´
 			memcpy(decompress, ptr, start);
 
-			//ÐÂÖ¸Õë
+			//æ–°æŒ‡é’ˆ
 			delete []ptr;
 			ptr = decompress;
 			f_header = (file_header*)ptr;
 		}
 	}
 
-	//Êý¾ÝÇø
+	//æ•°æ®åŒº
 	data = ptr + f_header->data_ptr;
 
-	//×ÖµäÇø
+	//å­—å…¸åŒº
 	dic_len   = f_header->dic_len;
 	dic_count = f_header->dic_count;
 	dic_chr   = f_header->dic_chr;
 	dic_ptr   = ptr + f_header->dic_ptr;
 
-	//²ã
+	//å±‚
 	layer1_ptr = (s_index*)(ptr + f_header->layer1_ptr);
 	layer1_num = f_header->layer1_num;
 	layer2_ptr = (s_index*)(ptr + f_header->layer2_ptr);
 	layer2_num = f_header->layer2_num;
 
-	//Ê±¼ä
+	//æ—¶é—´
 	wsprintf(date_str, "%04d-%02d-%02d %02d:%02d:%02d", f_header->date.year + 2000,
 		f_header->date.month,
 		f_header->date.day,
@@ -390,21 +391,21 @@ inline bool init_ipwry()
 	return true;
 
 error:
-	::MessageBox(NULL, "IPwry.datÎÄ¼þÒÑËð»µ,ÇëÖØÐÂÏÂÔØ.", NULL, NULL);
+	::MessageBox(NULL, "IPwry.datæ–‡ä»¶å·²æŸå,è¯·é‡æ–°ä¸‹è½½.", NULL, NULL);
 	return false;
 }
 inline void get_ip_info(ip_info &info, const s_index *t_index)
 {
-	//Êý¾ÝÇø
+	//æ•°æ®åŒº
 	char *t_data_ptr = data + (t_index->offset & 0x00FFFFFF);
 
 	//header
 	data_header *d_header = (data_header*)t_data_ptr;
 
-	//ÆðÊ¼IP
+	//èµ·å§‹IP
 	info.begin = t_index->begin;
 
-	//½áÊøIP
+	//ç»“æŸIP
 	unsigned int endip = *(unsigned int*)(t_data_ptr + 1);
 	if(0 == d_header->differ)
 		endip = 0;
@@ -417,80 +418,80 @@ inline void get_ip_info(ip_info &info, const s_index *t_index)
 
 	info.end = info.begin + endip;
 
-	//ÊÇ·ñ»¹ÓÐ
+	//æ˜¯å¦è¿˜æœ‰
 	info.has_child = d_header->has_child;
 
-	//¹ú¼Ò,µØÇø
-	char *p = t_data_ptr + 1 + d_header->differ; //Ö¸Ïò¹ú¼Ò,µØÇø
+	//å›½å®¶,åœ°åŒº
+	char *p = t_data_ptr + 1 + d_header->differ; //æŒ‡å‘å›½å®¶,åœ°åŒº
 
-	if(jump_aj == d_header->jump) //È«Ìø
+	if(jump_aj == d_header->jump) //å…¨è·³
 	{
-		t_data_ptr = data + (0x00FFFFFF & *(unsigned int*)p);  //ÐÂÊý¾ÝÇø
-		d_header = (data_header*)t_data_ptr;                   //ÐÂÍ·
+		t_data_ptr = data + (0x00FFFFFF & *(unsigned int*)p);  //æ–°æ•°æ®åŒº
+		d_header = (data_header*)t_data_ptr;                   //æ–°å¤´
 
-		p = t_data_ptr + 1 + d_header->differ; //Ö¸Ïò¹ú¼Ò,µØÇø
+		p = t_data_ptr + 1 + d_header->differ; //æŒ‡å‘å›½å®¶,åœ°åŒº
 	}
 
 	switch(d_header->jump)
 	{
-	case jump_f_j:  //¸¸, Ìø
+	case jump_f_j:  //çˆ¶, è·³
 		info.c = country;
 		info.l = data + (*(unsigned int*)p & 0x00FFFFFF);
 		break;
-	case jump_f_l:  //¸¸, Ô­
+	case jump_f_l:  //çˆ¶, åŽŸ
 		info.c = country;
 		info.l = p;
 		break;
-	case jump_f_n:  //¸¸, ÎÞ
+	case jump_f_n:  //çˆ¶, æ— 
 		info.c = country;
 		info.l = "";
 		break;
-	case jump_j_f:  //Ìø, ¸¸
+	case jump_j_f:  //è·³, çˆ¶
 		info.c = data + (*(unsigned int*)p & 0x00FFFFFF);
 		info.l = local;
 		break;
-	case jump_l_f:  //Ô­, ¸¸
+	case jump_l_f:  //åŽŸ, çˆ¶
 		info.c = p;
 		info.l = local;
 		break;
-	case jump_n_f:  //ÎÞ, ¸¸
+	case jump_n_f:  //æ— , çˆ¶
 		info.c = "";
 		info.l = local;
 		break;
 
-	case jump_j_j:  //Ìø, Ìø
+	case jump_j_j:  //è·³, è·³
 		info.c = data + (*(unsigned int*)p & 0x00FFFFFF);
 		info.l = data + (*(unsigned int*)(p+3) & 0x00FFFFFF);
 		break;
-	case jump_j_l:  //Ìø, Ô­
+	case jump_j_l:  //è·³, åŽŸ
 		info.c = data + (*(unsigned int*)p & 0x00FFFFFF);
 		info.l = p + 3;
 		break;
-	case jump_j_n:  //Ìø, ÎÞ
+	case jump_j_n:  //è·³, æ— 
 		info.c = data + (*(unsigned int*)p & 0x00FFFFFF);
 		info.l = "";
 		break;
-	case jump_l_j:  //Ô­, Ìø
+	case jump_l_j:  //åŽŸ, è·³
 		info.c = p;
 		info.l = data + (*(unsigned int*)(p + strlen(p) + 1) & 0x00FFFFFF);
 		break;
-	case jump_l_l:  //Ô­, Ô­
+	case jump_l_l:  //åŽŸ, åŽŸ
 		info.c = p;
 		info.l = p + strlen(p) + 1;
 		break;
-	case jump_l_n:  //Ô­, ÎÞ
+	case jump_l_n:  //åŽŸ, æ— 
 		info.c = p;
 		info.l = "";
 		break;
-	case jump_n_j:  //ÎÞ, Ìø
+	case jump_n_j:  //æ— , è·³
 		info.c = "";
 		info.l = data + (*(unsigned int*)p & 0x00FFFFFF);
 		break;
-	case jump_n_l:  //ÎÞ, Ô­
+	case jump_n_l:  //æ— , åŽŸ
 		info.c = "";
 		info.l = p;
 		break;
-	case jump_uk:   //Î´Öª
+	case jump_uk:   //æœªçŸ¥
 	default:
 		info.c = null_s1;
 		info.l = null_s2;
@@ -504,7 +505,7 @@ inline void decode()
 }
 inline void get_ipwry(const unsigned int ip)
 {
-	//ÖØÖÃ
+	//é‡ç½®
 	country = null_s1;
 	local = null_s2;
 
@@ -517,7 +518,7 @@ inline void get_ipwry(const unsigned int ip)
 	end = layer1_num;
 	tt = (s_index*)( (char*)layer1_ptr + end * 7);
 
-	//×îºóÒ»¸ö
+	//æœ€åŽä¸€ä¸ª
 	get_ip_info(info, tt);
 	if( ip > info.end )  
 		goto layer2;
@@ -525,7 +526,7 @@ inline void get_ipwry(const unsigned int ip)
 	++end;
 	while(1)
 	{
-		if( beg >= end - 1 )  //ÕÒµ½
+		if( beg >= end - 1 )  //æ‰¾åˆ°
 			break;
 		if( ip < ((s_index*)((char*)layer1_ptr + (beg + end)/2 * 7))->begin )
 			end = (beg + end) / 2;
@@ -534,7 +535,7 @@ inline void get_ipwry(const unsigned int ip)
 	}
 
 	get_ip_info( info, (s_index*)((char*)layer1_ptr + beg*7) );
-	if(ip <= info.end)  //¼ÓÈë
+	if(ip <= info.end)  //åŠ å…¥
 	{
 		country = info.c;
 		local   = info.l;
@@ -549,7 +550,7 @@ layer2:
 	end = layer2_num;
 	tt = (s_index*)( (char*)layer2_ptr + end * 7);
 
-	//×îºóÒ»¸ö
+	//æœ€åŽä¸€ä¸ª
 	get_ip_info(info, tt);
 	if( ip > info.end )
 		goto do_decode;
@@ -557,7 +558,7 @@ layer2:
 	++end;
 	while(1)
 	{
-		if( beg >= end - 1 )  //ÕÒµ½
+		if( beg >= end - 1 )  //æ‰¾åˆ°
 			break;
 		if( ip < ((s_index*)((char*)layer2_ptr + (beg + end)/2 * 7))->begin )
 			end = (beg + end) / 2;
@@ -566,7 +567,7 @@ layer2:
 	}
 
 	get_ip_info( info, (s_index*)((char*)layer2_ptr + beg*7) );
-	if(ip <= info.end)  //¼ÓÈë
+	if(ip <= info.end)  //åŠ å…¥
 	{
 		country = info.c;
 		local   = info.l;

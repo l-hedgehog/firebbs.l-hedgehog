@@ -70,10 +70,10 @@ BEGIN
         BLOCK "080404b0"
         BEGIN
             VALUE "Comments", "Find ip data from ipwry.dat"
-            VALUE "FileDescription", "dll"
+            VALUE "FileDescription", "Dynamic-link library"
             VALUE "FileVersion", "0.2.2c"
             VALUE "InternalName", "ipsearcher"
-            VALUE "LegalCopyright", "(C) 2004-2005 cnss; (C) 2009 Hector Zhao"
+            VALUE "LegalCopyright", "(C) 2004-2005 cnss; (C) 2009-2010 Hector Zhao"
             VALUE "OriginalFilename", "ipsearch.dll"
             VALUE "ProductName", "ipwry.dat searcher"
             VALUE "ProductVersion", "0.2.2c.l-hedgehog"
