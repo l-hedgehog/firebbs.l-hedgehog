@@ -4,9 +4,15 @@
 #include <windows.h>
 #include <stdlib.h> 
 
-extern "C" __declspec(dllexport) void* __cdecl _GetAddress(const char *IPstr);
+extern "C"
+{
+BOOL WINAPI DllMain(HINSTANCE hinstDLL,DWORD fdwReason,LPVOID lpvReserved);
+}
 
-void *ret[2];           //for return
+extern "C" __declspec(dllexport) char* __cdecl GetAddress(const char *IPstr);
+
+char *ret[2];
+char c[1024], l[512];   //for return
 char *ptr = NULL;       //ptr of image
 char *p = NULL;         //point to index
 unsigned int total;     //ip count
@@ -36,7 +42,7 @@ inline void Load(void)
 		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	if(INVALID_HANDLE_VALUE == hnd)
 	{
-		::MessageBox(NULL, text, "不能打开文件!", NULL);
+		::MessageBox(NULL, text, "Cannot open file", NULL);
 		return;
 	}
 
@@ -49,7 +55,7 @@ inline void Load(void)
 	if(!ptr)
 	{
 		CloseHandle(hnd);
-		::MessageBox(NULL, "不能分配内存!", NULL, NULL);
+		::MessageBox(NULL, "Cannot allocate memory", NULL, NULL);
 		return;
 	}
 
@@ -58,7 +64,7 @@ inline void Load(void)
 	{
 		CloseHandle(hnd);
 		free(ptr);
-		::MessageBox(NULL, text, "不能读入文件!", NULL);
+		::MessageBox(NULL, text, "Cannot read the file", NULL);
 		return;
 	}
 	CloseHandle(hnd);
@@ -70,7 +76,7 @@ inline void Load(void)
 	if(total % 7 != 0)
 	{
 		free(ptr);
-		::MessageBox(NULL, text, "QQwry.dat文件有损坏!", NULL);
+		::MessageBox(NULL, text, "QQwry.dat is corrupted", NULL);
 		return;
 	}
 
@@ -100,13 +106,23 @@ inline unsigned int str2ip(const char *lp)
 	return ret;
 }
 
-void* __cdecl _GetAddress(const char *IPstr)
+inline void strcpyn(char *d, const char *s, int len)
+{
+	while(*s && len > 1)
+	{
+		*d++ = *s++;
+		--len;
+	}
+	*d = 0x0;
+}
+
+char* __cdecl GetAddress(const char *IPstr)
 {
 	if(NULL == p)
 	{
-		ret[0] = "无法打开数据";
+		ret[0] = "Cannot open the data";
 		ret[1] = "";
-		return ret;
+		return ret[0];
 	}
 
 	unsigned int ip = str2ip(IPstr);
@@ -150,17 +166,17 @@ void* __cdecl _GetAddress(const char *IPstr)
 	}
  	else
 	{
-		ret[0] = "未知数据";
+		ret[0] = "Unknown data";
 		ret[1] = "";
 	}
-	return ret;
+	strcpyn(c, ret[0], 512);
+	strcpyn(l, ret[1], 512);
+	strcat(c, l);
+	return c;
 }
-BOOL APIENTRY DllMain( HANDLE hModule, 
-       DWORD  ul_reason_for_call, 
-       LPVOID lpReserved
-       )
+BOOL WINAPI DllMain(HINSTANCE hinstDLL,DWORD fdwReason,LPVOID lpvReserved)
 {
-	switch(ul_reason_for_call)
+	switch(fdwReason)
 	{
 		//case DLL_THREAD_ATTACH:
 		//case DLL_THREAD_DETACH:
