@@ -80,7 +80,7 @@ var hzIPSearcher = null;
 if(prefs.getBoolPref('ipsearcher')){
   try {
     hzIPSearcher = 
-      Cc["@hector.zhao/ipsearcher-service;1"].
+      Cc["@hector.zhao/ipsearcher-service;2"].
         getService(Ci.nsISupports).wrappedJSObject;
   }
   catch(e) {
