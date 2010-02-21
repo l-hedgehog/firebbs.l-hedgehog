@@ -1,7 +1,7 @@
 /* ***** BEGIN COPYRIGHT AND LICENSE BLOCK *****
  *
  * Copyright © 2007 Milx
- * Copyright © 2008, 2009, 2010 Hector Zhao
+ * Copyright © 2008, 2009 Hector Zhao
  *
  * This file is part of FireBBS.l-hedgehog.
  *
@@ -523,8 +523,10 @@ function BEL(){
                                          locale("alerts"), locale("newMessage"));
   if(prefs.getCharPref('sound')) {
     nsISound.play(nsIIOService.newURI(prefs.getCharPref('sound'), null, null));  
-  } else {
+  } else if(nsISound.playEventSound) {
     nsISound.playEventSound(nsISound.EVENT_NEW_MAIL_RECEIVED);
+  } else {
+    nsISound.playSystemSound("_moz_mailbeep");
   }
 }
 //LF(Line Feed)

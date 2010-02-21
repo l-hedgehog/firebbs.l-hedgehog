@@ -31,12 +31,14 @@ Tips
     4.  Also, [telnet://ptt.cc/?charset=big5&fontfamily=MingLiU][3] will work,
         with the exception of "sound".
 *   __IPSearcher__
-    *   Windows only;
+    *   All platform supported;
     *   How to get a copy of QQWry.dat?
         1.  Download _QQWry.dat_ from [cz88][4];
-        2.  Put it into the same directory as firefox.exe;
+        2.  Put it into the [profile directory][5];
+        3.  Don't forget to update this file regularly.
 
   [1]: http://firebbs.googlepages.com
   [2]: /l-hedgehog/firebbs.l-hedgehog/blob/master/release_note.txt
   [3]: telnet://ptt.cc/?charset=big5&fontfamily=MingLiU
   [4]: http://www.cz88.net/
+  [5]: https://developer.mozilla.org/en/Runtime_Directories#Firefox
