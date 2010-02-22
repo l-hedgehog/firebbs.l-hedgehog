@@ -93,7 +93,7 @@ IPSearcherService.prototype = {
         return ret;
     },
 
-    str2ip : function(ipstr){
+    str2ip: function(ipstr){
         var ret = 0;
         var iparr = ipstr.split(".");
         for(var i = 0; i < 4; i++){
@@ -105,19 +105,9 @@ IPSearcherService.prototype = {
     },
 
     init: function(){
-        var nsIDirectoryService = Cc["@mozilla.org/file/directory_service;1"].
-                                  getService(Ci.nsIProperties);
-        var curProcD = nsIDirectoryService.get("CurProcD", Ci.nsIFile);
-        var profD = nsIDirectoryService.get("ProfD", Ci.nsIFile);
-        var file = __LOCATION__.parent;
-        curProcD.append("QQwry.dat");
-        profD.append("QQwry.dat");
-        if(curProcD.isFile()){
-            curProcD.moveTo(file, null);
-        }
-        else if(profD.isFile()){
-            profD.moveTo(file, null);
-        }
+        var file = Cc["@mozilla.org/file/directory_service;1"].
+                     getService(Ci.nsIProperties).
+                     get("ProfD", Ci.nsIFile);
         file.append("QQwry.dat");
         if(file.isFile()){
             var fstream = Cc["@mozilla.org/network/file-input-stream;1"].
@@ -140,7 +130,7 @@ IPSearcherService.prototype = {
 
             this.conv = Cc["@mozilla.org/intl/scriptableunicodeconverter"].
                         createInstance(Ci.nsIScriptableUnicodeConverter);
-            //this is hardcoded to gb2312 as qqwry.dat/ipwry.dat is encoded in gb2312;
+            //this is hardcoded to gb2312 as qqwry.dat is encoded in gb2312;
             this.conv.charset = "gb2312";
         }
         else{
