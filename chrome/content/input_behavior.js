@@ -206,15 +206,7 @@ function mouse_behavior(e){
           }
           else if(e.target.rel.toLowerCase() == "ip2loc"){
             FireBBS.float_box.style.display = "block";
-            var ip = e.target.textContent;
-            var address = "";
-            try {
-              address = hzIPSearcher.location(ip);
-            }
-            catch(e) {
-              hzIPSearcher.init();
-              address = hzIPSearcher.location(ip);
-            }
+            var address = hzIPSearcher.location(e.target.textContent);
             FireBBS.float_box.innerHTML="<span id='ip2loc'>" + address + "</span>";
             e.target.addEventListener('mouseout', mouse_behavior, false);
             e.target.addEventListener('mousemove', mouse_behavior, false);

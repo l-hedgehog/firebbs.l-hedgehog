@@ -81,10 +81,12 @@ if(prefs.getBoolPref('ipsearcher')){
   try {
     hzIPSearcher = 
       Cc["@hector.zhao/ipsearcher-service;2"].
-        getService(Ci.nsISupports).wrappedJSObject;
+        getService(Ci.hzIIPSearcherService);
+    hzIPSearcher.init();
   }
   catch(e) {
     prefs.setBoolPref('ipsearcher', false);
+    hzIPSearcher = null;
   }
 }
 
@@ -112,8 +114,6 @@ var FireBBS = {
         nsIConverterInputStream.close();
         nsIConverterOutputStream.close();
         switchInputCapturer();
-        if(hzIPSearcher)
-          hzIPSearcher.stop();
         $anti_idler.stop();
       },
 
@@ -233,8 +233,6 @@ var FireBBS = {
     this.input_area = document.getElementById('input_area');
     this.float_box = document.getElementById('float_box');
     this.previous_node = [0, false, false, 10, 7];
-    if(hzIPSearcher)
-      hzIPSearcher.init();
     $anti_idler.init();
     
     //document.title = document.location.host;

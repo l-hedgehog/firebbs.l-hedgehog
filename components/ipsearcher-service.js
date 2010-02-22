@@ -22,24 +22,30 @@
 const Cc = Components.classes;
 const Ci = Components.interfaces;
 const Cu = Components.utils;
+const CE = Components.Exception;
 
 Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 
 function IPSearcherService()
 {
-    this.wrappedJSObject = this;
+    //this.wrappedJSObject = this;
 }
 
 IPSearcherService.prototype = {
     classDescription: "IPSearcher Service",
     classID:          Components.ID("{d6e0b16b-7dfa-4917-9dd6-703863031d93}"),
     contractID:       "@hector.zhao/ipsearcher-service;2",
-    QueryInterface:   XPCOMUtils.generateQI([Ci.nsISupports]),
+    QueryInterface:   XPCOMUtils.generateQI([Ci.hzIIPSearcherService]),
 
     conv:  null,
     data:  null,
+    file:  null,
     index: null,
     total: null,
+
+    close: function(){
+        this.data = null;
+    },
 
     getadd: function(ipstr){
         var ip = this.str2ip(ipstr);
@@ -83,6 +89,16 @@ IPSearcherService.prototype = {
         return ret.join(" ").replace("CZ88.NET", "Unknown data");
     },
 
+    open: function(){
+        var fstream = Cc["@mozilla.org/network/file-input-stream;1"].
+                        createInstance(Ci.nsIFileInputStream);
+        fstream.init(this.file, -1, 0, 0);
+        var bstream = Cc["@mozilla.org/binaryinputstream;1"].
+                        createInstance(Ci.nsIBinaryInputStream);
+        bstream.setInputStream(fstream);
+        this.data = bstream.readBytes(bstream.available());
+    },
+
     rbytes: function(offset, count){
         var ret = 0;
         for(var i = count; i > 0; i--){
@@ -104,46 +120,40 @@ IPSearcherService.prototype = {
     },
 
     init: function(){
-        var file = Cc["@mozilla.org/file/directory_service;1"].
-                     getService(Ci.nsIProperties).
-                     get("ProfD", Ci.nsIFile);
-        file.append("QQwry.dat");
-        if(file.isFile()){
-            var fstream = Cc["@mozilla.org/network/file-input-stream;1"].
-                            createInstance(Ci.nsIFileInputStream);
-            fstream.init(file, -1, 0, 0);
-            var bstream = Cc["@mozilla.org/binaryinputstream;1"].
-                            createInstance(Ci.nsIBinaryInputStream);
-            bstream.setInputStream(fstream);
-            this.data = bstream.readBytes(bstream.available());
+        if(!this.index){
+            this.file = Cc["@mozilla.org/file/directory_service;1"].
+                          getService(Ci.nsIProperties).
+                          get("ProfD", Ci.nsIFile);
+            this.file.append("QQwry.dat");
+            if(this.file.isFile()){
+                this.open();
+                this.index = this.rbytes(0, 4);
+                this.total = this.rbytes(4, 4) - this.index;
+                this.close();
+                if(this.total % 7){
+                    throw CE("QQwry.dat is corrupted");
+                }
+                else{
+                    this.total /= 7;
+                    this.total ++;
+                }
 
-            this.index = this.rbytes(0, 4);
-            this.total = this.rbytes(4, 4) - this.index;
-            if(this.total % 7){
-                alert("QQwry.dat is corrupted");
+                this.conv = Cc["@mozilla.org/intl/scriptableunicodeconverter"].
+                              createInstance(Ci.nsIScriptableUnicodeConverter);
+                //this is hardcoded to gb2312 as qqwry.dat is encoded in gb2312;
+                this.conv.charset = "gb2312";
             }
-            else{
-                this.total /= 7;
-                this.total ++;
+            else{           
+                throw CE("Cannot find QQwry.dat");
             }
-
-            this.conv = Cc["@mozilla.org/intl/scriptableunicodeconverter"].
-                        createInstance(Ci.nsIScriptableUnicodeConverter);
-            //this is hardcoded to gb2312 as qqwry.dat is encoded in gb2312;
-            this.conv.charset = "gb2312";
-        }
-        else{
-            alert("Cannot find QQwry.dat");
         }
     },
 
     location: function(ip){
-        return this.conv.ConvertToUnicode(this.getadd(ip));
-    },
-
-    stop: function(){
-        this.conv = null;
-        this.data = null;
+        this.open();
+        var ret = this.conv.ConvertToUnicode(this.getadd(ip));
+        this.close();
+        return ret;
     },
 };
 
