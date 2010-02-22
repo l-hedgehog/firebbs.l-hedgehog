@@ -24,7 +24,6 @@ const Ci = Components.interfaces;
 const Cu = Components.utils;
 
 Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-Cu.import("resource://gre/modules/ctypes.jsm");
 
 function IPSearcherService()
 {

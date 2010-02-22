@@ -317,24 +317,28 @@ var $garbage_span_collector = {
 };
 
 var $anti_idler = {
-  interval : null,
-  latest : null,
+  latest   : null,
   //^@
-  string : String.fromCharCode(0x00),
-
-  antiIdle: function(ai){
-    if((new Date()) - ai.latest > 270000){
-      FireBBS.sendData(ai.string);
-    }
-  },
+  string   : String.fromCharCode(0x00),
+  timer    : null,
 
   init: function(){
     this.latest = new Date();
-    this.interval = setInterval(this.antiIdle, 300000, this);
+    this.timer = Cc["@mozilla.org/timer;1"].
+                   createInstance(Ci.nsITimer);
+    this.timer.initWithCallback(this,
+                                300000,
+                                Ci.nsITimer.TYPE_REPEATING_SLACK);
+  },
+
+  notify: function(timer){
+    if((new Date()) - this.latest > 270000){
+      FireBBS.sendData(this.string);
+    }
   },
 
   stop: function(){
-    clearInterval(this.interval);
+    this.timer.cancel();
   },
 
   update: function(){
