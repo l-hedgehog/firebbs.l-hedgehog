@@ -4,6 +4,10 @@ the first digit is reserved for my real contribution to the extension
 
 == yyyy-mm-dd *.* ==
 
+== 2010-02-23 0.44 ==
+- revert minVersion to fx 3.0(toolkit 1.9)
+- ip2location using pure js (all platforms now)
+
 == 2010-01-15 0.43 ==
 - set minVersion to toolkit 1.9.2
 - ip2location using js-ctypes and cnss's qqwry (windows only)
