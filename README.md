@@ -32,10 +32,11 @@ Tips
         with the exception of "sound".
 *   __IPSearcher__
     *   All platform supported;
-    *   How to get a copy of QQWry.dat?
-        1.  Download _QQWry.dat_ from [cz88][4];
+    *   How to get a copy of QQwry.dat?
+        1.  Download _QQwry.dat_ from [cz88][4];
         2.  Put it into the [profile directory][5];
-        3.  Don't forget to update this file regularly.
+        3.  Make sure the filename is "_QQwry.dat_", __CASE SENSITIVE__;
+        4.  Don't forget to update this file regularly.
 
   [1]: http://firebbs.googlepages.com
   [2]: /l-hedgehog/firebbs.l-hedgehog/blob/master/release_note.txt

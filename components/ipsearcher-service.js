@@ -140,7 +140,7 @@ IPSearcherService.prototype = {
 
                 this.conv = Cc["@mozilla.org/intl/scriptableunicodeconverter"].
                               createInstance(Ci.nsIScriptableUnicodeConverter);
-                //this is hardcoded to gb2312 as qqwry.dat is encoded in gb2312;
+                //this is hardcoded to gb2312 as QQwry.dat is encoded in gb2312;
                 this.conv.charset = "gb2312";
             }
             else{           
