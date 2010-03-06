@@ -23,33 +23,39 @@
 const Cc = Components.classes;
 const Ci = Components.interfaces;
 
-var nsISocketTransportService =
-      Cc["@mozilla.org/network/socket-transport-service;1"].
-        getService(Ci.nsISocketTransportService);
-var nsIScriptableInputStream =
-      Cc["@mozilla.org/scriptableinputstream;1"].
-        createInstance(Ci.nsIScriptableInputStream);
-var nsIInputStreamPump =
-      Cc["@mozilla.org/network/input-stream-pump;1"].
-        createInstance(Ci.nsIInputStreamPump);
-
-var nsIConverterInputStream =
-      Cc["@mozilla.org/intl/converter-input-stream;1"].
-        createInstance(Ci.nsIConverterInputStream);
-
-var nsIConverterOutputStream =
-      Cc["@mozilla.org/intl/converter-output-stream;1"].
-        createInstance(Ci.nsIConverterOutputStream);
-
 var strBundle =
       Cc["@mozilla.org/intl/stringbundle;1"].
         getService(Ci.nsIStringBundleService).
         createBundle("chrome://firebbs/locale/firebbs.properties");
-
 var prefs =
       Cc["@mozilla.org/preferences-service;1"].
         getService(Ci.nsIPrefService).
         getBranch("extensions.firebbs.");
+var bcDBCS = 
+      prefs.getBoolPref('experiment.bicolorDBCS');
+
+var nsISocketTransportService =
+      Cc["@mozilla.org/network/socket-transport-service;1"].
+        getService(Ci.nsISocketTransportService);
+var nsIInputStreamPump =
+      Cc["@mozilla.org/network/input-stream-pump;1"].
+        createInstance(Ci.nsIInputStreamPump);
+
+if(bcDBCS){
+  var nsIBinaryInputStream =
+      Cc["@mozilla.org/binaryinputstream;1"].
+        createInstance(Ci.nsIBinaryInputStream);
+  var nsIScriptableUnicodeConverter =
+      Cc["@mozilla.org/intl/scriptableunicodeconverter"].
+        createInstance(Ci.nsIScriptableUnicodeConverter);
+} else {
+  var nsIConverterInputStream =
+      Cc["@mozilla.org/intl/converter-input-stream;1"].
+        createInstance(Ci.nsIConverterInputStream);
+  var nsIConverterOutputStream =
+      Cc["@mozilla.org/intl/converter-output-stream;1"].
+        createInstance(Ci.nsIConverterOutputStream);
+}
 
 var nsIClipboard =
       Cc["@mozilla.org/widget/clipboard;1"].
@@ -111,14 +117,22 @@ var FireBBS = {
       onStopRequest: function(request, context, status){
         FireBBS.outputStream.close();
         FireBBS.inputStream.close();
-        nsIConverterInputStream.close();
-        nsIConverterOutputStream.close();
+        if(bcDBCS){
+          nsIBinaryInputStream.close();
+        } else {
+          nsIConverterInputStream.close();
+          nsIConverterOutputStream.close();
+        }
         switchInputCapturer();
         $anti_idler.stop();
       },
 
       onDataAvailable: function(request, context, inputStream, offset, count){
-        nsIConverterInputStream.readString(0xFFFF, this.data);
+        if(bcDBCS){
+          this.data.value = nsIBinaryInputStream.readBytes(nsIBinaryInputStream.available());
+        } else {
+          nsIConverterInputStream.readString(0xFFFF, this.data);
+        }
         var str = this.restStr + this.data.value;
         this.restStr ='';
 
@@ -141,7 +155,8 @@ var FireBBS = {
 
             if(result){
               CSIFunctionHandler(result[2], result[1].split(';'));
-              FireBBS.HTMLString_cache += generate_span(strArray[i].substr(result[0].length));
+              var span = generate_span(strArray[i].substr(result[0].length));
+              FireBBS.HTMLString_cache += span;
             }
             else{
               if(i == strArray.length - 1){//this is an unfinished data message
@@ -216,14 +231,16 @@ var FireBBS = {
       }
     }
 
-    const REPLACEMENT_CHARACTER = Ci.nsIConverterInputStream.DEFAULT_REPLACEMENT_CHARACTER;
-
     this.outputStream = transport.openOutputStream(0,0,0);
     this.inputStream = transport.openInputStream(0,0,0);
-    nsIConverterInputStream.init(this.inputStream, charset, 0xFFFF, REPLACEMENT_CHARACTER);
-    nsIConverterOutputStream.init(this.outputStream, charset, 0xFFFF, REPLACEMENT_CHARACTER)
-
-    nsIScriptableInputStream.init(this.inputStream);
+    if(bcDBCS){
+      nsIBinaryInputStream.setInputStream(this.inputStream);
+      nsIScriptableUnicodeConverter.charset = charset;
+    } else {
+      const REPLACEMENT_CHARACTER = Ci.nsIConverterInputStream.DEFAULT_REPLACEMENT_CHARACTER;
+      nsIConverterInputStream.init(this.inputStream, charset, 0xFFFF, REPLACEMENT_CHARACTER);
+      nsIConverterOutputStream.init(this.outputStream, charset, 0xFFFF, REPLACEMENT_CHARACTER);
+    }
 
     nsIInputStreamPump.init(this.inputStream, -1, -1, 0, 0, false);
     nsIInputStreamPump.asyncRead(this.dataListener,null);
@@ -270,7 +287,13 @@ var FireBBS = {
   },
 
   sendData : function(str){
-    nsIConverterOutputStream.writeString(str);
+    if(bcDBCS){
+      str = nsIScriptableUnicodeConverter.ConvertFromUnicode(str);
+      FireBBS.outputStream.write(str, str.length);
+      FireBBS.outputStream.flush();
+    } else {
+      nsIConverterOutputStream.writeString(str);
+    }
     FireBBS.cursor.style.color = 'red';
     $anti_idler.update();
   },

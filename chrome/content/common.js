@@ -46,10 +46,16 @@ function addLink(match){
 function generate_span(str){
   if(!str || $character.display == 'none') return '';
 
+  var pos = convertMN2XY($cursor.position);
+  if(bcDBCS){
+    var lengthOfText = str.length;
+    str = nsIScriptableUnicodeConverter.ConvertToUnicode(str);
+  } else {
+    var lengthOfText = stringLen(str);
+  }
   //str = str.replace(/\uFFFD/g, ' ');
   str = str.replace(/\ufffd/g, '?');
-  var pos = convertMN2XY($cursor.position);
-  var lengthOfText = stringLen(str);
+  var bicolor = (stringLen(str)==lengthOfText+1);
   if(str.match(/&|<|>|"/g)){
      str = str.replace(/&/g, '&amp;');
      str = str.replace(/</g, '&lt;');
@@ -77,6 +83,11 @@ function generate_span(str){
 
   if($character.underline || $character.blink)
     s +=  'text-decoration: ' + $character.getProperty('text-decoration') + ';';
+
+  if(bicolor){
+    FireBBS.HTMLString_cache = FireBBS.HTMLString_cache.replace(/<\/span>$/, str[0]+'</span>');
+    s += 'overflow: hidden; text-indent: -' + $character.fontWidth + 'px;';
+  }
 
   s += 'color: ' + $character.getProperty('color') + ';';
   s += 'background-color: ' + $character.getProperty('background-color') + ';">';
