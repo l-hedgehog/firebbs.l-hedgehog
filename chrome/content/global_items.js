@@ -128,6 +128,7 @@ var $character = {
   backgroundColor : 0,
   image: 'positive',
   display: 'block',
+  lead: 0,
 
   init: function(fontSize){
     this.fontSize = fontSize;
@@ -206,6 +207,10 @@ var $character = {
     this.backgroundColor = index;
   },
 
+  setLead: function(lead){
+    this.lead = lead;
+  },
+
   getProperty: function(pro){
     switch(pro){
       case 'display':
@@ -213,7 +218,7 @@ var $character = {
       case 'font-style':
         return this.italic;
       case 'text-decoration':
-          return this.underline + ' ' + this.blink;
+        return this.underline + ' ' + this.blink;
       case 'color':
         if(this.color < 10){
           var index = this.intensity + (this.image == 'positive'

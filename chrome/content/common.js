@@ -50,12 +50,12 @@ function generate_span(str){
   if(bcDBCS){
     var lengthOfText = str.length;
     str = nsIScriptableUnicodeConverter.ConvertToUnicode(str);
+    var bicolor = $character.lead + lengthOfText - stringLen(str);
   } else {
     var lengthOfText = stringLen(str);
   }
   //str = str.replace(/\uFFFD/g, ' ');
   str = str.replace(/\ufffd/g, '?');
-  var bicolor = (stringLen(str)==lengthOfText+1);
   if(str.match(/&|<|>|"/g)){
      str = str.replace(/&/g, '&amp;');
      str = str.replace(/</g, '&lt;');
@@ -70,10 +70,10 @@ function generate_span(str){
   if(hzIPSearcher)
     str = str.replace(fromIpTemplate, ip2LocRel);
 
-  var s = '<span';
-  s += ' id="m' + $cursor.position.m + 'n' + $cursor.position.n + 'n' + ($cursor.position.n + lengthOfText) + '"';
+  var s = '<span ';
+  s += 'id="m' + $cursor.position.m + 'n' + $cursor.position.n + 'n' + ($cursor.position.n + lengthOfText) + '"';
   s += 'class="terminal_display" '
-  s += ' style="';
+  s += 'style="';
   s += 'left: ' + pos[0] + 'px;';
   s += 'top: ' + pos[1] + 'px;';
   s += 'width: ' + (lengthOfText * $character.fontWidth) + 'px;';
@@ -82,11 +82,21 @@ function generate_span(str){
     s += 'font-style: ' + $character.getProperty('font-style') + ';';
 
   if($character.underline || $character.blink)
-    s +=  'text-decoration: ' + $character.getProperty('text-decoration') + ';';
+    s += 'text-decoration: ' + $character.getProperty('text-decoration') + ';';
 
-  if(bicolor){
+  if($character.lead){
     FireBBS.HTMLString_cache = FireBBS.HTMLString_cache.replace(/<\/span>$/, str[0]+'</span>');
     s += 'overflow: hidden; text-indent: -' + $character.fontWidth + 'px;';
+  }
+  if(bcDBCS){
+    switch(bicolor){
+      case 0:
+      case 1:
+        $character.setLead(bicolor);
+        break;
+      default:
+        //maybe throw an error?
+    }
   }
 
   s += 'color: ' + $character.getProperty('color') + ';';
@@ -122,9 +132,17 @@ function convertMN2XY(cursorPosition){
 
 function stringLen(str){
   var str2 = str.replace(/[\x00-\xFF\uFFFD]/g, '');
-  //bug fix for this: '¤§¨·×÷°'
-  var str3 = str.replace(/[^\xA4\xA7\xA8\xB0\xB7\xD7\xF7]/g, '');
-  return str.length + str2.length + str3.length;
+  //fix for these: '¤§¨°±·×÷'
+  var str3 = str.replace(/[^\xA4\xA7\xA8\xB0\xB1\xB7\xD7\xF7]/g, '');
+  //fix for these: 'àáèéêìíòóùúü'
+  var str4 = str.replace(/[^\xE0\xE1\xE8-\xEA\xEC\xED\xF2\xF3\xF9\xFA\xFC]/g, '');
+  //fix for ptt.cc login, but cannot find this string in the online pttbbs cvs 
+  var len5 = /\ufffd\ufffd\x18\x01\ufffd/.test(str) ? 1 : 0;
+  if(bcDBCS){
+    return str.length + str2.length + str3.length + str4.length + len5;
+  } else {
+    return str.length + str2.length + str3.length;
+  }
 }
 
 function locale(strName){
