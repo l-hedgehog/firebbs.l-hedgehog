@@ -50,6 +50,7 @@ function generate_span(str){
   if(bcDBCS){
     var lengthOfText = str.length;
     str = nsIScriptableUnicodeConverter.ConvertToUnicode(str);
+    lengthOfText -= fixLen(str);
     var bicolor = $character.lead + lengthOfText - stringLen(str);
   } else {
     var lengthOfText = stringLen(str);
@@ -134,15 +135,15 @@ function stringLen(str){
   var str2 = str.replace(/[\x00-\xFF\uFFFD]/g, '');
   //fix for these: '¤§¨°±·×÷'
   var str3 = str.replace(/[^\xA4\xA7\xA8\xB0\xB1\xB7\xD7\xF7]/g, '');
+  return str.length + str2.length + str3.length;
+}
+
+function fixLen(str){
   //fix for these: 'àáèéêìíòóùúü'
-  var str4 = str.replace(/[^\xE0\xE1\xE8-\xEA\xEC\xED\xF2\xF3\xF9\xFA\xFC]/g, '');
+  var strFix = str.replace(/[^\xE0\xE1\xE8-\xEA\xEC\xED\xF2\xF3\xF9\xFA\xFC]/g, '');
   //fix for ptt.cc login, but cannot find this string in the online pttbbs cvs 
-  var len5 = /\ufffd\ufffd\x18\x01\ufffd/.test(str) ? 1 : 0;
-  if(bcDBCS){
-    return str.length + str2.length + str3.length + str4.length + len5;
-  } else {
-    return str.length + str2.length + str3.length;
-  }
+  var lenFix = /\ufffd\ufffd\x18\x01\ufffd/.test(str) ? 1 : 0;
+  return strFix.length + lenFix;
 }
 
 function locale(strName){

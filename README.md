@@ -29,7 +29,7 @@ Tips
         *   "sound", path of the sound to be played when receiving messages,
             leave it blank to use system default;
     4.  Also, [telnet://ptt.cc/?charset=big5&fontfamily=MingLiU][3] will work,
-        with the exception of "sound".
+        for "bgcolor", "charset", "fontfamily" & "fontsize".
 *   __IPSearcher__
     *   All platform supported;
     *   How to get a copy of QQwry.dat?
