@@ -26,10 +26,7 @@ const CE = Components.Exception;
 
 Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 
-function IPSearcherService()
-{
-    //this.wrappedJSObject = this;
-}
+function IPSearcherService(){}
 
 IPSearcherService.prototype = {
     classDescription: "IPSearcher Service",
@@ -86,7 +83,7 @@ IPSearcherService.prototype = {
             ret.push("Unknown data");
             ret.push("");
         }
-        return ret.join(" ").replace("CZ88.NET", "Unknown data");
+        return ret.join(" ").replace("CZ88.NET", "");
     },
 
     open: function(){
@@ -97,6 +94,8 @@ IPSearcherService.prototype = {
                         createInstance(Ci.nsIBinaryInputStream);
         bstream.setInputStream(fstream);
         this.data = bstream.readBytes(bstream.available());
+        fstream.close();
+        bstream.close();
     },
 
     rbytes: function(offset, count){
