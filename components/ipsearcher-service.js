@@ -21,6 +21,7 @@
 
 const Cc = Components.classes;
 const Ci = Components.interfaces;
+const Cr = Components.results;
 const Cu = Components.utils;
 const CE = Components.Exception;
 
@@ -124,13 +125,13 @@ IPSearcherService.prototype = {
                           getService(Ci.nsIProperties).
                           get("ProfD", Ci.nsIFile);
             this.file.append("QQwry.dat");
-            if(this.file.isFile()){
+            if(this.file.exists() && this.file.isFile()){
                 this.open();
                 this.index = this.rbytes(0, 4);
                 this.total = this.rbytes(4, 4) - this.index;
                 this.close();
                 if(this.total % 7){
-                    throw CE("QQwry.dat is corrupted");
+                    throw CE("QQwry.dat is corrupted", Cr.NS_ERROR_FILE_CORRUPTED);
                 }
                 else{
                     this.total /= 7;
@@ -142,8 +143,8 @@ IPSearcherService.prototype = {
                 //this is hardcoded to gb2312 as QQwry.dat is encoded in gb2312;
                 this.conv.charset = "gb2312";
             }
-            else{           
-                throw CE("Cannot find QQwry.dat");
+            else{
+                throw CE("Cannot find QQwry.dat", Cr.NS_ERROR_FILE_NOT_FOUND);
             }
         }
     },
