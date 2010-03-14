@@ -289,6 +289,7 @@ var FireBBS = {
   sendData : function(str){
     if(bcDBCS){
       str = nsIScriptableUnicodeConverter.ConvertFromUnicode(str);
+      str += nsIScriptableUnicodeConverter.Finish();
       FireBBS.outputStream.write(str, str.length);
       FireBBS.outputStream.flush();
     } else {
