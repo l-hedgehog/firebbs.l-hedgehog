@@ -340,11 +340,14 @@ function node2ASCII(node){
     FireBBS.previous_node[4] = color[0];    
   }
   string = string.replace(/;$/, 'm');
+  var text = node.innerHTML.replace(/<.+?>/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
+  if(style.textIndent){
+    string = "\x1b[D" + string + "\x1b[C";
+    text = text.substr(1);
+  }
   if(string == "\x1B\x1B["){
-    string = node.innerHTML.replace(/<.+?>/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
+    string = "";
   }
-  else {
-    string += node.innerHTML.replace(/<.+?>/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
-  }
-  return (lineStart ? "\x1B\x1B[m\r" : "") + string;
+  string += text;
+  return ((lineStart && FireBBS.ASCII_cache) ? "\x1B\x1B[m\r" : "") + string;
 }

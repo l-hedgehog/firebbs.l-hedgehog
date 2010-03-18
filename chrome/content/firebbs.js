@@ -130,6 +130,7 @@ var FireBBS = {
       onDataAvailable: function(request, context, inputStream, offset, count){
         if(bcDBCS){
           this.data.value = nsIBinaryInputStream.readBytes(nsIBinaryInputStream.available());
+          $character.setLead(0);
         } else {
           nsIConverterInputStream.readString(0xFFFF, this.data);
         }

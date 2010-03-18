@@ -30,7 +30,7 @@ function prePicRel(match){
 
 function ip2LocRel(match){
   var ipStart = match.search(/\d/);
-  return match.substr(0, ipStart) + '<a rel="ip2loc">' + match.substr(ipStart, (match.length - ipStart - 1)) + '</a>]';
+  return match.substr(0, ipStart) + '<a rel="ip2loc">' + match.substr(ipStart) + '</a>';
 }
 
 //trick to avoid </img> in link
@@ -67,7 +67,7 @@ function generate_span(str){
   var urlTemplate=/(https?:\/\/)([\w-.]+)(:[0-9]+)?(\/[\/\w;,?:@&=+$.!~*'#%-]*)?/g;  //()
   str = str.replace(urlTemplate, addLink);
   //add ip2location link
-  var fromIpTemplate=/\[FROM:\s\d+\.\d+\.\d+\.[*\d]+]/;
+  var fromIpTemplate=/FROM:\s\d+\.\d+\.\d+\.[*\d]+/;
   if(hzIPSearcher)
     str = str.replace(fromIpTemplate, ip2LocRel);
 
@@ -150,15 +150,14 @@ function locale(strName){
   return strBundle.GetStringFromName(strName);
 }
 
-function toHex(dec) {
-  var hex = "0123456789ABCDEF";
-  return hex[Math.floor(dec / 16)] + "" + hex[dec % 16];
+function toHex(dec){
+  return (256 + parseInt(dec, 10)).toString(16).substr(-2);
 }
 
-function hexColor(color) {
+function hexColor(color){
   if(color.search("rgb")==0){
     var rgb = /(\d+),\s(\d+),\s(\d+)/.exec(color);
-    return "#" + toHex(rgb[1]) + "" + toHex(rgb[2]) + "" + toHex(rgb[3]);
+    return "#" + (toHex(rgb[1]) + toHex(rgb[2]) + toHex(rgb[3])).toUpperCase();
   } else {
     return color;
   }
