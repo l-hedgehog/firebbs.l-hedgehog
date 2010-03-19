@@ -4,6 +4,10 @@ the first digit is reserved for my real contribution to the extension
 
 == yyyy-mm-dd *.* ==
 
+== 2010-03-19 0.45 ==
+- experimental support of bicolor DBCS
+- new pref to control the delay of anti-idler
+
 == 2010-02-23 0.44 ==
 - revert minVersion to fx 3.0(toolkit 1.9)
 - ip2location using pure js (all platforms now)

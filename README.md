@@ -23,8 +23,11 @@ Tips
         *   "bgcolor", background color, web standard color names preferred,
             "#080808" is ok but only in "about:config";
         *   "charset", encodings, e.g. "big5";
+        *   "experiment.bicolorDBCS", experimental support of bicolor DBCS,
+            enable it may introduce bugs in text & ASCII copy;
         *   "fontfamily";
         *   "fontsize";
+        *   "idledelay", idle time before anti-idler sends "^@", in seconds;
         *   "ipsearcher", __READ THE NEXT SECTION__ before you enable it;
         *   "sound", path of the sound to be played when receiving messages,
             leave it blank to use system default;
