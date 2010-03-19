@@ -322,24 +322,24 @@ var $garbage_span_collector = {
 };
 
 var $anti_idler = {
-  latest   : null,
+  delay    : 300000,
   //^@
   string   : String.fromCharCode(0x00),
   timer    : null,
 
-  init: function(){
-    this.latest = new Date();
+  init: function(delay){
+    if(delay){
+      this.delay = delay * 1000;
+    }
     this.timer = Cc["@mozilla.org/timer;1"].
                    createInstance(Ci.nsITimer);
     this.timer.initWithCallback(this,
-                                300000,
+                                this.delay,
                                 Ci.nsITimer.TYPE_REPEATING_SLACK);
   },
 
   notify: function(timer){
-    if((new Date()) - this.latest > 270000){
-      FireBBS.sendData(this.string);
-    }
+    FireBBS.sendData(this.string);
   },
 
   stop: function(){
@@ -347,6 +347,8 @@ var $anti_idler = {
   },
 
   update: function(){
-    this.latest = new Date();
+    this.timer.initWithCallback(this,
+                                this.delay,
+                                Ci.nsITimer.TYPE_REPEATING_SLACK);
   },
 };

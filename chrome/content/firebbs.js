@@ -251,7 +251,7 @@ var FireBBS = {
     this.input_area = document.getElementById('input_area');
     this.float_box = document.getElementById('float_box');
     this.previous_node = [0, false, false, 10, 7];
-    $anti_idler.init();
+    $anti_idler.init(prefs.getIntPref('idledelay'));
     
     //document.title = document.location.host;
     $garbage_span_collector.initCoveredArea();

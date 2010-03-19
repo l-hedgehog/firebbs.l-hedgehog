@@ -5,7 +5,7 @@
 
   <Description about="urn:mozilla:install-manifest">
     <em:id>firebbs.l-hedgehog@hector.zhao</em:id>
-    <em:version>0.45b14</em:version>
+    <em:version>0.45b15</em:version>
     <em:type>2</em:type>
 
     <em:targetApplication>

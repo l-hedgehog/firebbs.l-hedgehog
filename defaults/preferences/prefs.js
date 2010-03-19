@@ -24,5 +24,6 @@ pref("extensions.firebbs.charset", "chrome://firebbs/locale/firebbs.properties")
 pref("extensions.firebbs.experiment.bicolorDBCS", false);
 pref("extensions.firebbs.fontfamily", "chrome://firebbs/locale/firebbs.properties");
 pref("extensions.firebbs.fontsize", 24);
+pref("extensions.firebbs.idledelay", 300);
 pref("extensions.firebbs.ipsearcher", false);
 pref("extensions.firebbs.sound", "");
