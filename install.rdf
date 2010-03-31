@@ -5,7 +5,7 @@
 
   <Description about="urn:mozilla:install-manifest">
     <em:id>firebbs.l-hedgehog@hector.zhao</em:id>
-    <em:version>0.45</em:version>
+    <em:version>0.46a18</em:version>
     <em:type>2</em:type>
 
     <em:targetApplication>
@@ -22,7 +22,7 @@
     <em:contributor>Hector Zhao</em:contributor>
     <em:homepageURL>http://hedgehog-hosted.appspot.com/firebbs.l-hedgehog</em:homepageURL>
     <em:updateURL>https://hedgehog-hosted.appspot.com/download/update.rdf</em:updateURL>
-<!--    <em:optionsURL></em:optionsURL> -->
+    <em:optionsURL>chrome://firebbs/content/options.xul</em:optionsURL>
     <em:iconURL>chrome://firebbs/skin/firebbs.png</em:iconURL>
   </Description>
 </RDF>

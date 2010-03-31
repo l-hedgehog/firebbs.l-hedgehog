@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<!DOCTYPE prefwindow SYSTEM "chrome://firebbs/locale/options.dtd">
+<!-- ***** BEGIN COPYRIGHT AND LICENSE BLOCK *****
+   -
+   - Copyright © 2010 Hector Zhao
+   -
+   - This file is part of FireBBS.l-hedgehog.
+   -
+   - FireBBS.l-hedgehog is free software: you can redistribute it
+   - and/or modify it under the terms of the GNU General Public License
+   - as published by the Free Software Foundation, either version 3 of
+   - the License, or (at your option) any later version.
+   -
+   - FireBBS.l-hedgehog is distributed in the hope that it will be
+   - useful, but WITHOUT ANY WARRANTY; without even the implied warranty
+   - of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   - GNU General Public License for more details.
+   -
+   - You should have received a copy of the GNU General Public License
+   - along with FireBBS.l-hedgehog.  If not, see <http://www.gnu.org/licenses/>.
+   -
+   - ***** END COPYRIGHT AND LICENSE BLOCK ***** -->
+<prefwindow id="ipsearcher-preferences" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" title="&firebbspref.title;">
+  <prefpane id="generalpane" label="&generalpane.title;">
+    <preferences>
+      <preference id="s-bgcolor" name="extensions.firebbs.bgcolor" type="string"/>
+      <preference id="s-charset" name="extensions.firebbs.charset" type="wstring"/>
+      <preference id="s-fontfamily" name="extensions.firebbs.fontfamily" type="wstring"/>
+      <preference id="i-fontsize" name="extensions.firebbs.fontsize" type="int"/>
+      <preference id="i-idledelay" name="extensions.firebbs.idledelay" type="int"/>
+      <preference id="b-ipsearcher" name="extensions.firebbs.ipsearcher" type="bool"/>
+    </preferences>
+    <groupbox>
+      <caption label="&appearance.label;"/>
+      <grid>
+        <rows>
+          <row>
+            <label control="cp-bgcolor">&cp-bgcolor.label;</label>
+            <colorpicker id="cp-bgcolor" preference="s-bgcolor" type="button"/>
+          </row>
+          <row>
+            <label control="t-charset">&t-charset.label;</label>
+            <textbox id="t-charset" preference="s-charset"/>
+          </row>
+          <row>
+            <label control="t-fontfamily">&t-fontfamily.label;</label>
+            <textbox id="t-fontfamily" preference="s-fontfamily"/>
+          </row>
+          <row>
+            <label control="t-fontsize">&t-fontsize.label;</label>
+            <textbox id="t-fontsize" preference="i-fontsize" type="number" increment="2"/>
+          </row>
+        </rows>
+      </grid>
+    </groupbox>
+    <groupbox>
+      <caption label="&misc.label;"/>
+      <grid>
+        <rows>
+          <row>
+            <label control="t-idledelay">&t-idledelay.label;</label>
+            <textbox id="t-idledelay" preference="i-idledelay" type="number" increment="30"/>
+          </row>
+          <row>
+            <checkbox id="c-ipsearcher" preference="b-ipsearcher" label="&c-ipsearcher.label;"/>
+          </row>
+        </rows>
+      </grid>
+    </groupbox>
+  </prefpane>
+</prefwindow>

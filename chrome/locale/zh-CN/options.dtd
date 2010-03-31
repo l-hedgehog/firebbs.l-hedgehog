@@ -1,0 +1,30 @@
+<!-- ***** BEGIN COPYRIGHT AND LICENSE BLOCK *****
+   -
+   - Copyright © 2010 Hector Zhao
+   -
+   - This file is part of FireBBS.l-hedgehog.
+   -
+   - FireBBS.l-hedgehog is free software: you can redistribute it
+   - and/or modify it under the terms of the GNU General Public License
+   - as published by the Free Software Foundation, either version 3 of
+   - the License, or (at your option) any later version.
+   -
+   - FireBBS.l-hedgehog is distributed in the hope that it will be
+   - useful, but WITHOUT ANY WARRANTY; without even the implied warranty
+   - of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   - GNU General Public License for more details.
+   -
+   - You should have received a copy of the GNU General Public License
+   - along with FireBBS.l-hedgehog.  If not, see <http://www.gnu.org/licenses/>.
+   -
+   - ***** END COPYRIGHT AND LICENSE BLOCK ***** -->
+<!ENTITY firebbspref.title "FireBBS.l-hedgehog 选项">
+<!ENTITY generalpane.title "常规">
+<!ENTITY appearance.label "外观">
+<!ENTITY cp-bgcolor.label "背景色">
+<!ENTITY t-charset.label "字符编码">
+<!ENTITY t-fontfamily.label "字体（请选用等宽字体）">
+<!ENTITY t-fontsize.label "字号大小">
+<!ENTITY misc.label "其它">
+<!ENTITY t-idledelay.label "防发呆间隔（单位：秒）">
+<!ENTITY c-ipsearcher.label "IP 查地址">

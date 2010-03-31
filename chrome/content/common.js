@@ -29,8 +29,7 @@ function prePicRel(match){
 }
 
 function ip2LocRel(match){
-  var ipStart = match.search(/\d/);
-  return match.substr(0, ipStart) + '<a rel="ip2loc">' + match.substr(ipStart) + '</a>';
+  return match[0] + '<a rel="ip2loc">' + match.substr(1) + '</a>';
 }
 
 //trick to avoid </img> in link
@@ -67,7 +66,7 @@ function generate_span(str){
   var urlTemplate=/(https?:\/\/)([\w-.]+)(:[0-9]+)?(\/[\/\w;,?:@&=+$.!~*'#%-]*)?/g;  //()
   str = str.replace(urlTemplate, addLink);
   //add ip2location link
-  var fromIpTemplate=/FROM:\s\d+\.\d+\.\d+\.[*\d]+/;
+  var fromIpTemplate=/[\[\s]\d+\.\d+\.\d+\.[*\d]+/;
   if(hzIPSearcher)
     str = str.replace(fromIpTemplate, ip2LocRel);
 
@@ -158,6 +157,43 @@ function hexColor(color){
   if(color.search("rgb")==0){
     var rgb = /(\d+),\s(\d+),\s(\d+)/.exec(color);
     return "#" + (toHex(rgb[1]) + toHex(rgb[2]) + toHex(rgb[3])).toUpperCase();
+  } else if(color[0] == "#"){
+    switch(color) {
+      case "#000000":
+        return "black";
+      case "#800000":
+        return "maroon";
+      case "#008000":
+        return "green";
+      case "#808000":
+        return "olive";
+      case "#000080":
+        return "navy";
+      case "#800080":
+        return "purple";
+      case "#008080":
+        return "teal";
+      case "#C0C0C0":
+        return "silver";
+      case "#808080":
+        return "gray";
+      case "#FF0000":
+        return "red";
+      case "#00FF00":
+        return "lime";
+      case "#FFFF00":
+        return "yellow";
+      case "#0000FF":
+        return "blue";
+      case "#FF00FF":
+        return "fuchsia";
+      case "#00FFFF":
+        return "aqua";
+      case "#FFFFFF":
+        return "white";
+      default:
+        return color;
+    }
   } else {
     return color;
   }
