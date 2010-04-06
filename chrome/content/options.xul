@@ -22,6 +22,26 @@
    -
    - ***** END COPYRIGHT AND LICENSE BLOCK ***** -->
 <prefwindow id="ipsearcher-preferences" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" title="&firebbspref.title;">
+  <script type="application/x-javascript">
+    function chooseFile() {
+      const Cc = Components.classes;
+      const Ci = Components.interfaces;
+
+      var fp = Cc["@mozilla.org/filepicker;1"].
+                 createInstance(Ci.nsIFilePicker);
+      fp.init(window, document.getElementById("b-sound").label, fp.modeOpen);
+      fp.appendFilters(fp.filterAll);
+
+      var rv = fp.show();
+      if (rv == fp.returnOK) {
+        var ts = document.getElementById("t-sound");
+        ts.value = fp.fileURL.spec;
+        var evt = document.createEvent("HTMLEvents");
+        evt.initEvent("change", true, false);
+        ts.dispatchEvent(evt);
+      }
+    }
+  </script>
   <prefpane id="generalpane" label="&generalpane.title;">
     <preferences>
       <preference id="s-bgcolor" name="extensions.firebbs.bgcolor" type="string"/>
@@ -30,6 +50,7 @@
       <preference id="i-fontsize" name="extensions.firebbs.fontsize" type="int"/>
       <preference id="i-idledelay" name="extensions.firebbs.idledelay" type="int"/>
       <preference id="b-ipsearcher" name="extensions.firebbs.ipsearcher" type="bool"/>
+      <preference id="s-sound" name="extensions.firebbs.sound" type="string"/>
     </preferences>
     <groupbox>
       <caption label="&appearance.label;"/>
@@ -64,6 +85,10 @@
           </row>
           <row>
             <checkbox id="c-ipsearcher" preference="b-ipsearcher" label="&c-ipsearcher.label;"/>
+          </row>
+          <row>
+            <button id="b-sound" control="t-sound" label="&t-sound.label;" oncommand="chooseFile();"/>
+            <textbox id="t-sound" preference="s-sound"/>
           </row>
         </rows>
       </grid>

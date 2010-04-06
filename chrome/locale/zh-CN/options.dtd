@@ -28,3 +28,4 @@
 <!ENTITY misc.label "其它">
 <!ENTITY t-idledelay.label "防发呆间隔（单位：秒）">
 <!ENTITY c-ipsearcher.label "IP 查地址">
+<!ENTITY t-sound.label "提醒声音（留空默认）">
