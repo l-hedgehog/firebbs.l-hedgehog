@@ -57,7 +57,8 @@ const nsIURI             = Components.interfaces.nsIURI;
 
 Components.utils.import("resource://gre/modules/XPCOMUtils.jsm");
 
-function TelnetProtocol() {}
+function TelnetProtocol() {
+}
 
 TelnetProtocol.prototype = {
   classDescription: kPROTOCOL_NAME,
@@ -73,7 +74,7 @@ TelnetProtocol.prototype = {
                  nsIProtocolHandler.URI_LOADABLE_BY_ANYONE,
   
   allowPort: function(port, scheme) {
-    return false;
+    return false
   },
 
   newURI: function(spec, charset, baseURI) {
@@ -82,7 +83,7 @@ TelnetProtocol.prototype = {
     url.init(nsIStandardURL.URLTYPE_STANDARD,
              this.defaultPort, spec, charset, baseURI);
 
-    return url.QueryInterface(nsIURI);
+    return url.QueryInterface(nsIURI)
   },
 
   newChannel: function(aURI) {
@@ -90,18 +91,18 @@ TelnetProtocol.prototype = {
     var site_url = aURI.spec;
 
     // strip away the kSCHEME: part
-    site_url = site_url.substring(site_url.indexOf("://") + 3, site_url.length);    
+    site_url = site_url.substring(site_url.indexOf("://") + 3, site_url.length);
     // site_url = encodeURI(site_url);
 
     /* create dummy nsIURI and nsIChannel instances */
     var ios = Components.classes[kIOSERVICE_CONTRACTID].getService(nsIIOService);
 
-    return ios.newChannel('chrome://firebbs/content/firebbs.html', null, null);
+    return ios.newChannel("chrome://firebbs/content/firebbs.html", null, null)
   }
-}
+};
 
 // XPCOM registration.
 var components = [TelnetProtocol];
 function NSGetModule(compMgr, fileSpec) {
-  return XPCOMUtils.generateModule(components);
+  return XPCOMUtils.generateModule(components)
 }

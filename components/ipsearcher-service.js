@@ -27,7 +27,8 @@ const CE = Components.Exception;
 
 Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 
-function IPSearcherService(){}
+function IPSearcherService() {
+}
 
 IPSearcherService.prototype = {
   classDescription: "IPSearcher Service",
@@ -41,53 +42,55 @@ IPSearcherService.prototype = {
   _index: null,
   _total: null,
 
-  _close: function(){
-    this._data = null;
+  _close: function() {
+    this._data = null
   },
 
-  _getadd: function(ipstr){
+  _getadd: function(ipstr) {
     var ip = this._str2ip(ipstr);
     var begin = 0;
     var end = this._total;
     var ret = [];
-    while(true){
-      if(begin >= end - 1)
-        break;
-      if(ip < this._rbytes((this._index + 7 * Math.floor((begin + end) / 2)), 4))
-        end = (begin + end) / 2;
-      else
-        begin = (begin + end) / 2;
+    while(true) {
+      if(begin >= end - 1) {
+        break
+      }
+      if(ip < this._rbytes(this._index + 7 * Math.floor((begin + end) / 2), 4)) {
+        end = (begin + end) / 2
+      }else {
+        begin = (begin + end) / 2
+      }
     }
-    var temp = this._rbytes((this._index + 7 * Math.floor(begin) + 4), 3);
-    if(ip <= this._rbytes(temp, 4)){
+    var temp = this._rbytes(this._index + 7 * Math.floor(begin) + 4, 3);
+    if(ip <= this._rbytes(temp, 4)) {
       temp += 4;
-      if(String.fromCharCode(0x01) == this._data[temp])
-        temp = this._rbytes(temp + 1, 3);
-      if(String.fromCharCode(0x02) == this._data[temp]){
-        ret.push(this._rbytes(temp + 1, 3));
-        temp += 4;
+      if(String.fromCharCode(1) == this._data[temp]) {
+        temp = this._rbytes(temp + 1, 3)
       }
-      else{
-        ret.push(temp);
-        temp = this._data.indexOf(String.fromCharCode(0x00), ret[0]) + 1;
-      }
-      if(String.fromCharCode(0x02) == this._data[temp])
+      if(String.fromCharCode(2) == this._data[temp]) {
         ret.push(this._rbytes(temp + 1, 3));
-      else
+        temp += 4
+      }else {
         ret.push(temp);
-      temp = this._data.indexOf(String.fromCharCode(0x00), ret[0]);
+        temp = this._data.indexOf(String.fromCharCode(0), ret[0]) + 1
+      }
+      if(String.fromCharCode(2) == this._data[temp]) {
+        ret.push(this._rbytes(temp + 1, 3))
+      }else {
+        ret.push(temp)
+      }
+      temp = this._data.indexOf(String.fromCharCode(0), ret[0]);
       ret[0] = this._data.substring(ret[0], temp);
-      temp = this._data.indexOf(String.fromCharCode(0x00), ret[1]);
-      ret[1] = this._data.substring(ret[1], temp);
-    }
-    else{
+      temp = this._data.indexOf(String.fromCharCode(0), ret[1]);
+      ret[1] = this._data.substring(ret[1], temp)
+    }else {
       ret.push("Unknown data");
-      ret.push("");
+      ret.push("")
     }
-    return ret.join(" ").replace("CZ88.NET", "");
+    return ret.join(" ").replace("CZ88.NET", "")
   },
 
-  _open: function(){
+  _open: function() {
     var fstream = Cc["@mozilla.org/network/file-input-stream;1"].
                     createInstance(Ci.nsIFileInputStream);
     fstream.init(this._file, -1, 0, 0);
@@ -96,69 +99,67 @@ IPSearcherService.prototype = {
     bstream.setInputStream(fstream);
     this._data = bstream.readBytes(bstream.available());
     fstream.close();
-    bstream.close();
+    bstream.close()
   },
 
-  _rbytes: function(offset, count){
+  _rbytes: function(offset, count) {
     var ret = 0;
-    for(var i = count; i > 0; i--){
+    for(var i = count;i > 0;i--) {
         ret *= 256;
-        ret += parseInt(this._data.charCodeAt(offset + i - 1), 10);
+        ret += parseInt(this._data.charCodeAt(offset + i - 1), 10)
     }
-    return ret;
+    return ret
   },
 
-  _str2ip: function(ipstr){
+  _str2ip: function(ipstr) {
     var ret = 0;
     var iparr = ipstr.split(".");
-    for(var i = 0; i < 4; i++){
+    for(var i = 0;i < 4;i++) {
       ret *= 256;
-      if(!isNaN(parseInt(iparr[i], 10)))
-        ret += parseInt(iparr[i], 10);
+      if(!isNaN(parseInt(iparr[i], 10))) {
+        ret += parseInt(iparr[i], 10)
+      }
     }
-    return ret;
+    return ret
   },
 
-  init: function(){
-    if(!this._index){
+  init: function() {
+    if(!this._index) {
       this._file = Cc["@mozilla.org/file/directory_service;1"].
                      getService(Ci.nsIProperties).
                      get("ProfD", Ci.nsIFile);
       this._file.append("QQwry.dat");
-      if(this._file.exists() && this._file.isFile()){
+      if(this._file.exists() && this._file.isFile()) {
         this._open();
         this._index = this._rbytes(0, 4);
         this._total = this._rbytes(4, 4) - this._index;
         this._close();
-        if(this._total % 7){
+        if(this._total % 7) {
           throw CE("QQwry.dat is corrupted", Cr.NS_ERROR_FILE_CORRUPTED);
-        }
-        else{
+        }else {
           this._total /= 7;
-          this._total ++;
+          this._total++
         }
 
         this._conv = Cc["@mozilla.org/intl/scriptableunicodeconverter"].
                        createInstance(Ci.nsIScriptableUnicodeConverter);
         //this is hardcoded to gb2312 as QQwry.dat is encoded in gb2312;
-        this._conv.charset = "gb2312";
-      }
-      else{
+        this._conv.charset = "gb2312"
+      }else {
         throw CE("Cannot find QQwry.dat", Cr.NS_ERROR_FILE_NOT_FOUND);
       }
     }
   },
 
-  location: function(ip){
+  location: function(ip) {
     this._open();
     var ret = this._conv.ConvertToUnicode(this._getadd(ip));
     this._close();
-    return ret;
+    return ret
   }
 };
 
 var components = [IPSearcherService];
-function NSGetModule(compMgr, fileSpec)
-{
-  return XPCOMUtils.generateModule(components);
+function NSGetModule(compMgr, fileSpec) {
+  return XPCOMUtils.generateModule(components)
 }
