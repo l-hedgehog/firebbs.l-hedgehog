@@ -157,7 +157,8 @@ function hexColor(color){
   if(color.search("rgb")==0){
     var rgb = /(\d+),\s(\d+),\s(\d+)/.exec(color);
     return "#" + (toHex(rgb[1]) + toHex(rgb[2]) + toHex(rgb[3])).toUpperCase();
-  } else if(color[0] == "#"){
+  }
+  if(color[0] == "#"){
     switch(color) {
       case "#000000":
         return "black";
@@ -194,7 +195,6 @@ function hexColor(color){
       default:
         return color;
     }
-  } else {
-    return color;
   }
+  return color;
 }
