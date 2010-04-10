@@ -22,333 +22,328 @@
 
 var colorTable = [];
 //0~9 dark ones
-colorTable[0] = 'black';
-colorTable[1] = '#400000';
-colorTable[2] = '#004000';
-colorTable[3] = '#404000';
-colorTable[4] = '#000040';
-colorTable[5] = '#400040';
-colorTable[6] = '#004040';
-colorTable[7] = '#606060';
-colorTable[9] = '#F9F9F9';
+colorTable[0] = "black";
+colorTable[1] = "#400000";
+colorTable[2] = "#004000";
+colorTable[3] = "#404000";
+colorTable[4] = "#000040";
+colorTable[5] = "#400040";
+colorTable[6] = "#004040";
+colorTable[7] = "#606060";
+colorTable[9] = "#F9F9F9";
 //10~19 normal ones
-colorTable[10] = 'black';
-colorTable[11] = 'maroon';
-colorTable[12] = 'green';
-colorTable[13] = 'olive';
-colorTable[14] = 'navy';
-colorTable[15] = 'purple';
-colorTable[16] = 'teal';
-colorTable[17] = 'silver';
-colorTable[19] = '#F9F9F9';
+colorTable[10] = "black";
+colorTable[11] = "maroon";
+colorTable[12] = "green";
+colorTable[13] = "olive";
+colorTable[14] = "navy";
+colorTable[15] = "purple";
+colorTable[16] = "teal";
+colorTable[17] = "silver";
+colorTable[19] = "#F9F9F9";
 //20~29 bright ones
-colorTable[20] = 'gray';
-colorTable[21] = 'red';
-colorTable[22] = 'lime';
-colorTable[23] = 'yellow';
-colorTable[24] = 'blue';
-colorTable[25] = 'fuchsia';
-colorTable[26] = 'aqua';
-colorTable[27] = 'white';
-colorTable[29] = '#F9F9F9';
+colorTable[20] = "gray";
+colorTable[21] = "red";
+colorTable[22] = "lime";
+colorTable[23] = "yellow";
+colorTable[24] = "blue";
+colorTable[25] = "fuchsia";
+colorTable[26] = "aqua";
+colorTable[27] = "white";
+colorTable[29] = "#F9F9F9";
 
 var $output_area = {
-  rows : 24,
-  cols : 80,
+  rows: 24,
+  cols: 80
 };
 
 var $scrolling_region = {
-  top: 1,
+  top:    1,
   bottom: $output_area.rows,
 
-  setToDefault: function(){
+  setToDefault: function() {
     this.top = 1;
-    this.bottom = $output_area.rows;
+    this.bottom = $output_area.rows
   },
 
-  setRegion: function(top, bottom){
+  setRegion: function(top, bottom) {
     this.top = top;
-    this.bottom = bottom;
-  },
-
+    this.bottom = bottom
+  }
 };
 
 var $cursor = {
-  position : {
+  position: {
     m: 1,
-    n: 1,
+    n: 1
   },
-  saved_position : {
+  saved_position: {
     m: 1,
-    n: 1,
+    n: 1
   },
 
-  setPosition: function(m, n){
-    if(m < 1){
-      this.position.m = 1;
-    }
-    else if(m <= $output_area.rows){
-      this.position.m = m;
-    }
-    else{
-      this.position.m = $output_area.rows;
+  setPosition: function(m, n) {
+    if(m < 1) {
+      this.position.m = 1
+    }else if(m <= $output_area.rows) {
+      this.position.m = m
+    }else {
+      this.position.m = $output_area.rows
     }
 
-    if(n < 1){
-      this.position.n = 1;
-    }
-    else if(n <= $output_area.cols){
-      this.position.n = n;
-    }
-    else{
-      this.position.n = $output_area.cols;
+    if(n < 1) {
+      this.position.n = 1
+    }else if(n <= $output_area.cols) {
+      this.position.n = n
+    }else {
+      this.position.n = $output_area.cols
     }
   },
 
-  savePosition: function(){
+  savePosition: function() {
     this.saved_position.m = this.position.m;
-    this.saved_position.n = this.position.n;
+    this.saved_position.n = this.position.n
   },
 
-  restorePosition: function(){
+  restorePosition: function() {
     this.position.m = this.saved_position.m;
-    this.position.n = this.saved_position.n;
+    this.position.n = this.saved_position.n
   }
 };
 
 var $character = {
-  fontSize : 24,
-  fontWidth : 12,
-  fontHeight: 24,
-  intensity: 10,
-  italic : '',
-  underline : '',
-  blink : '',
-  color : 7,
-  backgroundColor : 0,
-  image: 'positive',
-  display: 'block',
-  lead: 0,
+  fontSize:         24,
+  fontWidth:        12,
+  fontHeight:       24,
+  intensity:        10,
+  italic:           "",
+  underline:        "",
+  blink:            "",
+  color:            7,
+  backgroundColor:  0,
+  image:            "positive",
+  display:          "block",
+  lead:             0,
 
-  init: function(fontSize){
+  init: function(fontSize) {
     this.fontSize = fontSize;
     this.fontWidth = fontSize / 2;
-    this.fontHeight = fontSize;
+    this.fontHeight = fontSize
   },
 
-  setToDefault: function(){
+  setToDefault: function() {
     this.intensity = 10;
-    this.italic = '';
-    this.underline = '';
-    this.blink = '';
+    this.italic = "";
+    this.underline = "";
+    this.blink = "";
     this.color = 7;
     this.backgroundColor = 0;
-    this.image = 'positive';
-    this.display = 'block';
+    this.image = "positive";
+    this.display = "block"
   },
 
-  setIntensityToBold: function(){
-    this.intensity = 20;
+  setIntensityToBold: function() {
+    this.intensity = 20
   },
 
-  setIntensityToNormal: function(){
-    this.intensity = 10;
+  setIntensityToNormal: function() {
+    this.intensity = 10
   },
 
-  setIntensityToFaint: function(){
+  setIntensityToFaint: function() {
     this.intensity = 0
   },
 
-  italicOn: function(){
-    this.italic = 'italic';
+  italicOn: function() {
+    this.italic = "italic"
   },
 
-  italicOff: function(){
-    this.italic = '';
+  italicOff: function() {
+    this.italic = ""
   },
 
-  underlineOn: function(){
-    this.underline = 'underline';
+  underlineOn: function() {
+    this.underline = "underline"
   },
 
-  underlineOff: function(){
-    this.underline = '';
+  underlineOff: function() {
+    this.underline = ""
   },
 
-  blinkOn: function(){
-    this.blink = 'blink';
+  blinkOn: function() {
+    this.blink = "blink"
   },
 
-  blinkOff: function(){
-    this.blink = '';
+  blinkOff: function() {
+    this.blink = ""
   },
 
-  setImagePositive: function(){
-    this.image = 'positive';
+  setImagePositive: function() {
+    this.image = "positive"
   },
 
-  setImageNegative: function(){
-    this.image = 'negtive';
+  setImageNegative: function() {
+    this.image = "negtive"
   },
 
-  setVisibilityOn:function(){
-    this.display = 'block';
+  setVisibilityOn: function() {
+    this.display = "block"
   },
 
-  setVisibilityOff:function(){
-    this.display = 'none';
+  setVisibilityOff: function() {
+    this.display = "none"
   },
 
-  setColor: function(index){
-    this.color = index;
+  setColor: function(index) {
+    this.color = index
   },
 
-  setBackgroundColor: function(index){
-    this.backgroundColor = index;
+  setBackgroundColor: function(index) {
+    this.backgroundColor = index
   },
 
-  setLead: function(lead){
-    this.lead = lead;
+  setLead: function(lead) {
+    this.lead = lead
   },
 
-  getProperty: function(pro){
-    switch(pro){
-      case 'display':
+  getProperty: function(pro) {
+    switch(pro) {
+      case "display":
         return this.display;
-      case 'font-style':
+      case "font-style":
         return this.italic;
-      case 'text-decoration':
-        return this.underline + ' ' + this.blink;
-      case 'color':
-        if(this.color < 10){
-          var index = this.intensity + (this.image == 'positive'
+      case "text-decoration":
+        return this.underline + " " + this.blink;
+      case "color":
+        if(this.color < 10) {
+          var index = this.intensity + (this.image == "positive"
                                      ?  this.color
                                      :  this.backgroundColor);
-          return colorTable[index];
-        }
-        else{
-          return  this.image == 'positive'
-                ? colorTable[20 + this.color % 10]
-                : colorTable[20 + this.backgroundColor % 10];
-        }
-      case 'background-color':
-        if(this.color < 10){
-          var index = 10 + (this.image == 'positive'
+          return colorTable[index]
+        }else {
+          return this.image == "positive"
+               ? colorTable[20 + this.color % 10]
+               : colorTable[20 + this.backgroundColor % 10]
+        };
+      case "background-color":
+        if(this.color < 10) {
+          var index = 10 + (this.image == "positive"
                          ?  this.backgroundColor
                          :  this.color);
-          return colorTable[index];
-        }
-        else{
-          return  this.image == 'positive'
-                ? colorTable[20 + this.backgroundColor % 10]
-                : colorTable[20 + this.color % 10];
+          return colorTable[index]
+        }else {
+          return this.image == "positive"
+               ? colorTable[20 + this.backgroundColor % 10]
+               : colorTable[20 + this.color % 10]
         }
     }
-  },
+  }
 };
 
 var $garbage_span_collector = {
-  coveredArea : [],
+  coveredArea: [],
 
-  initCoveredArea : function(){
+  initCoveredArea: function() {
     this.coveredArea.length = 0;
-    for(var i = 0; i < 25; i++){
-      this.coveredArea.push([]);
+    for(var i = 0;i < 25;i++) {
+      this.coveredArea.push([])
     }
   },
 
-  interpretCoveredArea : function(){
+  interpretCoveredArea: function() {
 
-    function combineRange(range1, range2){
-      if(!range1.length){
+    function combineRange(range1, range2) {
+      if(!range1.length) {
         var tmp = [];
-        tmp.push(range2)
+        tmp.push(range2);
         return tmp
       }
 
-      var tmp = range1[range1.length -1];
+      var tmp = range1[range1.length - 1];
 
       if(Math.abs(range2[1] - tmp[0]) -
          Math.abs(tmp[1] - tmp[0]) -
-         Math.abs(range2[1] -range2[0]) <= 0){
+         Math.abs(range2[1] - range2[0]) <= 0) {
         tmp[1] = range2[1];
-        return range1.splice(range1.length - 1, 1, tmp);
-      }
-      else {
+        return range1.splice(range1.length - 1, 1, tmp)
+      }else {
         range1.push(range2);
-        return range1;
+        return range1
       }
     }
 
-    for(var i=0; i<this.coveredArea.length; i++){
-      if(this.coveredArea[i].length)
-        this.coveredArea[i] = (this.coveredArea[i]).reduce(combineRange, []);
+    for(var i = 0;i < this.coveredArea.length;i++) {
+      if(this.coveredArea[i].length) {
+        this.coveredArea[i] = this.coveredArea[i].reduce(combineRange, [])
+      }
     }
   },
 
-  setRange: function(m, range){
+  setRange: function(m, range) {
    // if(range[1]>81) range[1]=Infinity;
-    this.coveredArea[m].push(range);
+    this.coveredArea[m].push(range)
   },
 
-  clearScreen: function(){
+  clearScreen: function() {
     this.interpretCoveredArea();
     var re = /m(\d+)n(\d+)n(\d+)/;
 
-    with(FireBBS.output_area){
-      for(var i = childNodes.length - 1; i >= 0 ; i--){
-        if(childNodes[i].style.display == 'none'){
+    with(FireBBS.output_area) {
+      for(var i = childNodes.length - 1;i >= 0;i--) {
+        if(childNodes[i].style.display == "none") {
           removeChild(childNodes[i]);
-          continue;
+          continue
         }
 
         var result = re.exec(childNodes[i].id);
-        if(!result) continue;
+        if(!result) {
+          continue
+        }
         ranges = this.coveredArea[result[1]];
 
-        if(ranges.length){
-          for(var j = 0; j < ranges.length; j++){
+        if(ranges.length) {
+          for(var j = 0;j < ranges.length;j++) {
             if(ranges[j][0] <= result[2] &&
-               ranges[j][1] >= result[3]){
+               ranges[j][1] >= result[3]) {
               removeChild(childNodes[i]);
-              break;
+              break
             }
           }
         }
       }
     }
-    this.initCoveredArea();
-  },
+    this.initCoveredArea()
+  }
 };
 
 var $anti_idler = {
-  delay    : 300000,
+  delay:  3E5,
   //^@
-  string   : String.fromCharCode(0x00),
-  timer    : null,
+  string: String.fromCharCode(0),
+  timer:  null,
 
-  init: function(delay){
-    if(delay){
-      this.delay = delay * 1000;
+  init: function(delay) {
+    if(delay) {
+      this.delay = delay * 1E3
     }
     this.timer = Cc["@mozilla.org/timer;1"].
                    createInstance(Ci.nsITimer);
     this.timer.initWithCallback(this,
                                 this.delay,
-                                Ci.nsITimer.TYPE_REPEATING_SLACK);
+                                Ci.nsITimer.TYPE_REPEATING_SLACK)
   },
 
-  notify: function(timer){
-    FireBBS.sendData(this.string);
+  notify: function(timer) {
+    FireBBS.sendData(this.string)
   },
 
-  stop: function(){
-    this.timer.cancel();
+  stop: function() {
+    this.timer.cancel()
   },
 
-  update: function(){
+  update: function() {
     this.timer.initWithCallback(this,
                                 this.delay,
-                                Ci.nsITimer.TYPE_REPEATING_SLACK);
-  },
+                                Ci.nsITimer.TYPE_REPEATING_SLACK)
+  }
 };

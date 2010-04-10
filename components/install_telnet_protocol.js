@@ -17,9 +17,13 @@
  * Portions created by IBM Corporation are Copyright (C) 2004
  * IBM Corporation. All Rights Reserved.
  *
+ * As part of FireBBS.l-hedgehog, XPCOMUtils is introduced into this file
+ * by Hector Zhao in 2009.
+ *
  * Contributor(s):
  *   Darin Fisher <darin@meer.net>
  *   Doron Rosenberg <doronr@us.ibm.com>
+ *   Hector Zhao <http://github.com/l-hedgehog>
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -35,12 +39,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-/*
- * Modification by 2009 Hector Zhao
- * Switch to XPCOMUtils, code from pythonext <http://pyxpcomext.mozdev.org>
- */
-
-// Test protocol related
+// Telnet protocol related
 const kSCHEME              = "telnet";
 const kPROTOCOL_NAME       = "Telnet Protocol";
 const kPROTOCOL_CONTRACTID = "@mozilla.org/network/protocol;1?name=" + kSCHEME;
@@ -58,7 +57,8 @@ const nsIURI             = Components.interfaces.nsIURI;
 
 Components.utils.import("resource://gre/modules/XPCOMUtils.jsm");
 
-function TelnetProtocol() {}
+function TelnetProtocol() {
+}
 
 TelnetProtocol.prototype = {
   classDescription: kPROTOCOL_NAME,
@@ -74,7 +74,7 @@ TelnetProtocol.prototype = {
                  nsIProtocolHandler.URI_LOADABLE_BY_ANYONE,
   
   allowPort: function(port, scheme) {
-    return false;
+    return false
   },
 
   newURI: function(spec, charset, baseURI) {
@@ -83,7 +83,7 @@ TelnetProtocol.prototype = {
     url.init(nsIStandardURL.URLTYPE_STANDARD,
              this.defaultPort, spec, charset, baseURI);
 
-    return url.QueryInterface(nsIURI);
+    return url.QueryInterface(nsIURI)
   },
 
   newChannel: function(aURI) {
@@ -91,18 +91,18 @@ TelnetProtocol.prototype = {
     var site_url = aURI.spec;
 
     // strip away the kSCHEME: part
-    site_url = site_url.substring(site_url.indexOf("://") + 3, site_url.length);    
+    site_url = site_url.substring(site_url.indexOf("://") + 3, site_url.length);
     // site_url = encodeURI(site_url);
 
     /* create dummy nsIURI and nsIChannel instances */
     var ios = Components.classes[kIOSERVICE_CONTRACTID].getService(nsIIOService);
 
-    return ios.newChannel('chrome://firebbs/content/firebbs.html', null, null);
-  },
-}
+    return ios.newChannel("chrome://firebbs/content/firebbs.html", null, null)
+  }
+};
 
 // XPCOM registration.
 var components = [TelnetProtocol];
 function NSGetModule(compMgr, fileSpec) {
-    return XPCOMUtils.generateModule(components);
+  return XPCOMUtils.generateModule(components)
 }

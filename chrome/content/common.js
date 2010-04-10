@@ -20,76 +20,94 @@
  *
  * ***** END COPYRIGHT AND LICENSE BLOCK ***** */
 
-function prePicRel(match){
-  if(match.search(/\.(bmp|gif|jpe?g|png)$/i)==-1){
-    return '';
-  } else {
+function prePicRel(match) {
+  if(match.search(/\.(bmp|gif|jpe?g|png)$/i) == -1) {
+    return ""
+  }else {
     return ' rel="pic_preview"'
   }
 }
 
-function ip2LocRel(match){
-  return match[0] + '<a rel="ip2loc">' + match.substr(1) + '</a>';
+function ip2LocRel(match) {
+  return match[0] + '<a rel="ip2loc">' + match.substr(1) + "</a>"
 }
 
 //trick to avoid </img> in link
-function addLink(match){
+function addLink(match) {
   var imgTag = match.search(/&lt;/);
-  if(imgTag==-1){
-    return '<a href="' + match + '" target="_blank"' + prePicRel(match) + '>' + match + '</a>';
-  } else {
-    return '<a href="' + match.substr(0, imgTag) + '" target="_blank" rel="pic_preview">' + match.substr(0, imgTag) + '</a>' + match.substr(imgTag);
+  if(imgTag == -1) {
+    return '<a href="' + match + '" target="_blank"' + prePicRel(match) + ">" + match + "</a>"
+  }else {
+    return '<a href="' + match.substr(0, imgTag) + '" target="_blank" rel="pic_preview">' + match.substr(0, imgTag) + "</a>" + match.substr(imgTag)
   }
 }
 
-function generate_span(str){
-  if(!str || $character.display == 'none') return '';
+function generate_span(str) {
+  if(!str || $character.display == "none") {
+    return ""
+  }
 
   var pos = convertMN2XY($cursor.position);
-  if(bcDBCS){
+  if(bcDBCS) {
     var lengthOfText = str.length;
     str = nsIScriptableUnicodeConverter.ConvertToUnicode(str);
     lengthOfText -= fixLen(str);
-    var bicolor = $character.lead + lengthOfText - stringLen(str);
-  } else {
-    var lengthOfText = stringLen(str);
+    var bicolor = $character.lead + lengthOfText - stringLen(str)
+  }else {
+    var lengthOfText = stringLen(str)
   }
-  //str = str.replace(/\uFFFD/g, ' ');
-  str = str.replace(/\ufffd/g, '?');
-  if(str.match(/&|<|>|"/g)){
-     str = str.replace(/&/g, '&amp;');
-     str = str.replace(/</g, '&lt;');
-     str = str.replace(/>/g, '&gt;');
-     str = str.replace(/"/g, '&quot;');
+  //str = str.replace(/\ufffd/g, ' ');
+  str = str.replace(/\ufffd/g, "?");
+  if(str.match(/&|<|>|"/g)) {
+    str = str.replace(/&/g, "&amp;");
+    str = str.replace(/</g, "&lt;");
+    str = str.replace(/>/g, "&gt;");
+    str = str.replace(/"/g, "&quot;")
   }
   //add html link
-  var urlTemplate=/(https?:\/\/)([\w-.]+)(:[0-9]+)?(\/[\/\w;,?:@&=+$.!~*'#%-]*)?/g;  //()
+  var urlTemplate = /(https?:\/\/)([\w-.]+)(:[0-9]+)?(\/[\/\w;,?:@&=+$.!~*'#%-]*)?/g;  //()
   str = str.replace(urlTemplate, addLink);
   //add ip2location link
-  var fromIpTemplate=/[\[\s]\d+\.\d+\.\d+\.[*\d]+/;
-  if(hzIPSearcher)
-    str = str.replace(fromIpTemplate, ip2LocRel);
-
-  var s = '<span ';
-  s += 'id="m' + $cursor.position.m + 'n' + $cursor.position.n + 'n' + ($cursor.position.n + lengthOfText) + '"';
-  s += 'class="terminal_display" '
-  s += 'style="';
-  s += 'left: ' + pos[0] + 'px;';
-  s += 'top: ' + pos[1] + 'px;';
-  s += 'width: ' + (lengthOfText * $character.fontWidth) + 'px;';
-
-  if($character.italic)
-    s += 'font-style: ' + $character.getProperty('font-style') + ';';
-
-  if($character.underline || $character.blink)
-    s += 'text-decoration: ' + $character.getProperty('text-decoration') + ';';
-
-  if($character.lead){
-    FireBBS.HTMLString_cache = FireBBS.HTMLString_cache.replace(/<\/span>$/, str[0]+'</span>');
-    s += 'overflow: hidden; text-indent: -' + $character.fontWidth + 'px;';
+  var fromIpTemplate = /[\[\s]\d+\.\d+\.\d+\.[*\d]+/;
+  if(hzIPSearcher) {
+    str = str.replace(fromIpTemplate, ip2LocRel)
   }
-  if(bcDBCS){
-    switch(bicolor){
+
+  var s = ['<span id="m'];
+  s.push($cursor.position.m);
+  s.push("n");
+  s.push($cursor.position.n);
+  s.push("n");
+  s.push($cursor.position.n + lengthOfText);
+  s.push('" class="terminal_display" style="left: ');
+  s.push(pos[0]);
+  s.push("px;top: ");
+  s.push(pos[1]);
+  s.push("px;width: ");
+  s.push(lengthOfText * $character.fontWidth);
+  s.push("px;");
+
+  if($character.italic) {
+    s.push("font-style: ");
+    s.push($character.getProperty("font-style"));
+    s.push(";")
+  }
+
+  if($character.underline || $character.blink) {
+    s.push("text-decoration: ");
+    s.push($character.getProperty("text-decoration"));
+    s.push(";")
+  }
+
+  if($character.lead) {
+    var latest = FireBBS.HTMLString_cache.length - 1;
+    FireBBS.HTMLString_cache[latest] = FireBBS.HTMLString_cache[latest].replace(/<\/span>$/, str[0] + "</span>");
+    s.push("overflow: hidden; text-indent: -");
+    s.push($character.fontWidth);
+    s.push("px;")
+  }
+  if(bcDBCS) {
+    switch(bicolor) {
       case 0:
       case 1:
         $character.setLead(bicolor);
@@ -99,65 +117,77 @@ function generate_span(str){
     }
   }
 
-  s += 'color: ' + $character.getProperty('color') + ';';
-  s += 'background-color: ' + $character.getProperty('background-color') + ';">';
-  s += str + '</span>';
+  s.push("color: ");
+  s.push($character.getProperty("color"));
+  s.push(";background-color: ");
+  s.push($character.getProperty("background-color"));
+  s.push(';">');
+  s.push(str);
+  s.push("</span>");
 
   $garbage_span_collector.setRange($cursor.position.m, [$cursor.position.n, $cursor.position.n + lengthOfText]);
   $cursor.setPosition($cursor.position.m, $cursor.position.n + lengthOfText);
-  return s;
+  return s.join("")
 }
 
-function generate_bg_span(cursorPosition, cols){
+function generate_bg_span(cursorPosition, cols) {
   var pos = convertMN2XY($cursor.position);
-  var s = '<span';
-  s += ' id="m' + cursorPosition.m + 'n' + cursorPosition.n + 'n' + (cursorPosition.n + cols) + '"';
-  s += 'class="terminal_display" '
-  s += ' style="';
-  s += 'left: ' + pos[0] + 'px;';
-  s += 'top: ' + pos[1] + 'px;';
-  s += 'background-color: ' + colorTable[10] + ';'
-  s += 'width: ' + (cols * $character.fontWidth) + 'px"> </span>';
+  var s = ['<span id="m'];
+  s.push(cursorPosition.m);
+  s.push("n");
+  s.push(cursorPosition.n);
+  s.push("n");
+  s.push(cursorPosition.n + cols);
+  s.push('" class="terminal_display" style="left: ');
+  s.push(pos[0]);
+  s.push("px;top: ");
+  s.push(pos[1]);
+  s.push("px;background-color: ");
+  s.push(colorTable[10]);
+  s.push(";width: ");
+  s.push(cols * $character.fontWidth);
+  s.push('px"> </span>');
   $garbage_span_collector.setRange($cursor.position.m, [cursorPosition.n, cursorPosition.n + cols]);
-  return s;
+  return s.join("")
 }
 
-function convertMN2XY(cursorPosition){
+function convertMN2XY(cursorPosition) {
   var origin = [FireBBS.output_area.offsetLeft + 1,
                 FireBBS.output_area.offsetTop + 1];
   var realX = origin[0] + (cursorPosition.n - 1) * $character.fontWidth;
   var realY = origin[1] + (cursorPosition.m - 1) * $character.fontHeight;
-  return [realX, realY];
+  return [realX, realY]
 }
 
-function stringLen(str){
-  var str2 = str.replace(/[\x00-\xFF\uFFFD]/g, '');
+function stringLen(str) {
+  var str2 = str.replace(/[\x00-\xFF\uFFFD]/g, "");
   //fix for these: '¤§¨°±·×÷'
-  var str3 = str.replace(/[^\xA4\xA7\xA8\xB0\xB1\xB7\xD7\xF7]/g, '');
-  return str.length + str2.length + str3.length;
+  var str3 = str.replace(/[^\xA4\xA7\xA8\xB0\xB1\xB7\xD7\xF7]/g, "");
+  return str.length + str2.length + str3.length
 }
 
-function fixLen(str){
+function fixLen(str) {
   //fix for these: 'àáèéêìíòóùúü'
-  var strFix = str.replace(/[^\xE0\xE1\xE8-\xEA\xEC\xED\xF2\xF3\xF9\xFA\xFC]/g, '');
+  var strFix = str.replace(/[^\xE0\xE1\xE8-\xEA\xEC\xED\xF2\xF3\xF9\xFA\xFC]/g, "");
   //fix for ptt.cc login, but cannot find this string in the online pttbbs cvs 
   var lenFix = /\ufffd\ufffd\x18\x01\ufffd/.test(str) ? 1 : 0;
-  return strFix.length + lenFix;
+  return strFix.length + lenFix
 }
 
-function locale(strName){
-  return strBundle.GetStringFromName(strName);
+function locale(strName) {
+  return strBundle.GetStringFromName(strName)
 }
 
-function toHex(dec){
-  return (256 + parseInt(dec, 10)).toString(16).substr(-2);
+function toHex(dec) {
+  return (256 + parseInt(dec, 10)).toString(16).substr(-2)
 }
 
-function hexColor(color){
-  if(color.search("rgb")==0){
+function hexColor(color) {
+  if(color.search("rgb") == 0) {
     var rgb = /(\d+),\s(\d+),\s(\d+)/.exec(color);
-    return "#" + (toHex(rgb[1]) + toHex(rgb[2]) + toHex(rgb[3])).toUpperCase();
-  } else if(color[0] == "#"){
+    return "#" + (toHex(rgb[1]) + toHex(rgb[2]) + toHex(rgb[3])).toUpperCase()
+  }
+  if(color[0] == "#") {
     switch(color) {
       case "#000000":
         return "black";
@@ -192,9 +222,8 @@ function hexColor(color){
       case "#FFFFFF":
         return "white";
       default:
-        return color;
+        return color
     }
-  } else {
-    return color;
   }
+  return color
 }
