@@ -17,21 +17,16 @@ Tips
     *   Copy as ASCII code: use "Shift + ^C" instead of "^C";
     *   Paste for both: use "Shift + ^V", __NOT__ "^V".
 *   __Preferences__
-    1.  Go to "about:config";
-    2.  In the filter, search for "extensions.firebbs.";
-    3.  There will be:
-        *   "bgcolor", background color, web standard color names preferred,
-            "#080808" is ok but only in "about:config";
-        *   "charset", encodings, e.g. "big5";
-        *   "experiment.bicolorDBCS", experimental support of bicolor DBCS,
-            enable it may introduce bugs in text & ASCII copy;
-        *   "fontfamily";
-        *   "fontsize";
-        *   "idledelay", idle time before anti-idler sends "^@", in seconds;
-        *   "ipsearcher", __READ THE NEXT SECTION__ before you enable it;
-        *   "sound", path of the sound to be played when receiving messages,
-            leave it blank to use system default;
-    4.  Also, [telnet://ptt.cc/?charset=big5&fontfamily=MingLiU][3] will work,
+    *   Options window can be accessed through "Tools / Addons / Extensions";
+    *   __READ THE NEXT SECTION__ before you enable IPSearcher;
+    *   Press the button to select the sound file you need;
+    *   To enable experimental features, you need:
+        1.  Go to "about:config";
+        2.  In the filter, search for "extensions.firebbs.experiment.";
+        3.  There will be:
+            *   "bicolorDBCS", experimental support of bicolor DBCS,
+                enable it may introduce bugs in text & ASCII copy;
+    *   Also, [telnet://ptt.cc/?charset=big5&fontfamily=MingLiU][3] will work,
         for "bgcolor", "charset", "fontfamily" & "fontsize".
 *   __IPSearcher__
     *   All platform supported;
