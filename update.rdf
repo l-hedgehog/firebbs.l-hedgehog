@@ -8,14 +8,15 @@
       <Seq>
         <li>
           <Description>
-            <em:version>0.45</em:version>
+            <em:version>0.46</em:version>
 
             <em:targetApplication>
               <Description>
                 <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
                 <em:minVersion>3.0</em:minVersion>
                 <em:maxVersion>3.6.*</em:maxVersion>
-                <em:updateLink>https://hedgehog-hosted.appspot.com/download/firebbs.l-hedgehog.xpi?v=0.45</em:updateLink>
+                <!--<em:updateLink>https://hedgehog-hosted.appspot.com/download/firebbs.l-hedgehog.xpi?v=0.45</em:updateLink>-->
+                <em:updateLink>https://addons.mozilla.org/en-US/firefox/downloads/file/86068/firebbs.l-hedgehog-0.46-fx.xpi?src=external-selfhostupdate&confirmed</em:updateLink>
               </Description>
             </em:targetApplication>
           </Description>

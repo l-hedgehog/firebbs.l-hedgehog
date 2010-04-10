@@ -4,6 +4,11 @@ the first digit is reserved for my real contribution to the extension
 
 == yyyy-mm-dd *.* ==
 
+== 2010-04-10 0.46 ==
+- option window, I'm not sure about the zh-TW strings
+- nominate this extension to public on AMO
+- code re-format
+
 == 2010-03-19 0.45 ==
 - experimental support of bicolor DBCS
 - new pref to control the delay of anti-idler
