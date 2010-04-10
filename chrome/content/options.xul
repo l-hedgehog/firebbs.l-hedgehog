@@ -87,7 +87,7 @@
             <checkbox id="c-ipsearcher" preference="b-ipsearcher" label="&c-ipsearcher.label;"/>
           </row>
           <row>
-            <button id="b-sound" control="t-sound" label="&t-sound.label;" oncommand="chooseFile();"/>
+            <button id="b-sound" label="&t-sound.label;" oncommand="chooseFile();"/>
             <textbox id="t-sound" preference="s-sound"/>
           </row>
         </rows>

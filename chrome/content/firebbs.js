@@ -283,7 +283,7 @@ var FireBBS = {
     this.output_area.style.height = $character.fontHeight * $output_area.rows + "px"
   },
 
-  sendData : function(str) {
+  sendData: function(str) {
     if(bcDBCS) {
       str = nsIScriptableUnicodeConverter.ConvertFromUnicode(str);
       str += nsIScriptableUnicodeConverter.Finish();
@@ -296,7 +296,7 @@ var FireBBS = {
     $anti_idler.update()
   },
 
-  relocateCursor : function() {
+  relocateCursor: function() {
     var pos = convertMN2XY($cursor.position);
     this.cursor.style.left = pos[0] + "px";
     this.cursor.style.top = pos[1] + "px";
