@@ -73,25 +73,38 @@ function generate_span(str) {
     str = str.replace(fromIpTemplate, ip2LocRel)
   }
 
-  var s = "<span ";
-  s += 'id="m' + $cursor.position.m + "n" + $cursor.position.n + "n" + ($cursor.position.n + lengthOfText) + '"';
-  s += 'class="terminal_display" ';
-  s += 'style="';
-  s += "left: " + pos[0] + "px;";
-  s += "top: " + pos[1] + "px;";
-  s += "width: " + lengthOfText * $character.fontWidth + "px;";
+  var s = ['<span id="m'];
+  s.push($cursor.position.m);
+  s.push("n");
+  s.push($cursor.position.n);
+  s.push("n");
+  s.push($cursor.position.n + lengthOfText);
+  s.push('" class="terminal_display" style="left: ');
+  s.push(pos[0]);
+  s.push("px;top: ");
+  s.push(pos[1]);
+  s.push("px;width: ");
+  s.push(lengthOfText * $character.fontWidth);
+  s.push("px;");
 
   if($character.italic) {
-    s += "font-style: " + $character.getProperty("font-style") + ";"
+    s.push("font-style: ");
+    s.push($character.getProperty("font-style"));
+    s.push(";")
   }
 
   if($character.underline || $character.blink) {
-    s += "text-decoration: " + $character.getProperty("text-decoration") + ";"
+    s.push("text-decoration: ");
+    s.push($character.getProperty("text-decoration"));
+    s.push(";")
   }
 
   if($character.lead) {
-    FireBBS.HTMLString_cache = FireBBS.HTMLString_cache.replace(/<\/span>$/, str[0] + "</span>");
-    s += "overflow: hidden; text-indent: -" + $character.fontWidth + "px;"
+    var latest = FireBBS.HTMLString_cache.length - 1;
+    FireBBS.HTMLString_cache[latest] = FireBBS.HTMLString_cache[latest].replace(/<\/span>$/, str[0] + "</span>");
+    s.push("overflow: hidden; text-indent: -");
+    s.push($character.fontWidth);
+    s.push("px;")
   }
   if(bcDBCS) {
     switch(bicolor) {
@@ -104,27 +117,38 @@ function generate_span(str) {
     }
   }
 
-  s += "color: " + $character.getProperty("color") + ";";
-  s += "background-color: " + $character.getProperty("background-color") + ';">';
-  s += str + "</span>";
+  s.push("color: ");
+  s.push($character.getProperty("color"));
+  s.push(";background-color: ");
+  s.push($character.getProperty("background-color"));
+  s.push(';">');
+  s.push(str);
+  s.push("</span>");
 
   $garbage_span_collector.setRange($cursor.position.m, [$cursor.position.n, $cursor.position.n + lengthOfText]);
   $cursor.setPosition($cursor.position.m, $cursor.position.n + lengthOfText);
-  return s
+  return s.join("")
 }
 
 function generate_bg_span(cursorPosition, cols) {
   var pos = convertMN2XY($cursor.position);
-  var s = "<span";
-  s += ' id="m' + cursorPosition.m + "n" + cursorPosition.n + "n" + (cursorPosition.n + cols) + '"';
-  s += 'class="terminal_display" ';
-  s += ' style="';
-  s += "left: " + pos[0] + "px;";
-  s += "top: " + pos[1] + "px;";
-  s += "background-color: " + colorTable[10] + ";";
-  s += "width: " + cols * $character.fontWidth + 'px"> </span>';
+  var s = ['<span id="m'];
+  s.push(cursorPosition.m);
+  s.push("n");
+  s.push(cursorPosition.n);
+  s.push("n");
+  s.push(cursorPosition.n + cols);
+  s.push('" class="terminal_display" style="left: ');
+  s.push(pos[0]);
+  s.push("px;top: ");
+  s.push(pos[1]);
+  s.push("px;background-color: ");
+  s.push(colorTable[10]);
+  s.push(";width: ");
+  s.push(cols * $character.fontWidth);
+  s.push('px"> </span>');
   $garbage_span_collector.setRange($cursor.position.m, [cursorPosition.n, cursorPosition.n + cols]);
-  return s
+  return s.join("")
 }
 
 function convertMN2XY(cursorPosition) {

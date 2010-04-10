@@ -102,8 +102,8 @@ var FireBBS = {
   float_box:        null,
   outputStream:     null,
   inputStream:      null,
-  HTMLString_cache: '',
-  ASCII_cache:      '',
+  HTMLString_cache: [],
+  ASCII_cache:      [],
   previous_node:    null,
 
   dataListener: {
@@ -145,7 +145,7 @@ var FireBBS = {
       str = str.replace(/\r/g, "\u001b[1G");//escape CR(replace )
 
       var strArray = str.split("\u001b");
-      FireBBS.HTMLString_cache += generate_span(strArray[0]);
+      FireBBS.HTMLString_cache.push(generate_span(strArray[0]));
 
       for(var i = 1;i < strArray.length;i++) {
         switch(strArray[i][0]) {
@@ -156,7 +156,7 @@ var FireBBS = {
             if(result) {
               CSIFunctionHandler(result[2], result[1].split(";"));
               var span = generate_span(strArray[i].substr(result[0].length));
-              FireBBS.HTMLString_cache += span
+              FireBBS.HTMLString_cache.push(span)
             }else {
               if(i == strArray.length - 1) {//this is an unfinished data message
                 this.restStr = "\u001b" + strArray[i]
@@ -166,32 +166,32 @@ var FireBBS = {
 
           case "\u0007":
             BEL();
-            FireBBS.HTMLString_cache += generate_span(strArray[i].substr(1));
+            FireBBS.HTMLString_cache.push(generate_span(strArray[i].substr(1)));
             break;
           case "\n":
             LF();
-            FireBBS.HTMLString_cache += generate_span(strArray[i].substr(1));
+            FireBBS.HTMLString_cache.push(generate_span(strArray[i].substr(1)));
             break;
 
           case "D":
             IND();
-            FireBBS.HTMLString_cache += generate_span(strArray[i].substr(1));
+            FireBBS.HTMLString_cache.push(generate_span(strArray[i].substr(1)));
             break;
           case "M":
             RI();
-            FireBBS.HTMLString_cache += generate_span(strArray[i].substr(1));
+            FireBBS.HTMLString_cache.push(generate_span(strArray[i].substr(1)));
             break;
           case "E":
             NEL();
-            FireBBS.HTMLString_cache += generate_span(strArray[i].substr(1));
+            FireBBS.HTMLString_cache.push(generate_span(strArray[i].substr(1)));
             break;
           case "7":
             DECSC();
-            FireBBS.HTMLString_cache += generate_span(strArray[i].substr(1));
+            FireBBS.HTMLString_cache.push(generate_span(strArray[i].substr(1)));
             break;
           case "8":
             DECRC();
-            FireBBS.HTMLString_cache += generate_span(strArray[i].substr(1));
+            FireBBS.HTMLString_cache.push(generate_span(strArray[i].substr(1)));
             break;
           default:
             if(i == strArray.length - 1) {//this is an unfinished data message
@@ -201,8 +201,8 @@ var FireBBS = {
       }
 
       $garbage_span_collector.clearScreen();
-      FireBBS.output_area.innerHTML += FireBBS.HTMLString_cache;
-      FireBBS.HTMLString_cache = "";
+      FireBBS.output_area.innerHTML += FireBBS.HTMLString_cache.join("");
+      FireBBS.HTMLString_cache = [];
       FireBBS.relocateCursor()
     }
   },

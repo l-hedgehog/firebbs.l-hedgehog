@@ -58,11 +58,12 @@ function key_map(e) {
             ASCII = [window.getSelection().anchorNode.parentNode, window.getSelection().focusNode.parentNode]
           }
           FireBBS.input_area.focus();
-          FireBBS.ASCII_cache = "";
+          FireBBS.ASCII_cache = [];
           for(var i = ASCII[0];i != ASCII[1].nextSibling;i = i.nextSibling) {
-            FireBBS.ASCII_cache += node2ASCII(i)
+            FireBBS.ASCII_cache.push(node2ASCII(i))
           }
-          FireBBS.ASCII_cache += "\u001b\u001b[m";
+          FireBBS.ASCII_cache.push("\u001b\u001b[m");
+          FireBBS.ASCII_cache = FireBBS.ASCII_cache.join("");
           nsISupportsString.data = FireBBS.ASCII_cache;
           nsITransferable.setTransferData("text/unicode", nsISupportsString, FireBBS.ASCII_cache.length * 2);
           nsIClipboard.setData(nsITransferable, null, nsIClipboard.kGlobalClipboard)
@@ -298,10 +299,11 @@ function node2ASCII(node) {
   if(lineStart) {
     FireBBS.previous_node = [0, false, false, 10, 7]
   }
-  var string = "\u001b\u001b[";
+  var s = ["\u001b\u001b["];
   var intensity = Math.floor(color[0] / 10) - 1;
   if(intensity != FireBBS.previous_node[0]) {
-    string += intensity + ";";
+    s.push(intensity);
+    s.push(";");
     FireBBS.previous_node[0] = intensity;
     if(!intensity) {
       FireBBS.previous_node = [0, false, false, 10, 7]
@@ -309,32 +311,37 @@ function node2ASCII(node) {
   }
   var underline = style.textDecoration.search("underline") != -1;
   if(underline != FireBBS.previous_node[1]) {
-    string += underline ? "4;" : "24;";
+    s.push(underline ? "4" : "24");
+    s.push(";");
     FireBBS.previous_node[1] = underline
   }
   var blink = style.textDecoration.search("blink") != -1;
   if(blink != FireBBS.previous_node[2]) {
-    string += blink ? "5;" : "25;";
+    s.push(blink ? "5" : "25");
+    s.push(";");
     FireBBS.previous_node[2] = blink
   }
   if(color[1] != FireBBS.previous_node[3]) {
-    string += 40 + color[1] % 10 + ";";
+    s.push(40 + color[1] % 10);
+    s.push(";");
     FireBBS.previous_node[3] = color[1]
   }
   color[0] = color[0] % 10;
   if(color[0] != FireBBS.previous_node[4]) {
-    string += 30 + color[0] + ";";
+    s.push(30 + color[0]);
+    s.push(";");
     FireBBS.previous_node[4] = color[0]
   }
-  string = string.replace(/;$/, "m");
+  var latest = s.length - 1;
+  s[latest] = "m";
   var text = node.innerHTML.replace(/<.+?>/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
   if(style.textIndent) {
-    string = "\u001b[D" + string + "\u001b[C";
+    s = ["\u001b[D"].concat(s, ["\u001b[C"]);
     text = text.substr(1)
   }
-  if(string == "\u001b\u001b[") {
-    string = ""
+  if(s.length == 1) {
+    s = []
   }
-  string += text;
-  return (lineStart && FireBBS.ASCII_cache ? "\u001b\u001b[m\r" : "") + string
+  s.push(text);
+  return [(lineStart && FireBBS.ASCII_cache.length ? "\u001b\u001b[m\r" : "")].concat(s).join("")
 }
