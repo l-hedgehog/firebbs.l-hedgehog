@@ -258,6 +258,10 @@ function switchInputCapturer() {
 
 function composition_start() {
   var pos = convertMN2XY($cursor.position);
+  //try fix chewing
+  if(FireBBS.input_area.style.opacity) {
+    FireBBS.input_area.style.width = window.innerWidth - pos[0] - 30 + "px"
+  }
   FireBBS.input_area.style.left = pos[0] + "px";
   FireBBS.input_area.style.top = pos[1] + "px"
 }

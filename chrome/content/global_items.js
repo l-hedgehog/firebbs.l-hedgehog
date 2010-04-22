@@ -330,7 +330,7 @@ var $anti_idler = {
                    createInstance(Ci.nsITimer);
     this.timer.initWithCallback(this,
                                 this.delay,
-                                Ci.nsITimer.TYPE_REPEATING_SLACK)
+                                Ci.nsITimer.TYPE_ONE_SHOT)
   },
 
   notify: function(timer) {
@@ -344,6 +344,6 @@ var $anti_idler = {
   update: function() {
     this.timer.initWithCallback(this,
                                 this.delay,
-                                Ci.nsITimer.TYPE_REPEATING_SLACK)
+                                Ci.nsITimer.TYPE_ONE_SHOT)
   }
 };

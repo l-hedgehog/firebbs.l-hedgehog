@@ -46,7 +46,12 @@
     <script type="text/javascript">
 FireBBS.init();
 
+function b4unload() {
+  FireBBS.stop()
+}
+
 window.addEventListener('keypress', key_map, false);
+window.addEventListener('beforeunload', b4unload, false);
 document.addEventListener('DOMMouseScroll', mouse_behavior, false);
 document.addEventListener('click', mouse_behavior, false);
 document.addEventListener('contextmenu', mouse_behavior, false);

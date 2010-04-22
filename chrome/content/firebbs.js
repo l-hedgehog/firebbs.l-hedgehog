@@ -114,16 +114,11 @@ var FireBBS = {
     },
 
     onStopRequest: function(request, context, status) {
-      FireBBS.outputStream.close();
-      FireBBS.inputStream.close();
-      if(bcDBCS) {
-        nsIBinaryInputStream.close()
-      }else {
-        nsIConverterInputStream.close();
-        nsIConverterOutputStream.close()
+      try {
+        FireBBS.stop()
+      }catch(e) {
+        return
       }
-      switchInputCapturer();
-      $anti_idler.stop()
     },
 
     onDataAvailable: function(request, context, inputStream, offset, count) {
@@ -281,6 +276,30 @@ var FireBBS = {
     $character.init(fontSize);
     this.output_area.style.width = $character.fontWidth * $output_area.cols + "px";
     this.output_area.style.height = $character.fontHeight * $output_area.rows + "px"
+
+    //try fix chewing
+    if(charset=="big5") {
+      this.input_area.style.backgroundColor = bgColor;
+      this.input_area.style.border = "0px none";
+      this.input_area.style.color = "silver";
+      this.input_area.style.fontSize = fontSize + "px";
+      this.input_area.style.height = fontSize + "px";
+      this.input_area.style.opacity = "0.6";
+      this.input_area.style.width = "auto"
+    }
+  },
+
+  stop: function() {
+    this.outputStream.close();
+    this.inputStream.close();
+    if(bcDBCS) {
+      nsIBinaryInputStream.close()
+    }else {
+      nsIConverterInputStream.close();
+      nsIConverterOutputStream.close()
+    }
+    switchInputCapturer();
+    $anti_idler.stop()
   },
 
   sendData: function(str) {
