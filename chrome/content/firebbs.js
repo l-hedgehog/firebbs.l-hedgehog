@@ -279,12 +279,12 @@ var FireBBS = {
 
     //try fix chewing
     if(charset=="big5") {
-      this.input_area.style.backgroundColor = bgColor;
+      this.input_area.style.background = "-moz-linear-gradient(left center, " + bgColor + ", transparent, transparent)";
       this.input_area.style.border = "0px none";
       this.input_area.style.color = "silver";
       this.input_area.style.fontSize = fontSize + "px";
       this.input_area.style.height = fontSize + "px";
-      this.input_area.style.opacity = "0.6";
+      this.input_area.style.opacity = "0.8";
       this.input_area.style.width = "auto"
     }
   },

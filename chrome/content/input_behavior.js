@@ -263,7 +263,7 @@ function composition_start() {
     FireBBS.input_area.style.width = window.innerWidth - pos[0] - 30 + "px"
   }
   FireBBS.input_area.style.left = pos[0] + "px";
-  FireBBS.input_area.style.top = pos[1] + "px"
+  FireBBS.input_area.style.top = pos[1] - 1 + "px"
 }
 
 function composition_end() {
