@@ -526,7 +526,7 @@ function BEL(msg) {
   if(belPref != "SILENT") {
     if(msg) {
       nsIAlertsService.showAlertNotification("chrome://firebbs/skin/firebbs.png", 
-                                             locale("alerts"), locale("newMessage"));
+                                             locale("alerts"), locale("newMessage"))
     }
     if(belPref) {
       nsISound.play(nsIIOService.newURI(belPref, null, null))
