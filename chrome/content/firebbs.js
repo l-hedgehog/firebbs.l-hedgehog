@@ -130,6 +130,15 @@ var FireBBS = {
       }
       var str = this.restStr + this.data.value;
       this.restStr = "";
+      if(str == "\u0007") {
+        this.restStr = str;
+        $bel_msg.init();
+        return
+      }
+      var belMsg = false;
+      if(!str.search(/\x07/)) {
+        belMsg = /[A-Z][a-z]{2}\s[A-Z][a-z]{2}\s\d+(\x1b\[1;44;37m)?\s(\x1b\[32m)?\d{2}:\d{2}/.test(str)
+      }
 
       str = str.replace(/\x07/g, "\u001b\u0007");//escape BEL
       str = str.replace(/[\b]/g, "\u001b[1D");//escape BS(replace )
@@ -160,7 +169,7 @@ var FireBBS = {
             break;
 
           case "\u0007":
-            BEL();
+            BEL(belMsg);
             FireBBS.HTMLString_cache.push(generate_span(strArray[i].substr(1)));
             break;
           case "\n":

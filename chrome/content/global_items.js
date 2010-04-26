@@ -347,3 +347,23 @@ var $anti_idler = {
                                 Ci.nsITimer.TYPE_ONE_SHOT)
   }
 };
+
+var $bel_msg = {
+  timer: null,
+
+  init: function() {
+    this.timer = Cc["@mozilla.org/timer;1"].
+                   createInstance(Ci.nsITimer);
+    this.timer.initWithCallback(this,
+                                100,
+                                Ci.nsITimer.TYPE_ONE_SHOT)
+  },
+
+  notify: function(timer) {
+    if(FireBBS.dataListener.restStr == "\u0007") {
+      BEL(false);
+      FireBBS.dataListener.restStr = ""
+    }
+    this.timer.cancel()
+  }
+};
