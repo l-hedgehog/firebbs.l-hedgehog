@@ -21,24 +21,36 @@
    - along with FireBBS.l-hedgehog.  If not, see <http://www.gnu.org/licenses/>.
    -
    - ***** END COPYRIGHT AND LICENSE BLOCK ***** -->
-<prefwindow id="ipsearcher-preferences" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" title="&firebbspref.title;">
+<prefwindow id="firebbs-preferences"
+            xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+            title="&firebbspref.title;"
+            onload="toggleSound();">
   <script type="application/x-javascript">
+    function toggleSound() {
+      if(document.getElementById("c-sound").checked) {
+        document.getElementById("b-soundfile").disabled = false;
+        document.getElementById("t-soundfile").disabled = false
+      }else {
+        document.getElementById("b-soundfile").disabled = true;
+        document.getElementById("t-soundfile").disabled = true
+      }
+    }
     function chooseFile() {
       const Cc = Components.classes;
       const Ci = Components.interfaces;
 
       var fp = Cc["@mozilla.org/filepicker;1"].
                  createInstance(Ci.nsIFilePicker);
-      fp.init(window, document.getElementById("b-sound").label, fp.modeOpen);
+      fp.init(window, null, fp.modeOpen);
       fp.appendFilters(fp.filterAll);
 
       var rv = fp.show();
-      if (rv == fp.returnOK) {
-        var ts = document.getElementById("t-sound");
-        ts.value = fp.fileURL.spec;
+      if(rv == fp.returnOK) {
+        var tsf = document.getElementById("t-soundfile");
+        tsf.value = fp.fileURL.spec;
         var evt = document.createEvent("HTMLEvents");
         evt.initEvent("change", true, false);
-        ts.dispatchEvent(evt);
+        tsf.dispatchEvent(evt)
       }
     }
   </script>
@@ -50,7 +62,8 @@
       <preference id="i-fontsize" name="extensions.firebbs.fontsize" type="int"/>
       <preference id="i-idledelay" name="extensions.firebbs.idledelay" type="int"/>
       <preference id="b-ipsearcher" name="extensions.firebbs.ipsearcher" type="bool"/>
-      <preference id="s-sound" name="extensions.firebbs.sound" type="string"/>
+      <preference id="b-sound" name="extensions.firebbs.sound" type="bool"/>
+      <preference id="s-soundfile" name="extensions.firebbs.soundfile" type="string"/>
     </preferences>
     <groupbox>
       <caption label="&appearance.label;"/>
@@ -76,6 +89,19 @@
       </grid>
     </groupbox>
     <groupbox>
+      <caption>
+        <checkbox id="c-sound" preference="b-sound" label="&c-sound.label;" oncommand="toggleSound();"/>
+      </caption>
+      <grid>
+        <rows>
+          <row>
+            <button id="b-soundfile" label="&b-soundfile.label;" oncommand="chooseFile();"/>
+            <textbox id="t-soundfile" preference="s-soundfile"/>
+          </row>
+        </rows>
+      </grid>
+    </groupbox>
+    <groupbox>
       <caption label="&misc.label;"/>
       <grid>
         <rows>
@@ -85,10 +111,6 @@
           </row>
           <row>
             <checkbox id="c-ipsearcher" preference="b-ipsearcher" label="&c-ipsearcher.label;"/>
-          </row>
-          <row>
-            <button id="b-sound" label="&t-sound.label;" oncommand="chooseFile();"/>
-            <textbox id="t-sound" preference="s-sound"/>
           </row>
         </rows>
       </grid>

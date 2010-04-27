@@ -284,7 +284,7 @@ var FireBBS = {
     terminal_display_class.style.lineHeight = fontSize + "px";
     $character.init(fontSize);
     this.output_area.style.width = $character.fontWidth * $output_area.cols + "px";
-    this.output_area.style.height = $character.fontHeight * $output_area.rows + "px"
+    this.output_area.style.height = $character.fontHeight * $output_area.rows + "px";
 
     //try fix chewing
     if(charset=="big5") {

@@ -521,18 +521,20 @@ function NEL() {//Move to next line(NEL )
 //**********************Start
 
 //BEL
-function BEL(msg) {
-  var belPref = prefs.getCharPref("sound");
-  if(belPref != "SILENT") {
-    if(msg) {
+function BEL(isMsg) {
+  if(prefs.getBoolPref("sound")) {
+    if(isMsg) {
       nsIAlertsService.showAlertNotification("chrome://firebbs/skin/firebbs.png", 
                                              locale("alerts"), locale("newMessage"))
     }
-    if(belPref) {
-      nsISound.play(nsIIOService.newURI(belPref, null, null))
+    var soundFile = prefs.getCharPref("soundfile");
+    if(soundFile) {
+      nsISound.play(nsIIOService.newURI(soundFile, null, null))
     }else if(nsISound.playEventSound) {
-      nsISound.playEventSound(nsISound.EVENT_NEW_MAIL_RECEIVED)
-      // nsISound.EVENT_ALERT_DIALOG_OPEN
+      var soundId = isMsg
+                  ? nsISound.EVENT_NEW_MAIL_RECEIVED
+                  : nsISound.EVENT_ALERT_DIALOG_OPEN;
+      nsISound.playEventSound(soundId)
     }else {
       nsISound.playSystemSound("_moz_mailbeep")
     }

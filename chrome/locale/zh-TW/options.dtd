@@ -27,5 +27,6 @@
 <!ENTITY t-fontsize.label "字號大小">
 <!ENTITY misc.label "其它">
 <!ENTITY t-idledelay.label "防發呆間隔（單位：秒）">
-<!ENTITY c-ipsearcher.label "IP 查地址（未經測試）">
-<!ENTITY t-sound.label "提醒聲音（留空默認）">
+<!ENTITY c-ipsearcher.label "啟用 IP 查地址">
+<!ENTITY c-sound.label "啟用提醒聲音">
+<!ENTITY b-soundfile.label "聲音檔（留空默認）">
