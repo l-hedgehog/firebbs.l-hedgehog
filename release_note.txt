@@ -4,6 +4,12 @@ the first digit is reserved for my real contribution to the extension
 
 == yyyy-mm-dd *.* ==
 
+== 2010-04-28 0.47 ==
+- fix two errors found in AMO review
+- nominate this extension to public on AMO, again
+- fix issue 1, chewing input method editor
+- workaround issue 2, new option to disable alerts
+
 == 2010-04-10 0.46 ==
 - option window, I'm not sure about the zh-TW strings
 - nominate this extension to public on AMO

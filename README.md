@@ -19,7 +19,6 @@ Tips
 *   __Preferences__
     *   Options window can be accessed through "Tools / Addons / Extensions";
     *   __READ THE NEXT SECTION__ before you enable IPSearcher;
-    *   Press the button to select the sound file you need;
     *   To enable experimental features, you need:
         1.  Go to "about:config";
         2.  In the filter, search for "extensions.firebbs.experiment.";
