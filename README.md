@@ -26,7 +26,7 @@ Tips
             *   "bicolorDBCS", experimental support of bicolor DBCS,
                 enable it may introduce bugs in text & ASCII copy;
     *   Also, [telnet://ptt.cc/?charset=big5&fontfamily=MingLiU][3] will work,
-        for "bgcolor", "charset", "fontfamily" & "fontsize".
+        for "charset", "fontfamily" & "fontsize".
 *   __IPSearcher__
     *   All platform supported;
     *   How to get a copy of QQwry.dat?

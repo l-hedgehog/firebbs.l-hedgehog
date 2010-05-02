@@ -218,7 +218,6 @@ var FireBBS = {
                           document.location.port ? document.location.port : 23,
                           null);
     var options = document.location.search;
-    var bgColor = /bgcolor\x3D(\w+)/.exec(options);
     var charset = /charset\x3D(\w+)/.exec(options)
                 ? /charset\x3D(\w+)/.exec(options)[1]
                 : prefs.getComplexValue("charset", Ci.nsIPrefLocalizedString).data;
@@ -256,10 +255,7 @@ var FireBBS = {
     //document.title = document.location.host;
     $garbage_span_collector.initCoveredArea();
 
-    bgColor = bgColor
-            ? bgColor[1]
-            : prefs.getCharPref("bgcolor");
-    bgColor = hexColor(bgColor);
+    var bgColor = hexColor(prefs.getCharPref("bgcolor"));
     document.body.style.backgroundColor = bgColor;
     for(var i = 0;i < colorTable.length;i++) {
       if(bgColor == colorTable[i]) {
