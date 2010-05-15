@@ -15,7 +15,7 @@
                 <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
                 <em:minVersion>3.0</em:minVersion>
                 <em:maxVersion>3.6.*</em:maxVersion>
-                <em:updateLink>http://releases.mozilla.org/pub/mozilla.org/addons/93617/firebbs.l-hedgehog-0.47-fx.xpi?src=external-selfhostupdate</em:updateLink>
+                <em:updateLink>http://addons.mozilla.org/zh-CN/firefox/downloads/latest/93617/addon-93617-latest.xpi?src=external-selfhostupdate</em:updateLink>
                 <em:updateInfoURL>https://addons.mozilla.org/versions/updateInfo/105181/%APP_LOCALE%/</em:updateInfoURL>
                 <em:updateHash>sha256:366d499a1643b40ac21070dd01024a3cacbef871f4da6da96bf2fc5454a70408</em:updateHash>
               </Description>
