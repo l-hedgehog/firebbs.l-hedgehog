@@ -205,7 +205,18 @@ var FireBBS = {
       }
 
       $garbage_span_collector.clearScreen();
-      FireBBS.output_area.innerHTML += FireBBS.HTMLString_cache.join("");
+
+      var plain = FireBBS.HTMLString_cache.join("");
+      //add html link
+      var urlTemplate = /(https?:\/\/)([\w-.]+)(:[0-9]+)?(\/[\/\w;,?:@&=+$.!~*'#%-]*)?/g;  //()
+      plain = plain.replace(urlTemplate, addLink);
+      //add ip2location link
+      var fromIpTemplate = /[\[\s]\d+\.\d+\.\d+\.[*\d]+/g;
+      if(hzIPSearcher) {
+        plain = plain.replace(fromIpTemplate, ip2LocRel)
+      }
+
+      FireBBS.output_area.innerHTML += plain;
       FireBBS.HTMLString_cache = [];
       FireBBS.relocateCursor()
     }

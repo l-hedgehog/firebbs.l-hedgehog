@@ -64,6 +64,7 @@ function generate_span(str) {
     str = str.replace(/>/g, "&gt;");
     str = str.replace(/"/g, "&quot;")
   }
+  /*
   //add html link
   var urlTemplate = /(https?:\/\/)([\w-.]+)(:[0-9]+)?(\/[\/\w;,?:@&=+$.!~*'#%-]*)?/g;  //()
   str = str.replace(urlTemplate, addLink);
@@ -72,6 +73,7 @@ function generate_span(str) {
   if(hzIPSearcher) {
     str = str.replace(fromIpTemplate, ip2LocRel)
   }
+  */
 
   var s = ['<span id="m'];
   s.push($cursor.position.m);
@@ -152,11 +154,8 @@ function generate_bg_span(cursorPosition, cols) {
 }
 
 function convertMN2XY(cursorPosition) {
-  var origin = [FireBBS.output_area.offsetLeft + 1,
-                FireBBS.output_area.offsetTop + 1];
-  var realX = origin[0] + (cursorPosition.n - 1) * $character.fontWidth;
-  var realY = origin[1] + (cursorPosition.m - 1) * $character.fontHeight;
-  return [realX, realY]
+  return [FireBBS.output_area.offsetLeft + 1 + (cursorPosition.n - 1) * $character.fontWidth,
+          FireBBS.output_area.offsetTop + 1 + (cursorPosition.m - 1) * $character.fontHeight]
 }
 
 function stringLen(str) {
