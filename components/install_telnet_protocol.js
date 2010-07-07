@@ -103,6 +103,8 @@ TelnetProtocol.prototype = {
 
 // XPCOM registration.
 var components = [TelnetProtocol];
-function NSGetModule(compMgr, fileSpec) {
-  return XPCOMUtils.generateModule(components)
+if (XPCOMUtils.generateNSGetFactory) {
+  var NSGetFactory = XPCOMUtils.generateNSGetFactory(components)
+}else {
+  var NSGetModule = XPCOMUtils.generateNSGetModule(components)
 }
