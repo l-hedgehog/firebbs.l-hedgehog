@@ -22,6 +22,7 @@
 
 const Cc = Components.classes;
 const Ci = Components.interfaces;
+const Cu = Components.utils;
 
 var strBundle =
       Cc["@mozilla.org/intl/stringbundle;1"].
@@ -78,9 +79,15 @@ var nsIIOService =
       Cc["@mozilla.org/network/io-service;1"].
         getService(Ci.nsIIOService);
 
-var nsIExtensionManager =
-      Cc["@mozilla.org/extensions/manager;1"].
-        getService(Ci.nsIExtensionManager);
+var nsIExtensionManager = null;
+try {
+  nsIExtensionManager =
+    Cc["@mozilla.org/extensions/manager;1"].
+      getService(Ci.nsIExtensionManager)
+}catch(e) {
+  nsIExtensionManager = null;
+  Cu.import("resource://gre/modules/AddonManager.jsm");
+}
 
 var hzIPSearcher = null;
 if(prefs.getBoolPref("ipsearcher")) {

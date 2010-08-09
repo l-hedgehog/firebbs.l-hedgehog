@@ -8,5 +8,6 @@ skin  firebbs  default  chrome/skin/default/
 component {5FAF83FD-708D-45c0-988B-C7404FB25376} components/install_telnet_protocol.js
 contract @mozilla.org/network/protocol;1?name=telnet {5FAF83FD-708D-45c0-988B-C7404FB25376}
 
+interfaces components/hzIIPSearcherService.xpt
 component {d6e0b16b-7dfa-4917-9dd6-703863031d93} components/ipsearcher-service.js
 contract @hector.zhao/ipsearcher-service;2 {d6e0b16b-7dfa-4917-9dd6-703863031d93}

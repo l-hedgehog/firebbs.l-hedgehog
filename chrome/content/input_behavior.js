@@ -129,10 +129,19 @@ function key_map(e) {
           //FireBBS.sendData('\x7F');
           break;
         case 112://Help ? About !
-          openDialog("chrome://mozapps/content/extensions/about.xul", "",
-                     "chrome,centerscreen,modal",
-                     "urn:mozilla:item:firebbs.l-hedgehog@hector.zhao",
-                     nsIExtensionManager.datasource);
+          if(nsIExtensionManager) {
+            openDialog("chrome://mozapps/content/extensions/about.xul", "",
+                       "chrome,centerscreen,modal",
+                       "urn:mozilla:item:firebbs.l-hedgehog@hector.zhao",
+                       nsIExtensionManager.datasource)
+          }else {
+            AddonManager.getAddonByID("firebbs.l-hedgehog@hector.zhao",
+                                      function(addon) {
+                                        openDialog("chrome://mozapps/content/extensions/about.xul", "",
+                                                   "chrome,centerscreen,modal",
+                                                   addon)
+                                      })
+          }
           break;
         default:
       }
