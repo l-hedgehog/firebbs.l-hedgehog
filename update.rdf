@@ -8,16 +8,16 @@
       <Seq>
         <li>
           <Description>
-            <em:version>0.47</em:version>
+            <em:version>0.48</em:version>
 
             <em:targetApplication>
               <Description>
                 <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
                 <em:minVersion>3.0</em:minVersion>
-                <em:maxVersion>3.6.*</em:maxVersion>
+                <em:maxVersion>4.0.*</em:maxVersion>
                 <em:updateLink>http://addons.mozilla.org/zh-CN/firefox/downloads/latest/93617/addon-93617-latest.xpi?src=external-selfhostupdate</em:updateLink>
-                <em:updateInfoURL>https://addons.mozilla.org/versions/updateInfo/105181/%APP_LOCALE%/</em:updateInfoURL>
-                <em:updateHash>sha256:366d499a1643b40ac21070dd01024a3cacbef871f4da6da96bf2fc5454a70408</em:updateHash>
+                <em:updateInfoURL>https://addons.mozilla.org/versions/updateInfo/118314/%APP_LOCALE%/</em:updateInfoURL>
+                <em:updateHash>sha256:c540c0266f0ab182bbfb6f303bd78ca3a7c810a1e8f7dc5c0af5c589c6d6265c</em:updateHash>
               </Description>
             </em:targetApplication>
           </Description>
