@@ -4,6 +4,10 @@ the first digit is reserved for my real contribution to the extension
 
 == yyyy-mm-dd *.* ==
 
+== 2010-09-24 0.48 ==
+- compatible with Fx 4
+- fix issue 3 by removing parameter "bgcolor" from url
+
 == 2010-04-28 0.47 ==
 - fix two errors found in AMO review
 - nominate this extension to public on AMO, again

@@ -18,7 +18,7 @@
  * IBM Corporation. All Rights Reserved.
  *
  * As part of FireBBS.l-hedgehog, XPCOMUtils is introduced into this file
- * by Hector Zhao in 2009.
+ * in 2009, then modified to work with Fx 4 in 2010, by Hector Zhao.
  *
  * Contributor(s):
  *   Darin Fisher <darin@meer.net>
