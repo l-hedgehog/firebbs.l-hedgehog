@@ -80,7 +80,19 @@ let setDefaultPrefs = function() {
       'defaults/preferences/prefs.js',
       null,
       Services.io.newURI(__SCRIPT_URI_SPEC__, null, null));
-  if (uri.QueryInterface(Ci.nsIFileURL).file.exists()) {
+  let fileExists = false;
+  if (uri instanceof Ci.nsIJARURI) {
+    if (uri.JARFile.QueryInterface(Ci.nsIFileURL).file.exists()) {
+      let zipReader = Cc['@mozilla.org/libjar/zip-reader;1']
+                        .createInstance(Ci.nsIZipReader);
+      zipReader.open(uri.JARFile.file);
+      fileExists = zipReader.hasEntry(uri.JAREntry);
+      zipReader.close();      
+    }
+  } else {
+    fileExists = uri.QueryInterface(Ci.nsIFileURL).file.exists();
+  }
+  if (fileExists) {
     Services.scriptloader.loadSubScript(uri.spec, prefLoaderScope);
   }
 };
@@ -92,12 +104,10 @@ function startup(aData, aReason) {
 
   var resProt = Services.io.getProtocolHandler('resource')
                   .QueryInterface(Ci.nsIResProtocolHandler);
-  var aliasFile = Cc['@mozilla.org/file/local;1']
-                    .createInstance(Ci.nsILocalFile);
-  var modulePath = aData.installPath.clone();
-  modulePath.append('modules');
-  aliasFile.initWithPath(modulePath.path);
-  var aliasURI = Services.io.newFileURI(aliasFile);
+  var aliasURI = Services.io.newURI(
+      'modules/', //trailing slash is required for directory, why?
+      null,
+      Services.io.newURI(aData.resourceURI.spec, null, null));
   resProt.setSubstitution(RESOURCE_NAME, aliasURI);
 
   telnetProtocolUrl = aData.resourceURI.spec +
