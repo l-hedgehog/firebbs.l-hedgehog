@@ -39,6 +39,9 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+
+var EXPORTED_SYMBOLS = ['TelnetProtocol'];
+
 // Telnet protocol related
 const kSCHEME              = "telnet";
 const kPROTOCOL_NAME       = "Telnet Protocol";
@@ -102,9 +105,4 @@ TelnetProtocol.prototype = {
 };
 
 // XPCOM registration.
-var components = [TelnetProtocol];
-if (XPCOMUtils.generateNSGetFactory) {
-  var NSGetFactory = XPCOMUtils.generateNSGetFactory(components)
-}else {
-  var NSGetModule = XPCOMUtils.generateNSGetModule(components)
-}
+var NSGetFactory = XPCOMUtils.generateNSGetFactory([TelnetProtocol])
