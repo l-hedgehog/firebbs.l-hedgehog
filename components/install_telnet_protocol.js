@@ -17,13 +17,13 @@
  * Portions created by IBM Corporation are Copyright (C) 2004
  * IBM Corporation. All Rights Reserved.
  *
- * As part of FireBBS.l-hedgehog, XPCOMUtils is introduced into this file
- * in 2009, then modified to work with Fx 4 in 2010, by Hector Zhao.
+ * As part of FireBBS.l-hedgehog, portions changed by Hector Zhao are
+ * Copyright (C) 2009, 2010, 2012 Hector Zhao.
  *
  * Contributor(s):
  *   Darin Fisher <darin@meer.net>
  *   Doron Rosenberg <doronr@us.ibm.com>
- *   Hector Zhao <http://github.com/l-hedgehog>
+ *   Hector Zhao <l-hedgehog@126.com>
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or

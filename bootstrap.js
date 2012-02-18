@@ -1,10 +1,35 @@
+/* ***** BEGIN COPYRIGHT AND LICENSE BLOCK *****
+ *
+ * Copyright © 2012 Brendan Dahl
+ * Copyright © 2011 Erik Vold
+ * Copyright © 2012 Hector Zhao
+ *
+ * This file is part of FireBBS.l-hedgehog.
+ *
+ * FireBBS.l-hedgehog is free software: you can redistribute it
+ * and/or modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
+ *
+ * FireBBS.l-hedgehog is distributed in the hope that it will be
+ * useful, but WITHOUT ANY WARRANTY; without even the implied warranty
+ * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with FireBBS.l-hedgehog.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ***** END COPYRIGHT AND LICENSE BLOCK ***** */
+
+/* Most part of this file is from pdf.js @ http://git.io/7QyhvQ (MIT/X11)
+   setDefaultPrefs is from addon-sdk @ http://git.io/vx9XPQ (MPL/GPL/LGPL) */
+
 'use strict';
 
+const RESOURCE_NAME = 'firebbs';
 const { classes: Cc, interfaces: Ci, manager: Cm, utils: Cu } = Components;
-
 Cu.import('resource://gre/modules/Services.jsm');
 
-// (Un)Register a class as a component, from http://git.io/7QyhvQ (MIT/X11)
 let Factory = {
   registrar: null,
   aClass: null,
@@ -33,7 +58,6 @@ let Factory = {
   }
 };
 
-// Default prefs workaround, from http://git.io/vx9XPQ (MPL/GPL/LGPL)
 let setDefaultPrefs = function() {
   let branch = Services.prefs.getDefaultBranch('');
   let prefLoaderScope = {
@@ -65,6 +89,17 @@ let telnetProtocolUrl = null;
 
 function startup(aData, aReason) {
   setDefaultPrefs();
+
+  var resProt = Services.io.getProtocolHandler('resource')
+                  .QueryInterface(Ci.nsIResProtocolHandler);
+  var aliasFile = Cc['@mozilla.org/file/local;1']
+                    .createInstance(Ci.nsILocalFile);
+  var modulePath = aData.installPath.clone();
+  modulePath.append('modules');
+  aliasFile.initWithPath(modulePath.path);
+  var aliasURI = Services.io.newFileURI(aliasFile);
+  resProt.setSubstitution(RESOURCE_NAME, aliasURI);
+
   telnetProtocolUrl = aData.resourceURI.spec +
                       'components/install_telnet_protocol.js';
   Cu.import(telnetProtocolUrl);
@@ -72,6 +107,10 @@ function startup(aData, aReason) {
 }
 
 function shutdown(aData, aReason) {
+  var resProt = Services.io.getProtocolHandler('resource')
+                  .QueryInterface(Ci.nsIResProtocolHandler);
+  resProt.setSubstitution(RESOURCE_NAME, null);
+
   Factory.unregister();
   if (telnetProtocolUrl) {
     Cu.unload(telnetProtocolUrl);

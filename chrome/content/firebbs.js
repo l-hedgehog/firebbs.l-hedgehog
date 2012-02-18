@@ -1,7 +1,7 @@
 /* ***** BEGIN COPYRIGHT AND LICENSE BLOCK *****
  *
  * Copyright © 2007 Milx
- * Copyright © 2007, 2008, 2009, 2010 Hector Zhao
+ * Copyright © 2007, 2008, 2009, 2010, 2012 Hector Zhao
  *
  * This file is part of FireBBS.l-hedgehog.
  *
@@ -89,17 +89,16 @@ try {
   Cu.import("resource://gre/modules/AddonManager.jsm");
 }
 
-var hzIPSearcher = null;
+Cu.import("resource://firebbs/hzIPSearcher.jsm");
 if(prefs.getBoolPref("ipsearcher")) {
   try {
-    hzIPSearcher = 
-      Cc["@hector.zhao/ipsearcher-service;2"].
-        getService(Ci.hzIIPSearcherService);
     hzIPSearcher.init()
   }catch(e) {
     prefs.setBoolPref("ipsearcher", false);
     hzIPSearcher = null
   }
+} else {
+  hzIPSearcher = null
 }
 
 var FireBBS = {
