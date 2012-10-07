@@ -4,6 +4,10 @@ the first digit is reserved for my real contribution to the extension
 
 == yyyy-mm-dd *.* ==
 
+== 2012-10-07 0.49 ==
+- restartless!
+- compatibility fix for fx 16+, https://bugzil.la/722872
+
 == 2010-09-24 0.48 ==
 - compatible with Fx 4
 - fix issue 3 by removing parameter "bgcolor" from url

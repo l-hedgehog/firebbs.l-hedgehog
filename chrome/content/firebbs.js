@@ -67,6 +67,9 @@ var nsISupportsString =
 var nsITransferable =
       Cc["@mozilla.org/widget/transferable;1"].
         createInstance(Ci.nsITransferable);
+if (nsITransferable.init) {
+  nsITransferable.init(null)
+}
 nsITransferable.addDataFlavor("text/unicode");
 
 var nsIAlertsService =
