@@ -68,7 +68,10 @@ var nsITransferable =
       Cc["@mozilla.org/widget/transferable;1"].
         createInstance(Ci.nsITransferable);
 if (nsITransferable.init) {
-  nsITransferable.init(null)
+  var privacyContext = window.QueryInterface(Ci.nsIInterfaceRequestor).
+                              getInterface(Ci.nsIWebNavigation).
+                              QueryInterface(Ci.nsILoadContext);
+  nsITransferable.init(privacyContext)
 }
 nsITransferable.addDataFlavor("text/unicode");
 
